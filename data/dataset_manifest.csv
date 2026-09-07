@@ -1,0 +1,16 @@
+image_id,class_name,label_idx,split,is_augmented,original_file,relative_path,resolution,channels
+RET_HEA_00001,healthy,0,train,False,sample_healthy_01.png,processed\train\healthy\RET_HEA_00001_train.png,224x224,3
+RET_HEA_00002_AUG,healthy,0,train,True,sample_healthy_01.png,processed\train\healthy\RET_HEA_00002_AUG_train.png,224x224,3
+RET_HEA_00003_AUG,healthy,0,train,True,sample_healthy_01.png,processed\train\healthy\RET_HEA_00003_AUG_train.png,224x224,3
+RET_HEA_00004,healthy,0,val,False,sample_healthy_01.png,processed\val\healthy\RET_HEA_00004_val.png,224x224,3
+RET_HEA_00005,healthy,0,test,False,sample_healthy_01.png,processed\test\healthy\RET_HEA_00005_test.png,224x224,3
+RET_DIA_00006,diabetic_retinopathy,1,train,False,sample_dr_01.png,processed\train\diabetic_retinopathy\RET_DIA_00006_train.png,224x224,3
+RET_DIA_00007_AUG,diabetic_retinopathy,1,train,True,sample_dr_01.png,processed\train\diabetic_retinopathy\RET_DIA_00007_AUG_train.png,224x224,3
+RET_DIA_00008_AUG,diabetic_retinopathy,1,train,True,sample_dr_01.png,processed\train\diabetic_retinopathy\RET_DIA_00008_AUG_train.png,224x224,3
+RET_DIA_00009,diabetic_retinopathy,1,val,False,sample_dr_01.png,processed\val\diabetic_retinopathy\RET_DIA_00009_val.png,224x224,3
+RET_DIA_00010,diabetic_retinopathy,1,test,False,sample_dr_01.png,processed\test\diabetic_retinopathy\RET_DIA_00010_test.png,224x224,3
+RET_GLA_00011,glaucoma,2,train,False,sample_glaucoma_01.png,processed\train\glaucoma\RET_GLA_00011_train.png,224x224,3
+RET_GLA_00012_AUG,glaucoma,2,train,True,sample_glaucoma_01.png,processed\train\glaucoma\RET_GLA_00012_AUG_train.png,224x224,3
+RET_GLA_00013_AUG,glaucoma,2,train,True,sample_glaucoma_01.png,processed\train\glaucoma\RET_GLA_00013_AUG_train.png,224x224,3
+RET_GLA_00014,glaucoma,2,val,False,sample_glaucoma_01.png,processed\val\glaucoma\RET_GLA_00014_val.png,224x224,3
+RET_GLA_00015,glaucoma,2,test,False,sample_glaucoma_01.png,processed\test\glaucoma\RET_GLA_00015_test.png,224x224,3
