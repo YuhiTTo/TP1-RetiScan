@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soporte Clínico de Patologías Retinianas | DenseNet121 CAD Web</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Principal -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- HEADER DE LA APLICACIÓN -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1>RetinaCAD Pro</h1>
+          <p>Sistema de Soporte Clínico con IA — Centro Oftalmológico V.E.R. / INO</p>
+        </div>
+      </div>
+
+      <div class="system-status">
+        <div class="status-badge">
+          <span class="dot"></span> Backend FastAPI Online
+        </div>
+        <div class="status-badge">
+          DenseNet121 (v1.4)
+        </div>
+        <div class="user-profile">
+          <div class="avatar">LM</div>
+          <div>
+            <div style="font-size: 0.8rem; font-weight: 600;">Dra. Lucero Manchay</div>
+            <div style="font-size: 0.7rem; color: var(--text-muted);">Especialista en Retina</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BARRA DE NAVEGACIÓN Y PESTAÑAS -->
+  <nav class="nav-tabs-bar">
+    <div class="nav-tabs-container">
+      <button class="tab-btn active" data-tab="tabInference">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        Triaje & Inferencia IA
+      </button>
+      <button class="tab-btn" data-tab="tabPatients">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        Historial de Pacientes
+      </button>
+      <button class="tab-btn" data-tab="tabDashboard">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+        Dashboard & Impacto
+      </button>
+      <button class="tab-btn" data-tab="tabArchitecture">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm1 9h-2V7h2v5z"/></svg>
+        Arquitectura & Benchmarking
+      </button>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-wrapper">
+
+    <!-- PESTAÑA 1: TRIAJE & INFERENCIA IA -->
+    <section id="tabInference" class="tab-content active">
+      <div class="grid-2col">
+        
+        <!-- PANEL IZQUIERDO: CARGA Y VISUALIZADOR -->
+        <div class="card-glass">
+          <div class="card-header">
+            <div class="card-title">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+              Carga y Procesamiento de Retinografía
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Formato: JPG / PNG (224x224)</span>
+          </div>
+
+          <!-- MUESTRAS PRESET -->
+          <div class="preset-section">
+            <div class="preset-title">Imágenes de Prueba Clínicas (Presets)</div>
+            <div class="preset-grid">
+              <div class="preset-btn active" data-preset="healthy">
+                <img src="assets/images/fundus_healthy.png" alt="Sano" class="preset-thumb">
+                <span class="preset-label" style="color:#34D399;">1. Ojo Sano</span>
+              </div>
+              <div class="preset-btn" data-preset="diabetic">
+                <img src="assets/images/fundus_diabetic_retinopathy.png" alt="Retinopatía" class="preset-thumb">
+                <span class="preset-label" style="color:#FBBF24;">2. Retinopatía D.</span>
+              </div>
+              <div class="preset-btn" data-preset="glaucoma">
+                <img src="assets/images/fundus_glaucoma.png" alt="Glaucoma" class="preset-thumb">
+                <span class="preset-label" style="color:#F87171;">3. Glaucoma</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ZONA DRAG & DROP -->
+          <div class="upload-dropzone" id="dropzone">
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+            <div style="font-weight: 600; margin-bottom: 0.2rem;">Arrastra una retinografía aquí o haz clic</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">Imágenes de fondo de ojo no midriáticas</div>
+            <input type="file" id="fileInput" accept="image/*" class="hidden">
+          </div>
+
+          <!-- VISUALIZADOR DE FONDO DE OJO -->
+          <div class="viewport-container">
+            <div class="scan-line" id="scanLine"></div>
+            <img src="assets/images/fundus_healthy.png" alt="Fondo de ojo" class="viewport-img" id="fundusViewport">
+            
+            <div class="viewport-overlay">
+              <button class="filter-btn active" data-filter="normal">Normal</button>
+              <button class="filter-btn" data-filter="clahe">Realzar Vasos (CLAHE)</button>
+              <button class="filter-btn" data-filter="heatmap">Mapa de Calor (XAI)</button>
+            </div>
+          </div>
+
+          <!-- BOTÓN INFERENCIA -->
+          <div style="margin-top: 1.25rem;">
+            <button class="btn-action" id="btnRunInference">
+              <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              Ejecutar Inferencia de IA (DenseNet121)
+            </button>
+          </div>
+        </div>
+
+        <!-- PANEL DERECHO: RESULTADOS Y DIAGNÓSTICO -->
+        <div class="card-glass" id="resultCard">
+          <div class="card-header">
+            <div class="card-title">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              Resultado y Clasificación Multiclase
+            </div>
+            <span class="status-badge" style="background: rgba(56, 189, 248, 0.1); color: var(--accent-cyan);">
+              FastAPI Inference Engine
+            </span>
+          </div>
+
+          <!-- BANNER DE DIAGNÓSTICO PRINCIPAL -->
+          <div class="diagnosis-banner healthy" id="diagBanner">
+            <div>
+              <div class="diag-title" id="diagTitle">Sin Hallazgos Patológicos (Normal)</div>
+              <div class="diag-subtitle" id="diagSubtitle">Estructura retiniana dentro de parámetros normales.</div>
+            </div>
+            <div class="diag-badge" id="diagConfidence">98.4% Confianza</div>
+          </div>
+
+          <!-- PROBABILIDADES POR CLASE -->
+          <div style="margin-bottom: 1.5rem;">
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 1rem; text-transform: uppercase;">
+              Desglose de Probabilidad Algorítmica (Softmax)
+            </div>
+
+            <!-- Clase 1: Sano -->
+            <div class="prob-group">
+              <div class="prob-header">
+                <span class="prob-name" style="color:#34D399;">🟢 Normal / Sin Hallazgos</span>
+                <span class="prob-val" id="probHealthyVal">98.4%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill fill-healthy" id="probHealthyBar" style="width: 98.4%;"></div>
+              </div>
+            </div>
+
+            <!-- Clase 2: Retinopatía Diabética -->
+            <div class="prob-group">
+              <div class="prob-header">
+                <span class="prob-name" style="color:#FBBF24;">🟡 Retinopatía Diabética</span>
+                <span class="prob-val" id="probDiabeticVal">1.2%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill fill-diabetic" id="probDiabeticBar" style="width: 1.2%;"></div>
+              </div>
+            </div>
+
+            <!-- Clase 3: Glaucoma -->
+            <div class="prob-group">
+              <div class="prob-header">
+                <span class="prob-name" style="color:#F87171;">🔴 Glaucoma</span>
+                <span class="prob-val" id="probGlaucomaVal">0.4%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill fill-glaucoma" id="probGlaucomaBar" style="width: 0.4%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RECOMENDACIÓN CLÍNICA -->
+          <div style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; margin-bottom: 0.3rem;">
+              Sugerencia de Soporte Clínico (2da Opinión)
+            </div>
+            <p id="textRecommendations" style="font-size: 0.85rem; color: var(--text-muted);">
+              No se observan microaneurismas ni excavación glaucomatosa. Se sugiere control rutinario preventivo en 12 meses.
+            </p>
+          </div>
+
+          <!-- BOTÓN GENERAR INFORME -->
+          <button class="btn-secondary" id="btnOpenReport" style="width: 100%; justify-content: center;">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-4 11H9v-4h6v4zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H7v4h10V3z"/></svg>
+            Generar Informe Clínico Oficial (PDF)
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PESTAÑA 2: HISTORIAL DE PACIENTES -->
+    <section id="tabPatients" class="tab-content">
+      <div class="card-glass">
+        <div class="card-header">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            Registro de Pacientes y Seguimiento Longitudinal
+          </div>
+          <input type="text" placeholder="Buscar por DNI o Nombre..." style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: white; padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem;">
+        </div>
+
+        <div class="table-responsive">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>DNI</th>
+                <th>Paciente</th>
+                <th>Edad</th>
+                <th>Fecha Triaje</th>
+                <th>Diagnóstico IA</th>
+                <th>Confianza</th>
+                <th>Prioridad</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>72849102</td>
+                <td>Carlos Mendoza Ríos</td>
+                <td>58 años</td>
+                <td>22/08/2026</td>
+                <td><span class="tag-status tag-diabetic">Retinopatía Diabética</span></td>
+                <td>95.8%</td>
+                <td><span style="color:#FBBF24; font-weight:600;">Alta</span></td>
+                <td><button class="btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">Ver Historial</button></td>
+              </tr>
+              <tr>
+                <td>41920384</td>
+                <td>Ana María Paredes</td>
+                <td>64 años</td>
+                <td>22/08/2026</td>
+                <td><span class="tag-status tag-glaucoma">Glaucoma</span></td>
+                <td>95.3%</td>
+                <td><span style="color:#F87171; font-weight:600;">Urgente</span></td>
+                <td><button class="btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">Ver Historial</button></td>
+              </tr>
+              <tr>
+                <td>45129304</td>
+                <td>Jorge Luis Mayhua</td>
+                <td>42 años</td>
+                <td>21/08/2026</td>
+                <td><span class="tag-status tag-healthy">Normal (Sano)</span></td>
+                <td>98.4%</td>
+                <td><span style="color:#34D399; font-weight:600;">Rutinaria</span></td>
+                <td><button class="btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">Ver Historial</button></td>
+              </tr>
+              <tr>
+                <td>10293847</td>
+                <td>María Salome Castro</td>
+                <td>61 años</td>
+                <td>20/08/2026</td>
+                <td><span class="tag-status tag-diabetic">Retinopatía Diabética</span></td>
+                <td>94.1%</td>
+                <td><span style="color:#FBBF24; font-weight:600;">Alta</span></td>
+                <td><button class="btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">Ver Historial</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PESTAÑA 3: DASHBOARD & IMPACTO -->
+    <section id="tabDashboard" class="tab-content">
+      <div class="grid-4col" style="margin-bottom: 1.5rem;">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan);">
+            <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          </div>
+          <div>
+            <div class="stat-val">1,248</div>
+            <div class="stat-label">Triajes Realizados</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper" style="background: rgba(16, 185, 129, 0.15); color: var(--status-healthy);">
+            <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 00-1.38-3.56A8.03 8.03 0 0118.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26z"/></svg>
+          </div>
+          <div>
+            <div class="stat-val">96.8%</div>
+            <div class="stat-label">Precisión Diagnóstica</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper" style="background: rgba(245, 158, 11, 0.15); color: var(--status-diabetic);">
+            <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          </div>
+          <div>
+            <div class="stat-val">2.4 min</div>
+            <div class="stat-label">Tiempo Medio de Triaje</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper" style="background: rgba(239, 68, 68, 0.15); color: var(--status-glaucoma);">
+            <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div>
+            <div class="stat-val">342</div>
+            <div class="stat-label">Casos Graves Derivados</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-glass">
+        <div class="card-header">
+          <div class="card-title">Impacto Operativo en Salud Pública (Lima Metropolitana)</div>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+          La implementación del sistema CAD reduce drásticamente el cuello de botella en los consultorios oftalmológicos de Lima Metropolitana. 
+          Al desplazar el filtro inicial hacia el nivel de atención primaria mediante IA asíncrona, se ha evitado la congestión en especialistas y se ha reducido el tiempo promedio de derivación de <strong>120 días a menos de 7 días</strong> para pacientes con riesgo inminente de pérdida visual.
+        </p>
+      </div>
+    </section>
+
+    <!-- PESTAÑA 4: ARQUITECTURA & BENCHMARKING -->
+    <section id="tabArchitecture" class="tab-content">
+      <div class="grid-2col">
+        <div class="card-glass">
+          <div class="card-header">
+            <div class="card-title">Arquitectura del Sistema (Tesis Proposal)</div>
+          </div>
+          <ul style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; padding-left: 1.2rem;">
+            <li><strong>Capa de Presentación (Frontend):</strong> Angular con TypeScript, Interceptores HTTP y Sanitización XSS.</li>
+            <li><strong>Capa de Aplicación (Backend):</strong> FastAPI en Python con endpoints asíncronos y Pydantic.</li>
+            <li><strong>Motor de IA / Inferencia:</strong> DenseNet121 preentrenado con Transfer Learning en TensorFlow/Keras.</li>
+            <li><strong>Persistencia & Cloud:</strong> PostgreSQL y Amazon Web Services (AWS S3 & EC2).</li>
+          </ul>
+        </div>
+
+        <div class="card-glass">
+          <div class="card-header">
+            <div class="card-title">Resultados del Benchmarking Tecnológico</div>
+          </div>
+          <ul style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; padding-left: 1.2rem;">
+            <li><strong>DenseNet121:</strong> Puntaje <strong>4.35 / 5.00</strong> (Mejor balance precisión/eficiencia vs ResNet50).</li>
+            <li><strong>FastAPI:</strong> Puntaje <strong>4.60 / 5.00</strong> (Integración nativa Python + OpenAPI automática).</li>
+            <li><strong>Angular:</strong> Puntaje <strong>4.85 / 5.00</strong> (Arquitectura empresarial prescriptiva y segura).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE INFORME CLÍNICO IMPRIMIBLE (PDF) -->
+  <div class="modal-backdrop" id="reportModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="btnCloseReport">&times;</button>
+      
+      <div class="clinical-report-header">
+        <div class="report-logo-text">
+          <h2>CENTRO OFTALMOLÓGICO V.E.R.</h2>
+          <p>Unidad de Diagnóstico por Imágenes y Soporte Clínico CAD</p>
+        </div>
+        <div class="report-meta-box">
+          <div><strong>INFORME CLÍNICO DE RETINOGRAFÍA</strong></div>
+          <div>Fecha: <span id="rptDate">22 de Agosto de 2026</span></div>
+          <div>Código Informe: #INF-2026-8492</div>
+        </div>
+      </div>
+
+      <div class="report-grid">
+        <div>
+          <div class="report-field"><label>Paciente</label><span>Carlos Mendoza Ríos</span></div>
+          <div class="report-field"><label>DNI</label><span>72849102</span></div>
+          <div class="report-field"><label>Edad / Sexo</label><span>58 años / Masculino</span></div>
+        </div>
+        <div>
+          <div class="report-field"><label>Médico Tratante</label><span>Dra. Lucero Manchay Paredes</span></div>
+          <div class="report-field"><label>Modelo de Inferencia</label><span>DenseNet121 CNN (v1.4)</span></div>
+          <div class="report-field"><label>Especialidad</label><span>Oftalmología / Retina</span></div>
+        </div>
+      </div>
+
+      <div class="report-diagnosis-box">
+        <div style="font-size: 0.8rem; font-weight: 700; color: #0284C7; text-transform: uppercase;">Diagnóstico Sugerido por IA (2da Opinión)</div>
+        <div style="font-size: 1.2rem; font-weight: 700; color: #0F172A; margin: 0.3rem 0;" id="rptDiagnosisTitle">Sin Hallazgos Patológicos</div>
+        <div style="font-size: 0.85rem; color: #475569;">Grado de Confianza Algorítmica: <strong id="rptConfidence">98.4%</strong></div>
+      </div>
+
+      <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; align-items: center;">
+        <img id="rptFundusImg" src="assets/images/fundus_healthy.png" alt="Fondo de Ojo" style="width: 140px; height: 140px; border-radius: 8px; object-fit: cover; border: 1px solid #CBD5E1;">
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 0.4rem;">Indicaciones y Plan Recomendado</div>
+          <p id="rptRecommendations" style="font-size: 0.88rem; color: #1E293B; line-height: 1.5;">
+            No se observan microaneurismas ni excavación glaucomatosa. Se sugiere control rutinario preventivo en 12 meses.
+          </p>
+        </div>
+      </div>
+
+      <div class="report-footer">
+        <div style="font-size: 0.75rem; color: #64748B; max-width: 320px;">
+          * Este documento constituye una herramienta de asistencia al diagnóstico. La decisión clínica final corresponde exclusivamente al médico oftalmólogo responsable.
+        </div>
+        <div class="signature-box">
+          <div class="signature-line">
+            <strong>Dra. Lucero Manchay Paredes</strong><br>CMP: 84920 | RNE: 39401<br>Centro Oftalmológico V.E.R.
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; text-align: right;">
+        <button class="btn-print" id="btnPrintReport">Imprimir / Guardar en PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT PRINCIPAL -->
+  <script src="js/app.js"></script>
+</body>
+</html>
