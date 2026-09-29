@@ -1,0 +1,337 @@
+image_key,image_name,image_path,camera,original_label,functional_label,label,official_split,experimental_split
+bosch::p10_image2.jpg,P10_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P10_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p11_image1.jpg,P11_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P11_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p11_image2.jpg,P11_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P11_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p12_image1.jpg,P12_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P12_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p12_image2.jpg,P12_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P12_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p13_image1.jpg,P13_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P13_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p13_image2.jpg,P13_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P13_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p14_image1.jpg,P14_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P14_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p14_image2.jpg,P14_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P14_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p15_image1.jpg,P15_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P15_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p15_image2.jpg,P15_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P15_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p16_image1.jpg,P16_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P16_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p16_image2.jpg,P16_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P16_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p17_image1.jpg,P17_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P17_Image1.JPG,Bosch,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+bosch::p17_image2.jpg,P17_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P17_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p18_image1.jpg,P18_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P18_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p18_image2.jpg,P18_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P18_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p19_image1.jpg,P19_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P19_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p19_image2.jpg,P19_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P19_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p20_image1.jpg,P20_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P20_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p20_image2.jpg,P20_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P20_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p21_image1.jpg,P21_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P21_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p21_image2.jpg,P21_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P21_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p22_image1.jpg,P22_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P22_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p22_image2.jpg,P22_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P22_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p23_image1.jpg,P23_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P23_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p23_image2.jpg,P23_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P23_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p24_image1.jpg,P24_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P24_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p24_image2.jpg,P24_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P24_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p25_image1.jpg,P25_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P25_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p25_image2.jpg,P25_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P25_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p26_image1.jpg,P26_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P26_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p26_image2.jpg,P26_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P26_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p27_image1.jpg,P27_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P27_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p27_image2.jpg,P27_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P27_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p28_image1.jpg,P28_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P28_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p28_image2.jpg,P28_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P28_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p29_image1.jpg,P29_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P29_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p29_image2.jpg,P29_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P29_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p30_image1.jpg,P30_Image1.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P30_Image1.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+bosch::p30_image2.jpg,P30_Image2.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Bosch/P30_Image2.JPG,Bosch,NORMAL,LOW_RISK,0,test,test
+forus::100.png,100.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/100.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::101.png,101.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/101.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::102.png,102.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/102.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::103.png,103.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/103.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::104.png,104.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/104.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::105.png,105.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/105.png,Forus,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+forus::106.png,106.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/106.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::107.png,107.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/107.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::108.png,108.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/108.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::109.png,109.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/109.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::110.png,110.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/110.png,Forus,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+forus::111.png,111.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/111.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::112.png,112.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/112.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::113.png,113.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/113.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::114.png,114.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/114.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::115.png,115.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/115.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::116.png,116.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/116.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::117.png,117.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/117.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::118.png,118.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/118.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::119.png,119.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/119.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::120.png,120.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/120.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::121.png,121.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/121.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::122.png,122.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/122.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::123.png,123.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/123.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::124.png,124.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/124.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::125.png,125.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/125.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::126.png,126.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/126.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::96.png,96.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/96.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::97.png,97.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/97.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::98.png,98.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/98.png,Forus,NORMAL,LOW_RISK,0,test,test
+forus::99.png,99.png,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Forus/99.png,Forus,NORMAL,LOW_RISK,0,test,test
+remidio::img_3709.jpg,IMG_3709.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3709.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3710.jpg,IMG_3710.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3710.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3711.jpg,IMG_3711.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3711.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3713.jpg,IMG_3713.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3713.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3714.jpg,IMG_3714.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3714.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3719.jpg,IMG_3719.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3719.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3720.jpg,IMG_3720.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3720.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3727.jpg,IMG_3727.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3727.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3728.jpg,IMG_3728.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3728.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3729.jpg,IMG_3729.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3729.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3730.jpg,IMG_3730.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3730.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3735.jpg,IMG_3735.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3735.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3740.jpg,IMG_3740.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3740.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3743.jpg,IMG_3743.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3743.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3744.jpg,IMG_3744.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3744.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3745.jpg,IMG_3745.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3745.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3746.jpg,IMG_3746.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3746.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3759.jpg,IMG_3759.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3759.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3760.jpg,IMG_3760.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3760.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3763.jpg,IMG_3763.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3763.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3766.jpg,IMG_3766.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3766.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3768.jpg,IMG_3768.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3768.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3770.jpg,IMG_3770.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3770.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3791.jpg,IMG_3791.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3791.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3793.jpg,IMG_3793.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3793.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3797.jpg,IMG_3797.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3797.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3798.jpg,IMG_3798.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3798.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3799.jpg,IMG_3799.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3799.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3800.jpg,IMG_3800.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3800.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3811.jpg,IMG_3811.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3811.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3812.jpg,IMG_3812.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3812.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3814.jpg,IMG_3814.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3814.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3815.jpg,IMG_3815.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3815.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3816.jpg,IMG_3816.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3816.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3818.jpg,IMG_3818.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3818.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3820.jpg,IMG_3820.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3820.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3823.jpg,IMG_3823.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3823.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3832.jpg,IMG_3832.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3832.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3833.jpg,IMG_3833.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3833.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3836.jpg,IMG_3836.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3836.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3837.jpg,IMG_3837.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3837.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3841.jpg,IMG_3841.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3841.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3844.jpg,IMG_3844.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3844.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3849.jpg,IMG_3849.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3849.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3852.jpg,IMG_3852.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3852.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3853.jpg,IMG_3853.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3853.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3854.jpg,IMG_3854.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3854.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3857.jpg,IMG_3857.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3857.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3859.jpg,IMG_3859.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3859.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3881.jpg,IMG_3881.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3881.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3882.jpg,IMG_3882.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3882.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3887.jpg,IMG_3887.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3887.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3888.jpg,IMG_3888.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3888.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3890.jpg,IMG_3890.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3890.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3891.jpg,IMG_3891.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3891.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3893.jpg,IMG_3893.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3893.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3894.jpg,IMG_3894.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3894.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3897.jpg,IMG_3897.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3897.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3898.jpg,IMG_3898.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3898.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3900.jpg,IMG_3900.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3900.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3903.jpg,IMG_3903.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3903.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3905.jpg,IMG_3905.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3905.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3907.jpg,IMG_3907.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3907.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3910.jpg,IMG_3910.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3910.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3911.jpg,IMG_3911.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3911.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3912.jpg,IMG_3912.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3912.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3913.jpg,IMG_3913.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3913.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3915.jpg,IMG_3915.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3915.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3919.jpg,IMG_3919.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3919.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3921.jpg,IMG_3921.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3921.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3922.jpg,IMG_3922.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3922.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3926.jpg,IMG_3926.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3926.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3929.jpg,IMG_3929.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3929.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3930.jpg,IMG_3930.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3930.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3936.jpg,IMG_3936.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3936.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3938.jpg,IMG_3938.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3938.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3939.jpg,IMG_3939.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3939.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3942.jpg,IMG_3942.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3942.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3944.jpg,IMG_3944.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3944.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3945.jpg,IMG_3945.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3945.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3949.jpg,IMG_3949.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3949.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3950.jpg,IMG_3950.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3950.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3952.jpg,IMG_3952.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3952.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3954.jpg,IMG_3954.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3954.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3955.jpg,IMG_3955.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3955.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3961.jpg,IMG_3961.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3961.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3962.jpg,IMG_3962.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3962.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3969.jpg,IMG_3969.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3969.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3971.jpg,IMG_3971.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3971.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3973.jpg,IMG_3973.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3973.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3974.jpg,IMG_3974.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3974.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_3975.jpg,IMG_3975.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3975.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3977.jpg,IMG_3977.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3977.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3978.jpg,IMG_3978.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3978.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3981.jpg,IMG_3981.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3981.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3983.jpg,IMG_3983.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3983.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3984.jpg,IMG_3984.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3984.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3986.jpg,IMG_3986.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3986.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3987.jpg,IMG_3987.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3987.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3988.jpg,IMG_3988.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3988.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3989.jpg,IMG_3989.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3989.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3994.jpg,IMG_3994.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3994.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3995.jpg,IMG_3995.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3995.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_3997.jpg,IMG_3997.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_3997.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4002.jpg,IMG_4002.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4002.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4003.jpg,IMG_4003.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4003.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4004.jpg,IMG_4004.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4004.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4024.jpg,IMG_4024.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4024.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4025.jpg,IMG_4025.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4025.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4032.jpg,IMG_4032.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4032.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4034.jpg,IMG_4034.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4034.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4043.jpg,IMG_4043.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4043.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4046.jpg,IMG_4046.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4046.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4048.jpg,IMG_4048.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4048.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4049.jpg,IMG_4049.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4049.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4058.jpg,IMG_4058.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4058.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4059.jpg,IMG_4059.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4059.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4066.jpg,IMG_4066.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4066.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4070.jpg,IMG_4070.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4070.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4078.jpg,IMG_4078.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4078.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4079.jpg,IMG_4079.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4079.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4099.jpg,IMG_4099.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4099.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4100.jpg,IMG_4100.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4100.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4110.jpg,IMG_4110.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4110.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4111.jpg,IMG_4111.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4111.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4112.jpg,IMG_4112.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4112.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4114.jpg,IMG_4114.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4114.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4129.jpg,IMG_4129.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4129.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4131.jpg,IMG_4131.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4131.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4132.jpg,IMG_4132.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4132.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4133.jpg,IMG_4133.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4133.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4144.jpg,IMG_4144.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4144.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4145.jpg,IMG_4145.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4145.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4150.jpg,IMG_4150.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4150.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4153.jpg,IMG_4153.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4153.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4154.jpg,IMG_4154.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4154.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4155.jpg,IMG_4155.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4155.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4166.jpg,IMG_4166.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4166.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4167.jpg,IMG_4167.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4167.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4169.jpg,IMG_4169.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4169.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4170.jpg,IMG_4170.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4170.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4176.jpg,IMG_4176.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4176.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4177.jpg,IMG_4177.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4177.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4191.jpg,IMG_4191.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4191.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4192.jpg,IMG_4192.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4192.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4198.jpg,IMG_4198.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4198.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4201.jpg,IMG_4201.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4201.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4202.jpg,IMG_4202.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4202.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4203.jpg,IMG_4203.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4203.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4228.jpg,IMG_4228.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4228.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4239.jpg,IMG_4239.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4239.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4240.jpg,IMG_4240.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4240.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4244.jpg,IMG_4244.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4244.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4245.jpg,IMG_4245.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4245.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4253.jpg,IMG_4253.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4253.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4254.jpg,IMG_4254.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4254.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4255.jpg,IMG_4255.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4255.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4256.jpg,IMG_4256.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4256.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4257.jpg,IMG_4257.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4257.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4258.jpg,IMG_4258.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4258.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4396.jpg,IMG_4396.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4396.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4397.jpg,IMG_4397.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4397.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4398.jpg,IMG_4398.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4398.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4399.jpg,IMG_4399.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4399.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4400.jpg,IMG_4400.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4400.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4401.jpg,IMG_4401.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4401.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4402.jpg,IMG_4402.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4402.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4403.jpg,IMG_4403.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4403.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4404.jpg,IMG_4404.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4404.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4405.jpg,IMG_4405.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4405.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4407.jpg,IMG_4407.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4407.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4408.jpg,IMG_4408.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4408.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4409.jpg,IMG_4409.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4409.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4410.jpg,IMG_4410.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4410.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4411.jpg,IMG_4411.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4411.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4412.jpg,IMG_4412.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4412.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4413.jpg,IMG_4413.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4413.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4414.jpg,IMG_4414.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4414.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4415.jpg,IMG_4415.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4415.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4416.jpg,IMG_4416.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4416.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4418.jpg,IMG_4418.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4418.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4420.jpg,IMG_4420.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4420.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4421.jpg,IMG_4421.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4421.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4422.jpg,IMG_4422.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4422.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4423.jpg,IMG_4423.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4423.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4424.jpg,IMG_4424.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4424.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4425.jpg,IMG_4425.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4425.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4426.jpg,IMG_4426.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4426.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4427.jpg,IMG_4427.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4427.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4432.jpg,IMG_4432.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4432.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4433.jpg,IMG_4433.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4433.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4434.jpg,IMG_4434.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4434.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4435.jpg,IMG_4435.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4435.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4436.jpg,IMG_4436.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4436.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4437.jpg,IMG_4437.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4437.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4438.jpg,IMG_4438.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4438.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4439.jpg,IMG_4439.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4439.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4440.jpg,IMG_4440.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4440.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4441.jpg,IMG_4441.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4441.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4442.jpg,IMG_4442.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4442.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4443.jpg,IMG_4443.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4443.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4444.jpg,IMG_4444.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4444.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4445.jpg,IMG_4445.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4445.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4446.jpg,IMG_4446.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4446.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4447.jpg,IMG_4447.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4447.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4448.jpg,IMG_4448.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4448.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4449.jpg,IMG_4449.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4449.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4451.jpg,IMG_4451.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4451.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4452.jpg,IMG_4452.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4452.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4453.jpg,IMG_4453.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4453.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4454.jpg,IMG_4454.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4454.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4455.jpg,IMG_4455.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4455.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4456.jpg,IMG_4456.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4456.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4457.jpg,IMG_4457.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4457.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4458.jpg,IMG_4458.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4458.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4459.jpg,IMG_4459.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4459.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4461.jpg,IMG_4461.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4461.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4462.jpg,IMG_4462.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4462.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4464.jpg,IMG_4464.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4464.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4465.jpg,IMG_4465.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4465.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4466.jpg,IMG_4466.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4466.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4467.jpg,IMG_4467.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4467.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4468.jpg,IMG_4468.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4468.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4469.jpg,IMG_4469.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4469.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4470.jpg,IMG_4470.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4470.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4471.jpg,IMG_4471.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4471.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4472.jpg,IMG_4472.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4472.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4473.jpg,IMG_4473.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4473.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4474.jpg,IMG_4474.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4474.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4475.jpg,IMG_4475.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4475.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4476.jpg,IMG_4476.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4476.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4477.jpg,IMG_4477.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4477.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4478.jpg,IMG_4478.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4478.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4480.jpg,IMG_4480.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4480.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4481.jpg,IMG_4481.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4481.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4482.jpg,IMG_4482.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4482.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4483.jpg,IMG_4483.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4483.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4485.jpg,IMG_4485.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4485.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4486.jpg,IMG_4486.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4486.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4488.jpg,IMG_4488.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4488.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4489.jpg,IMG_4489.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4489.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4491.jpg,IMG_4491.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4491.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4492.jpg,IMG_4492.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4492.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4493.jpg,IMG_4493.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4493.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4494.jpg,IMG_4494.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4494.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4495.jpg,IMG_4495.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4495.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4497.jpg,IMG_4497.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4497.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4501.jpg,IMG_4501.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4501.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4502.jpg,IMG_4502.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4502.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4505.jpg,IMG_4505.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4505.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4506.jpg,IMG_4506.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4506.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4507.jpg,IMG_4507.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4507.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4518.jpg,IMG_4518.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4518.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4520.jpg,IMG_4520.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4520.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4542.jpg,IMG_4542.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4542.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4543.jpg,IMG_4543.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4543.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4544.jpg,IMG_4544.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4544.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4545.jpg,IMG_4545.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4545.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4546.jpg,IMG_4546.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4546.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4547.jpg,IMG_4547.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4547.JPG,Remidio,GLAUCOMA SUSPECT,HIGH_RISK,1,test,test
+remidio::img_4558.jpg,IMG_4558.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4558.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4559.jpg,IMG_4559.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4559.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4560.jpg,IMG_4560.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4560.JPG,Remidio,NORMAL,LOW_RISK,0,test,test
+remidio::img_4561.jpg,IMG_4561.JPG,datasets/glaucoma/chaksu/raw/Test/1.0_Original_Fundus_Images/Remidio/IMG_4561.JPG,Remidio,NORMAL,LOW_RISK,0,test,test

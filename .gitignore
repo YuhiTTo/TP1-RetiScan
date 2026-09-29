@@ -1,23 +1,113 @@
+# =========================================================
 # Python
+# =========================================================
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+
+# Entornos virtuales
 .env
+.env.*
 venv/
 env/
+.venv/
 
+# =========================================================
+# Jupyter
+# =========================================================
+.ipynb_checkpoints/
+
+# =========================================================
 # IDE
+# =========================================================
 .vscode/
 .idea/
 
-# Large dataset raw and processed images (conservar estructura con .gitkeep y manifest)
-# data/raw/**/*.png
-# data/raw/**/*.jpg
-# data/processed/**/*.png
-# data/processed/**/*.jpg
-
-# OS
+# =========================================================
+# Sistema operativo
+# =========================================================
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# =========================================================
+# Datasets
+# =========================================================
+
+# No versionar el dataset original completo
+datasets/**/raw/
+
+# No versionar imágenes de datasets
+datasets/**/*.png
+datasets/**/*.jpg
+datasets/**/*.jpeg
+datasets/**/*.bmp
+datasets/**/*.tif
+datasets/**/*.tiff
+datasets/**/*.webp
+
+# No versionar archivos comprimidos de datasets
+datasets/**/*.zip
+datasets/**/*.rar
+datasets/**/*.7z
+datasets/**/*.tar
+datasets/**/*.gz
+
+# IMPORTANTE:
+# Los CSV/JSON de metadata y splits sí se conservan.
+# Por ejemplo:
+# datasets/glaucoma/chaksu/metadata/chaksu_master.csv
+# datasets/glaucoma/chaksu/metadata/chaksu_splits.csv
+# datasets/glaucoma/chaksu/metadata/chaksu_train.csv
+# datasets/glaucoma/chaksu/metadata/chaksu_validation.csv
+# datasets/glaucoma/chaksu/metadata/chaksu_test.csv
+
+
+# =========================================================
+# Modelos entrenados
+# =========================================================
+
+# NO ignorar archivos .keras porque serán versionados con Git LFS.
+# *.keras
+
+# Si en algún momento generamos otros formatos muy pesados
+# y decidimos no versionarlos, se pueden activar:
+# *.h5
+# *.hdf5
+# *.onnx
+# *.pb
+
+
+# =========================================================
+# TensorFlow / entrenamiento
+# =========================================================
+logs/
+tensorboard/
+**/logs/
+**/tensorboard/
+
+# Archivos temporales de entrenamiento
+*.tmp
+*.temp
+
+# =========================================================
+# Python / herramientas
+# =========================================================
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# =========================================================
+# Cachés
+# =========================================================
+.cache/
+**/.cache/
+
+# =========================================================
+# Archivos temporales del sistema/editor
+# =========================================================
+*.swp
+*.swo
+*~

@@ -1,0 +1,16 @@
+Configuración / Métrica,Resultado
+Arquitectura final,ResNet50V2
+Dataset,Chákṣu
+Resolución,384 × 384
+Threshold,0.100155
+ROC-AUC Test,0.819539
+Average Precision Test,0.422710
+Sensibilidad Test,0.745098
+Especificidad Test,0.740351
+Balanced Accuracy Test,0.742724
+Precision Test,0.339286
+F1-Score Test,0.466258
+TN,211
+FP,74
+FN,13
+TP,38

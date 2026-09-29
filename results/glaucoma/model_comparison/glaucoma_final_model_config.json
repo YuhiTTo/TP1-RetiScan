@@ -1,0 +1,18 @@
+{
+    "model_name": "ResNet50V2",
+    "model_path": "/mnt/c/Users/SeuNg720/Documents/TP1-RetiScan/models/glaucoma/resnet50v2/resnet50v2_finetune_best.keras",
+    "decision_threshold": 0.10015483,
+    "threshold_selection_criterion": "max_balanced_accuracy_validation",
+    "validation_samples": 202,
+    "validation_roc_auc": 0.8874074074074074,
+    "validation_average_precision": 0.5449957959339627,
+    "validation_sensitivity": 0.9629629629629629,
+    "validation_specificity": 0.7028571428571428,
+    "validation_balanced_accuracy": 0.8329100529100528,
+    "validation_precision": 0.3333333333333333,
+    "validation_f1": 0.49523809523809526,
+    "validation_tn": 123,
+    "validation_fp": 52,
+    "validation_fn": 1,
+    "validation_tp": 26
+}

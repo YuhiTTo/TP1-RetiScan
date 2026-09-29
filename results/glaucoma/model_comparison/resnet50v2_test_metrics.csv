@@ -1,0 +1,14 @@
+Métrica,Valor
+Threshold congelado,0.10015483
+ROC-AUC,0.8195390436876505
+Average Precision,0.4227102290190573
+Accuracy,0.7410714285714286
+Sensibilidad (Recall),0.7450980392156863
+Especificidad,0.7403508771929824
+Balanced Accuracy,0.7427244582043344
+Precision,0.3392857142857143
+F1-Score,0.4662576687116564
+Verdaderos Negativos (TN),211.0
+Falsos Positivos (FP),74.0
+Falsos Negativos (FN),13.0
+Verdaderos Positivos (TP),38.0
