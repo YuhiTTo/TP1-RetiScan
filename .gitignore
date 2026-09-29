@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Backend virtual environment
+retina-support-backend/venv/
+retina-support-backend/.venv/
+
+# Environment variables
+retina-support-backend/.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
