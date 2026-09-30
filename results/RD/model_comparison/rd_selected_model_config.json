@@ -1,0 +1,31 @@
+{
+    "selected_architecture": "EfficientNetB3+SE",
+    "checkpoint_phase": "Fine-Tuning",
+    "checkpoint_path": "/mnt/c/Users/SeuNg720/Documents/TP1-RetiScan/models/RD/efficientnetb3_se/efficientnetb3_se_finetune_best.keras",
+    "selection_criteria": "Highest Validation QWK and lower parameter count",
+    "validation_metrics": {
+        "QWK": 0.877946324387398,
+        "Macro F1": 0.6185002360888479,
+        "Accuracy": 0.780114722753346,
+        "Macro Precision": 0.6434989931858011,
+        "Macro Recall": 0.648836805192418
+    },
+    "qwk_difference_vs_resnet": 0.010329632482447781,
+    "qwk_difference_ci95": [
+        -0.015200457375571899,
+        0.03651496216280089
+    ],
+    "bootstrap_repetitions": 5000,
+    "test_used_for_selection": false,
+    "final_test_evaluation": {
+        "images": 524,
+        "QWK": 0.8601606111056703,
+        "Macro F1": 0.6266498251407822,
+        "Accuracy": 0.7767175572519084,
+        "Macro Precision": 0.668082863107401,
+        "Macro Recall": 0.6604664203845789,
+        "bootstrap_repetitions": 5000,
+        "confidence_level": 0.95,
+        "used_for_model_selection": false
+    }
+}

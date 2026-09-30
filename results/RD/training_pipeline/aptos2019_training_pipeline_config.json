@@ -1,0 +1,22 @@
+{
+    "dataset": "APTOS 2019",
+    "num_classes": 5,
+    "image_size": [
+        384,
+        384
+    ],
+    "batch_size": 8,
+    "random_seed": 42,
+    "train_images": 2440,
+    "validation_images": 523,
+    "test_images": 524,
+    "class_weights": {
+        "0": 0.38822593476531425,
+        "1": 2.0677966101694913,
+        "2": 0.7565891472868217,
+        "3": 4.135593220338983,
+        "4": 2.652173913043478
+    },
+    "primary_metric": "Quadratic Weighted Kappa (QWK)",
+    "secondary_metric": "Macro F1-Score"
+}

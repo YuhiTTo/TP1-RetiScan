@@ -1,0 +1,39 @@
+{
+    "total_original": 3662,
+    "total_clean": 3487,
+    "total_excluded": 175,
+    "exact_duplicate_groups": 123,
+    "exact_consistent_groups": 93,
+    "exact_conflicting_groups": 30,
+    "exact_conflicting_images": 62,
+    "confirmed_near_duplicate_pairs": 11,
+    "confirmed_near_duplicate_groups": 9,
+    "near_duplicate_exclusions": 17,
+    "classes": {
+        "0": {
+            "name": "Sin RD",
+            "count": 1796,
+            "percentage": 51.5055921995985
+        },
+        "1": {
+            "name": "Leve",
+            "count": 338,
+            "percentage": 9.693145970748494
+        },
+        "2": {
+            "name": "Moderada",
+            "count": 921,
+            "percentage": 26.412388872956694
+        },
+        "3": {
+            "name": "Severa",
+            "count": 168,
+            "percentage": 4.817895038715228
+        },
+        "4": {
+            "name": "Proliferativa",
+            "count": 264,
+            "percentage": 7.570977917981073
+        }
+    }
+}

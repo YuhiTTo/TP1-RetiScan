@@ -1,0 +1,16 @@
+{
+    "random_seed": 42,
+    "stratification_variable": "diagnosis",
+    "split_strategy": "stratified",
+    "requested_proportions": {
+        "train": 0.7,
+        "validation": 0.15,
+        "test": 0.15
+    },
+    "actual_counts": {
+        "train": 2440,
+        "validation": 523,
+        "test": 524
+    },
+    "test_usage": "Final evaluation only"
+}

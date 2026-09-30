@@ -1,0 +1,25 @@
+{
+    "dataset": "APTOS 2019",
+    "input_images": 3487,
+    "output_size": [
+        384,
+        384
+    ],
+    "color_mode": "RGB",
+    "fov_threshold": 10,
+    "morphology": {
+        "operation": "closing",
+        "kernel": "ellipse",
+        "kernel_size": 15
+    },
+    "region_selection": "largest_external_contour",
+    "convex_hull": true,
+    "margin_ratio": 0.02,
+    "square_padding": true,
+    "padding_value": 0,
+    "resize_interpolation": "INTER_AREA",
+    "data_augmentation": false,
+    "train_images": 2440,
+    "validation_images": 523,
+    "test_images": 524
+}

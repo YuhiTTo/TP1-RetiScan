@@ -1,0 +1,10 @@
+group_id,cantidad_imagenes,ids,diagnosticos,cantidad_diagnosticos,consistente
+1,2,"['3435fd8675a2', 'c62585bd68fb']","[3, 4]",2,False
+2,2,"['2f284b6a1940', 'bb5083fae98f']","[3, 4]",2,False
+3,2,"['16ce555748d8', '4d9fc85a8259']","[3, 4]",2,False
+4,2,"['2b48daf24be0', '9a94e0316ee3']",[3],1,True
+5,3,"['0243404e8a00', '3b018e8b7303', '3ddb86eb530e']","[2, 3, 4]",3,False
+6,2,"['cd93a472e5cd', 'd035c2bd9104']","[3, 4]",2,False
+7,2,"['b019a49787c1', 'e1fb532f55df']",[3],1,True
+8,2,"['33778d136069', '4ccfa0b4e96c']","[3, 4]",2,False
+9,2,"['8688f3d0fcaf', 'bfefa7344e7d']","[3, 4]",2,False
