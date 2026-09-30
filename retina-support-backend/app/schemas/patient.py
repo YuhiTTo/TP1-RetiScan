@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
 class PatientCreate(BaseModel):
@@ -15,15 +15,22 @@ class PatientCreate(BaseModel):
         max_length=20
     )
 
-    correo: str | None = Field(
-        default=None,
-        max_length=255
-    )
+    correo: EmailStr | None = None
 
     direccion: str | None = Field(
         default=None,
         max_length=200
     )
+
+    @field_validator("fecha_nacimiento")
+    @classmethod
+    def validate_birth_date(cls, value: date) -> date:
+        if value > date.today():
+            raise ValueError(
+                "La fecha de nacimiento no puede ser futura."
+            )
+
+        return value
 
 
 class PatientResponse(BaseModel):

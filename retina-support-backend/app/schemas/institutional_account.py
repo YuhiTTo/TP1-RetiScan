@@ -1,5 +1,4 @@
-from pydantic import BaseModel, Field
-
+from pydantic import BaseModel, EmailStr, Field
 
 class EstablishmentCreate(BaseModel):
     codigo_institucional: str = Field(min_length=2, max_length=50)
@@ -11,7 +10,7 @@ class EstablishmentCreate(BaseModel):
 
 
 class InstitutionalAccountData(BaseModel):
-    correo_electronico: str = Field(min_length=5, max_length=255)
+    correo_electronico: EmailStr
     password: str = Field(min_length=8, max_length=128)
     nombre_mostrado: str | None = Field(
         default=None,
