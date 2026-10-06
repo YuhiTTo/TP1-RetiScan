@@ -25,7 +25,7 @@ Desktop.ini
 
 # Datasets
 
-# No versionar el dataset original completo
+# No versionar los datasets originales completos
 datasets/**/raw/
 
 # No versionar imágenes de datasets
@@ -37,16 +37,23 @@ datasets/**/*.tif
 datasets/**/*.tiff
 datasets/**/*.webp
 
-# No versionar archivos comprimidos de datasets
+# No versionar archivos comprimidos
 datasets/**/*.zip
 datasets/**/*.rar
 datasets/**/*.7z
 datasets/**/*.tar
 datasets/**/*.gz
 
+# No versionar documentación original de los datasets
+datasets/**/metadata/*.pdf
+
 # IMPORTANTE:
-# Los CSV/JSON de metadata y splits sí se conservan.
-# Por ejemplo:
+# Los archivos pequeños necesarios para reproducibilidad
+# (CSV/JSON de metadata, splits y configuraciones)
+# sí se conservan en Git.
+#
+# Ejemplos:
+# datasets/RD/.../*.csv
 # datasets/glaucoma/chaksu/metadata/chaksu_master.csv
 # datasets/glaucoma/chaksu/metadata/chaksu_splits.csv
 # datasets/glaucoma/chaksu/metadata/chaksu_train.csv
@@ -56,11 +63,11 @@ datasets/**/*.gz
 
 # Modelos entrenados
 
-# NO ignorar archivos .keras porque serán versionados con Git LFS.
+# Los .keras SÍ se versionan mediante Git LFS.
+# No agregar:
 # *.keras
 
-# Si en algún momento generamos otros formatos muy pesados
-# y decidimos no versionarlos, se pueden activar:
+# Otros formatos pesados pueden ignorarse si se utilizan:
 # *.h5
 # *.hdf5
 # *.onnx
