@@ -81,6 +81,23 @@ def find_patients(
         search=search
     )
 
+def get_patient(
+    db: Session,
+    establishment_id: int,
+    patient_id: int
+) -> Patient:
+
+    patient = get_patient_by_id(
+        db=db,
+        establishment_id=establishment_id,
+        patient_id=patient_id
+    )
+
+    if patient is None:
+        raise PatientNotFoundError()
+
+    return patient
+
 def update_patient(
     db: Session,
     establishment_id: int,

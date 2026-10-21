@@ -8,7 +8,7 @@ from app.api.dependencies import (
 )
 from app.models.account import Account
 from app.schemas.patient import (PatientCreate, PatientResponse, PatientUpdate)
-from app.services.patient_service import (PatientAlreadyExistsError, PatientNotFoundError, create_patient, find_patients, update_patient)
+from app.services.patient_service import (PatientAlreadyExistsError, PatientNotFoundError, create_patient, find_patients, get_patient, update_patient)
 
 
 router = APIRouter(
@@ -82,6 +82,36 @@ def search_registered_patients(
     )
 
     return patients
+
+@router.get(
+    "/{patient_id}",
+    response_model=PatientResponse,
+    status_code=status.HTTP_200_OK
+)
+def get_registered_patient(
+    patient_id: int,
+    db: Session = Depends(get_db),
+    institutional_account: Account = Depends(
+        require_institutional_account
+    )
+):
+
+    try:
+        patient = get_patient(
+            db=db,
+            establishment_id=(
+                institutional_account.id_establecimiento
+            ),
+            patient_id=patient_id
+        )
+
+    except PatientNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="El paciente no fue encontrado."
+        )
+
+    return patient
 
 @router.patch(
     "/{patient_id}",
