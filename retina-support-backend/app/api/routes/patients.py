@@ -7,8 +7,8 @@ from app.api.dependencies import (
     require_institutional_account
 )
 from app.models.account import Account
-from app.schemas.patient import PatientCreate, PatientResponse
-from app.services.patient_service import (PatientAlreadyExistsError,create_patient,find_patients)
+from app.schemas.patient import (PatientCreate, PatientResponse, PatientUpdate)
+from app.services.patient_service import (PatientAlreadyExistsError, PatientNotFoundError, create_patient, find_patients, update_patient)
 
 
 router = APIRouter(
@@ -82,3 +82,56 @@ def search_registered_patients(
     )
 
     return patients
+
+@router.patch(
+    "/{patient_id}",
+    response_model=PatientResponse,
+    status_code=status.HTTP_200_OK
+)
+def update_registered_patient(
+    patient_id: int,
+    data: PatientUpdate,
+    db: Session = Depends(get_db),
+    institutional_account: Account = Depends(
+        require_institutional_account
+    )
+):
+
+    try:
+        patient = update_patient(
+            db=db,
+            establishment_id=(
+                institutional_account.id_establecimiento
+            ),
+            patient_id=patient_id,
+            data=data
+        )
+
+    except PatientNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="El paciente no fue encontrado."
+        )
+
+    except PatientAlreadyExistsError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "Ya existe otro paciente con ese número "
+                "de documento en el establecimiento."
+            )
+        )
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(error)
+        )
+
+    except IntegrityError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="No se pudo actualizar la información del paciente."
+        )
+
+    return patient

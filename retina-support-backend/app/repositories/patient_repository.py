@@ -19,6 +19,21 @@ def get_patient_by_document(
         statement
     ).scalar_one_or_none()
 
+def get_patient_by_id(
+    db: Session,
+    establishment_id: int,
+    patient_id: int
+) -> Patient | None:
+
+    statement = select(Patient).where(
+        Patient.id_paciente == patient_id,
+        Patient.id_establecimiento == establishment_id
+    )
+
+    return db.execute(
+        statement
+    ).scalar_one_or_none()
+
 def search_patients(
     db: Session,
     establishment_id: int,
