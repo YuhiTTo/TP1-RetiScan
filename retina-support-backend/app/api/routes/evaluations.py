@@ -14,6 +14,7 @@ from app.schemas.evaluation import (
 from app.services.evaluation_service import (
     EvaluationDoctorNotFoundError,
     EvaluationPatientNotFoundError,
+    get_patient_evaluations,
     create_evaluation
 )
 
@@ -70,3 +71,26 @@ def register_evaluation(
         )
 
     return evaluation
+
+@router.get(
+    "/{patient_id}/evaluations",
+    response_model=list[EvaluationResponse],
+    status_code=status.HTTP_200_OK
+)
+def list_patient_evaluations(
+    patient_id: int,
+    db: Session = Depends(get_db),
+    current_account: Account = Depends(require_institutional_account)
+):
+    try:
+        return get_patient_evaluations(
+            db=db,
+            establishment_id=current_account.id_establecimiento,
+            patient_id=patient_id
+        )
+
+    except EvaluationPatientNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Paciente no encontrado."
+        )

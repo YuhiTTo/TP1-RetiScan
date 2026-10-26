@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.models.evaluation import RetinalEvaluation
 from app.repositories.doctor_repository import get_doctor_by_full_name
 from app.repositories.patient_repository import get_patient_by_id
+from app.repositories.evaluation_repository import get_evaluations_by_patient
 from app.schemas.evaluation import EvaluationCreate
 
 
@@ -68,3 +69,24 @@ def create_evaluation(
     except IntegrityError:
         db.rollback()
         raise
+
+def get_patient_evaluations(
+    db: Session,
+    establishment_id: int,
+    patient_id: int
+) -> list[RetinalEvaluation]:
+
+    patient = get_patient_by_id(
+        db=db,
+        establishment_id=establishment_id,
+        patient_id=patient_id
+    )
+
+    if patient is None:
+        raise EvaluationPatientNotFoundError()
+
+    return get_evaluations_by_patient(
+        db=db,
+        establishment_id=establishment_id,
+        patient_id=patient_id
+    )
