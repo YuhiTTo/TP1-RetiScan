@@ -25,6 +25,9 @@ class RetinographyUnreadableError(Exception):
     pass
 
 
+class RetinographyUnsupportedFormatError(Exception):
+    pass
+
 def upload_evaluation_retinography(
     db: Session,
     establishment_id: int,
@@ -33,9 +36,7 @@ def upload_evaluation_retinography(
     content_type: str | None,
     content: bytes
 ) -> Retinography:
-
-    # Comprobar que la evaluación existe y pertenece
-    # al establecimiento autenticado.
+    
     evaluation = get_evaluation_by_id(
         db=db,
         establishment_id=establishment_id,
@@ -48,26 +49,54 @@ def upload_evaluation_retinography(
     if not content:
         raise RetinographyEmptyFileError()
 
-    # Obtener dimensiones básicas de la imagen.
+    original_filename = Path(filename).name
+
+    extension = (
+        Path(original_filename)
+        .suffix
+        .lower()
+        .lstrip(".")
+    )
+
+    allowed_extensions = {
+        "jpg",
+        "jpeg",
+        "png"
+    }
+
+    if extension not in allowed_extensions:
+        raise RetinographyUnsupportedFormatError()
+
     try:
         with Image.open(BytesIO(content)) as image:
+            image.verify()
+
+        with Image.open(BytesIO(content)) as image:
             width, height = image.size
+
+            detected_format = (
+                image.format.lower()
+                if image.format
+                else ""
+            )
 
     except Exception as error:
         raise RetinographyUnreadableError() from error
 
-    original_filename = Path(filename).name
+    allowed_formats = {
+        "jpeg",
+        "png"
+    }
 
-    extension = Path(original_filename).suffix.lower().lstrip(".")
-
-    # Subir o reemplazar el objeto en S3.
+    if detected_format not in allowed_formats:
+        raise RetinographyUnsupportedFormatError()
+    
     s3_path = upload_retinography(
         content=content,
         evaluation_id=evaluation_id,
         content_type=content_type
     )
-
-    # Una evaluación solamente puede tener una retinografía.
+    
     retinography = get_retinography_by_evaluation(
         db=db,
         evaluation_id=evaluation_id
@@ -83,7 +112,7 @@ def upload_evaluation_retinography(
             ancho_px=width,
             alto_px=height,
             ruta_original_s3=s3_path,
-            estado_validacion="PENDIENTE",
+            estado_validacion="VALIDADA",
             calidad_imagen=None,
             estado="CARGADA"
         )
@@ -91,8 +120,7 @@ def upload_evaluation_retinography(
         db.add(retinography)
 
     else:
-
-        # US-10: reemplazo de la imagen existente.
+        
         retinography.nombre_archivo = original_filename
         retinography.formato = extension
         retinography.tamano_bytes = len(content)
@@ -100,8 +128,7 @@ def upload_evaluation_retinography(
         retinography.alto_px = height
         retinography.ruta_original_s3 = s3_path
 
-        # Al reemplazar la imagen se reinicia su validación.
-        retinography.estado_validacion = "PENDIENTE"
+        retinography.estado_validacion = "VALIDADA"
         retinography.calidad_imagen = None
         retinography.estado = "CARGADA"
 

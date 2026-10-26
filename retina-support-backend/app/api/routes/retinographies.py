@@ -12,6 +12,7 @@ from app.services.retinography_service import (
     RetinographyEmptyFileError,
     RetinographyEvaluationNotFoundError,
     RetinographyUnreadableError,
+    RetinographyUnsupportedFormatError,
     upload_evaluation_retinography
 )
 from app.services.storage_service import (
@@ -64,6 +65,15 @@ async def upload_retinography(
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="La retinografía seleccionada está vacía."
+        )
+
+    except RetinographyUnsupportedFormatError:
+        raise HTTPException(
+            status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+            detail=(
+                "Formato de retinografía no admitido. "
+                "Utilice JPG, JPEG o PNG."
+            )
         )
 
     except RetinographyUnreadableError:
