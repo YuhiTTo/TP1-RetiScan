@@ -1,0 +1,22 @@
+{
+    "diabetic_retinopathy": {
+        "review_threshold": 0.8300000000000001,
+        "confidence_type": "calibrated_predicted_class_probability",
+        "validation_samples": 523,
+        "validation_errors": 115,
+        "reviewed_cases": 265,
+        "review_rate": 0.5066921606118547,
+        "error_recall": 0.9130434782608695,
+        "accepted_accuracy": 0.9612403100775194
+    },
+    "glaucoma": {
+        "review_threshold": 0.29,
+        "confidence_type": "normalized_decision_distance",
+        "validation_samples": 202,
+        "validation_errors": 54,
+        "reviewed_cases": 70,
+        "review_rate": 0.3465346534653465,
+        "error_recall": 0.8518518518518519,
+        "accepted_accuracy": 0.9393939393939394
+    }
+}

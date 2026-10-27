@@ -1,0 +1,8 @@
+fastapi==0.162.0
+uvicorn==0.54.0
+tensorflow==2.21.0
+numpy==2.5.3
+opencv-python==5.0.0.93
+boto3==1.43.119
+pydantic-settings==2.16.1
+

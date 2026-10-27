@@ -1,0 +1,16 @@
+{
+    "task": "diabetic_retinopathy",
+    "model": "EfficientNetB3+SE Fine-Tuning",
+    "method": "temperature_scaling",
+    "temperature": 1.1019132499924953,
+    "validation_samples": 523,
+    "nll_before": 0.5769579096964196,
+    "nll_after": 0.5749327877370469,
+    "classes": {
+        "0": "Sin indicios de Retinopatía Diabética",
+        "1": "Leve",
+        "2": "Moderada",
+        "3": "Severa",
+        "4": "Proliferativa"
+    }
+}
