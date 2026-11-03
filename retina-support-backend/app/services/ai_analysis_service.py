@@ -14,6 +14,7 @@ from app.repositories.retinography_repository import (
 from app.services.ai_client_service import (
     AIServiceAnalysisError,
     AIServiceConnectionError,
+    AIServicePreprocessingError,
     request_ai_analysis
 )
 
@@ -33,6 +34,8 @@ class AIModelConfigurationError(Exception):
 class AIAnalysisExecutionError(Exception):
     pass
 
+class AIAnalysisPreprocessingError(Exception):
+    pass
 
 def _get_active_models(
     db: Session
@@ -141,6 +144,32 @@ def run_ai_analysis(
             evaluation_id=evaluation_id,
             s3_path=retinography.ruta_original_s3
         )
+
+    except AIServicePreprocessingError as error:
+
+        now = datetime.now()
+        error_detail = str(error)[:1000]
+
+        analysis.estado = "ERROR"
+        analysis.fecha_fin = now
+
+        rd_execution.estado = "ERROR"
+        rd_execution.fecha_fin = now
+        rd_execution.detalle_error = (
+            error_detail
+        )
+
+        glaucoma_execution.estado = "ERROR"
+        glaucoma_execution.fecha_fin = now
+        glaucoma_execution.detalle_error = (
+            error_detail
+        )
+
+        db.commit()
+
+        raise AIAnalysisPreprocessingError(
+            error_detail
+        ) from error
 
     except (
         AIServiceConnectionError,

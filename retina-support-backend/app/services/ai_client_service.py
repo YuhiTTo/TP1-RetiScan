@@ -12,6 +12,8 @@ class AIServiceConnectionError(Exception):
 class AIServiceAnalysisError(Exception):
     pass
 
+class AIServicePreprocessingError(Exception):
+    pass
 
 def request_ai_analysis(
     evaluation_id: int,
@@ -55,6 +57,29 @@ def request_ai_analysis(
             "utf-8",
             errors="replace"
         )
+
+        if error.code == 422:
+
+            try:
+                parsed_detail = json.loads(
+                    detail
+                )
+
+                message = parsed_detail.get(
+                    "detail",
+                    "No se pudo preparar la "
+                    "retinografía para el análisis."
+                )
+
+            except json.JSONDecodeError:
+                message = (
+                    "No se pudo preparar la "
+                    "retinografía para el análisis."
+                )
+
+            raise AIServicePreprocessingError(
+                message
+            ) from error
 
         raise AIServiceAnalysisError(
             detail

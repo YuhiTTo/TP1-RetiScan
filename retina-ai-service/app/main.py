@@ -5,7 +5,11 @@ from app.schemas.analysis import (
     AnalysisResponse,
     ModelResult,
 )
-from app.services.inference_service import predict_retiscan
+from app.services.inference_service import (
+    RetinalPreprocessingError,
+    predict_retiscan,
+)
+
 from app.services.storage_service import (
     StorageDownloadError,
     download_retinography,
@@ -58,7 +62,7 @@ def analyze_retinography(
             )
         )
 
-    except ValueError as error:
+    except RetinalPreprocessingError as error:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=str(error)

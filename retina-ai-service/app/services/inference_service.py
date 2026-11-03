@@ -2,15 +2,23 @@ from app.services.preprocessing_service import preprocess_retinal_fov
 from app.services.rd_inference_service import predict_rd
 from app.services.glaucoma_inference_service import predict_glaucoma
 
+class RetinalPreprocessingError(Exception):
+    pass
 
 def predict_retiscan(
     content: bytes
 ) -> dict:
 
-    # Si el preprocesamiento falla, se detiene todo el flujo.
-    processed_rgb = preprocess_retinal_fov(
-        content
-    )
+    try:
+        processed_rgb = preprocess_retinal_fov(
+            content
+        )
+
+    except Exception as error:
+        raise RetinalPreprocessingError(
+            "No se pudo preparar la retinografía "
+            "para el análisis."
+        ) from error
 
     try:
         rd_data = predict_rd(
