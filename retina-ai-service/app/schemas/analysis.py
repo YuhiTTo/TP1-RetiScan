@@ -7,14 +7,26 @@ class AnalysisRequest(BaseModel):
 
 
 class ModelResult(BaseModel):
-    resultado: str
-    confianza: float = Field(ge=0.0, le=1.0)
-    requiere_revision: bool
+    estado: str
+
+    resultado: str | None = None
+
+    confianza: float | None = Field(
+        default=None,
+        ge=0.0,
+        le=1.0
+    )
+
+    requiere_revision: bool = False
+
+    detalle_error: str | None = None
 
 
 class AnalysisResponse(BaseModel):
     id_evaluacion: int
     estado: str
+
     retinopatia_diabetica: ModelResult
     glaucoma: ModelResult
+
     requiere_revision: bool

@@ -74,16 +74,30 @@ def analyze_retinography(
 
     return AnalysisResponse(
         id_evaluacion=request.id_evaluacion,
-        estado="COMPLETADO",
+        estado=result["status"],
         retinopatia_diabetica=ModelResult(
+            estado=rd_result["estado"],
             resultado=rd_result["label"],
             confianza=rd_result["confidence"],
-            requiere_revision=rd_result["requires_review"],
+            requiere_revision=rd_result[
+                "requires_review"
+            ],
+            detalle_error=rd_result[
+                "detail_error"
+            ],
         ),
         glaucoma=ModelResult(
+            estado=glaucoma_result["estado"],
             resultado=glaucoma_result["label"],
-            confianza=glaucoma_result["confidence"],
-            requiere_revision=glaucoma_result["requires_review"],
+            confianza=glaucoma_result[
+                "confidence"
+            ],
+            requiere_revision=glaucoma_result[
+                "requires_review"
+            ],
+            detalle_error=glaucoma_result[
+                "detail_error"
+            ],
         ),
         requiere_revision=result[
             "requires_review"

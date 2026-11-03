@@ -170,6 +170,7 @@ def run_ai_analysis(
         ) from error
 
     try:
+
         rd_data = response[
             "retinopatia_diabetica"
         ]
@@ -178,27 +179,43 @@ def run_ai_analysis(
             "glaucoma"
         ]
 
-        rd_result = AIResult(
-            id_ejecucion=(
-                rd_execution.id_ejecucion
-            ),
-            resultado=rd_data["resultado"],
-            nivel_confianza=rd_data[
-                "confianza"
-            ]
-        )
+        rd_status = rd_data[
+            "estado"
+        ]
 
-        glaucoma_result = AIResult(
-            id_ejecucion=(
-                glaucoma_execution.id_ejecucion
-            ),
-            resultado=glaucoma_data[
-                "resultado"
-            ],
-            nivel_confianza=glaucoma_data[
-                "confianza"
-            ]
-        )
+        glaucoma_status = glaucoma_data[
+            "estado"
+        ]
+
+        if rd_status not in {
+            "COMPLETADO",
+            "ERROR"
+        }:
+            raise ValueError()
+
+        if glaucoma_status not in {
+            "COMPLETADO",
+            "ERROR"
+        }:
+            raise ValueError()
+
+        if (
+            rd_status == "COMPLETADO"
+            and (
+                rd_data.get("resultado") is None
+                or rd_data.get("confianza") is None
+            )
+        ):
+            raise ValueError()
+
+        if (
+            glaucoma_status == "COMPLETADO"
+            and (
+                glaucoma_data.get("resultado") is None
+                or glaucoma_data.get("confianza") is None
+            )
+        ):
+            raise ValueError()
 
     except (
         KeyError,
@@ -232,25 +249,87 @@ def run_ai_analysis(
 
     now = datetime.now()
 
-    rd_execution.estado = "COMPLETADO"
+    rd_execution.estado = rd_status
     rd_execution.fecha_fin = now
 
-    glaucoma_execution.estado = "COMPLETADO"
+    rd_execution.detalle_error = (
+        rd_data.get("detalle_error")
+        if rd_status == "ERROR"
+        else None
+    )
+
+    glaucoma_execution.estado = (
+        glaucoma_status
+    )
     glaucoma_execution.fecha_fin = now
 
-    analysis.estado = "COMPLETADO"
+    glaucoma_execution.detalle_error = (
+        glaucoma_data.get("detalle_error")
+        if glaucoma_status == "ERROR"
+        else None
+    )
+
+    if (
+        rd_status == "COMPLETADO"
+        and glaucoma_status == "COMPLETADO"
+    ):
+        analysis.estado = "COMPLETADO"
+
+    elif (
+        rd_status == "COMPLETADO"
+        or glaucoma_status == "COMPLETADO"
+    ):
+        analysis.estado = "PARCIAL"
+
+    else:
+        analysis.estado = "ERROR"
+
     analysis.fecha_fin = now
 
-    db.add_all([
-        rd_result,
-        glaucoma_result
-    ])
+    rd_result = None
+    glaucoma_result = None
+
+    if rd_status == "COMPLETADO":
+
+        rd_result = AIResult(
+            id_ejecucion=(
+                rd_execution.id_ejecucion
+            ),
+            resultado=rd_data[
+                "resultado"
+            ],
+            nivel_confianza=rd_data[
+                "confianza"
+            ]
+        )
+
+        db.add(rd_result)
+
+    if glaucoma_status == "COMPLETADO":
+
+        glaucoma_result = AIResult(
+            id_ejecucion=(
+                glaucoma_execution.id_ejecucion
+            ),
+            resultado=glaucoma_data[
+                "resultado"
+            ],
+            nivel_confianza=glaucoma_data[
+                "confianza"
+            ]
+        )
+
+        db.add(glaucoma_result)
 
     db.commit()
 
     db.refresh(analysis)
-    db.refresh(rd_result)
-    db.refresh(glaucoma_result)
+
+    if rd_result is not None:
+        db.refresh(rd_result)
+
+    if glaucoma_result is not None:
+        db.refresh(glaucoma_result)
 
     return {
         "id_analisis": (
@@ -258,22 +337,55 @@ def run_ai_analysis(
         ),
         "id_evaluacion": evaluation_id,
         "estado": analysis.estado,
+
         "retinopatia_diabetica": {
-            "resultado": rd_result.resultado,
-            "confianza": rd_result.nivel_confianza,
-            "requiere_revision": rd_data.get(
-                "requiere_revision",
-                False
+            "estado": rd_execution.estado,
+            "resultado": (
+                rd_result.resultado
+                if rd_result is not None
+                else None
+            ),
+            "confianza": (
+                rd_result.nivel_confianza
+                if rd_result is not None
+                else None
+            ),
+            "requiere_revision": (
+                rd_data.get(
+                    "requiere_revision",
+                    False
+                )
+            ),
+            "detalle_error": (
+                rd_execution.detalle_error
             )
         },
+
         "glaucoma": {
-            "resultado": glaucoma_result.resultado,
-            "confianza": glaucoma_result.nivel_confianza,
-            "requiere_revision": glaucoma_data.get(
-                "requiere_revision",
-                False
+            "estado": (
+                glaucoma_execution.estado
+            ),
+            "resultado": (
+                glaucoma_result.resultado
+                if glaucoma_result is not None
+                else None
+            ),
+            "confianza": (
+                glaucoma_result.nivel_confianza
+                if glaucoma_result is not None
+                else None
+            ),
+            "requiere_revision": (
+                glaucoma_data.get(
+                    "requiere_revision",
+                    False
+                )
+            ),
+            "detalle_error": (
+                glaucoma_execution.detalle_error
             )
         },
+
         "requiere_revision": response.get(
             "requiere_revision",
             False
