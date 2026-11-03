@@ -78,10 +78,12 @@ def analyze_retinography(
         retinopatia_diabetica=ModelResult(
             resultado=rd_result["label"],
             confianza=rd_result["confidence"],
+            requiere_revision=rd_result["requires_review"],
         ),
         glaucoma=ModelResult(
             resultado=glaucoma_result["label"],
             confianza=glaucoma_result["confidence"],
+            requiere_revision=glaucoma_result["requires_review"],
         ),
         requiere_revision=result[
             "requires_review"

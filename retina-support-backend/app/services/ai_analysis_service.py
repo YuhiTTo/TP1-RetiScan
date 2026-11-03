@@ -259,19 +259,19 @@ def run_ai_analysis(
         "id_evaluacion": evaluation_id,
         "estado": analysis.estado,
         "retinopatia_diabetica": {
-            "resultado": (
-                rd_result.resultado
-            ),
-            "confianza": (
-                rd_result.nivel_confianza
+            "resultado": rd_result.resultado,
+            "confianza": rd_result.nivel_confianza,
+            "requiere_revision": rd_data.get(
+                "requiere_revision",
+                False
             )
         },
         "glaucoma": {
-            "resultado": (
-                glaucoma_result.resultado
-            ),
-            "confianza": (
-                glaucoma_result.nivel_confianza
+            "resultado": glaucoma_result.resultado,
+            "confianza": glaucoma_result.nivel_confianza,
+            "requiere_revision": glaucoma_data.get(
+                "requiere_revision",
+                False
             )
         },
         "requiere_revision": response.get(

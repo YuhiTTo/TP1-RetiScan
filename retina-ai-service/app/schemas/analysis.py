@@ -9,6 +9,7 @@ class AnalysisRequest(BaseModel):
 class ModelResult(BaseModel):
     resultado: str
     confianza: float = Field(ge=0.0, le=1.0)
+    requiere_revision: bool
 
 
 class AnalysisResponse(BaseModel):

@@ -7,6 +7,7 @@ class AIModelResultResponse(BaseModel):
         ge=0.0,
         le=1.0
     )
+    requiere_revision: bool
 
 
 class AIAnalysisResponse(BaseModel):
