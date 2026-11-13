@@ -17,6 +17,7 @@ from app.schemas.ai_analysis import (
 from app.services.ai_analysis_service import (
     AIAnalysisEvaluationNotFoundError,
     AIAnalysisExecutionError,
+    AIAnalysisImageQualityInsufficientError,
     AIAnalysisPreprocessingError,
     AIAnalysisRetinographyNotFoundError,
     AIModelConfigurationError,
@@ -78,6 +79,14 @@ def analyze_evaluation(
                 "artificial no están configurados "
                 "correctamente."
             )
+        )
+
+    except AIAnalysisImageQualityInsufficientError as error:
+        raise HTTPException(
+            status_code=(
+                status.HTTP_422_UNPROCESSABLE_ENTITY
+            ),
+            detail=str(error)
         )
 
     except AIAnalysisPreprocessingError as error:

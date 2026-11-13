@@ -30,3 +30,30 @@ class AnalysisResponse(BaseModel):
     glaucoma: ModelResult
 
     requiere_revision: bool
+
+class ImageQualityChecks(BaseModel):
+    claridad: bool | None
+    iluminacion: bool | None
+    contraste: bool | None
+    fov: bool
+
+
+class ImageQualityMetrics(BaseModel):
+    clarity_gradient_p90: float | None
+    dark_ratio_30: float | None
+    contrast_cv: float | None
+    fov_area_ratio: float | None
+    fov_width_ratio: float | None
+    fov_height_ratio: float | None
+    fov_center_offset: float | None
+
+
+class ImageQualityResponse(BaseModel):
+    id_evaluacion: int
+    estado: str
+
+    criterios_fallidos: list[str]
+
+    criterios: ImageQualityChecks
+
+    metricas: ImageQualityMetrics

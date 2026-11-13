@@ -1,0 +1,20 @@
+=== DeepDRiD — Gradient P90 vs claridad experta ===
+Observaciones válidas: 1200
+
+Distribución por nivel de claridad:
+Clarity=1: n=29 | mediana=11.313709 | Q25=10.295630 | Q75=12.806248
+Clarity=4: n=85 | mediana=12.806248 | Q25=11.401754 | Q75=14.422205
+Clarity=6: n=258 | mediana=14.212670 | Q25=13.038405 | Q75=16.492422
+Clarity=8: n=397 | mediana=17.029386 | Q25=14.764823 | Q75=19.646883
+Clarity=10: n=431 | mediana=20.248457 | Q25=18.110770 | Q75=23.021729
+
+Spearman rho: 0.675259
+p-value: 1.473486e-160
+
+Dirección: POSITIVA (mayor Gradient P90 se asocia con mayor claridad experta).
+
+Referencia previa — Laplaciano:
+rho = 0.300061
+p = 2.173659e-26
+
+Gradient P90 presenta una asociación ordinal mayor que el Laplaciano previo.

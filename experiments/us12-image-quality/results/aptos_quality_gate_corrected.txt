@@ -1,0 +1,36 @@
+Procesadas: 500
+Procesadas: 1000
+Procesadas: 1500
+Procesadas: 2000
+Procesadas: 2500
+Procesadas: 3000
+Procesadas: 3500
+Procesadas: 4000
+Procesadas: 4500
+Procesadas: 5000
+Procesadas: 5500
+
+=== APTOS 2019 — QUALITY GATE CORREGIDO ===
+Total: 5590
+Errores: 0
+
+SUFICIENTE: 4181/5590 (74.79%)
+INSUFICIENTE: 1409/5590 (25.21%)
+
+=== FALLOS POR CRITERIO ===
+clarity: 1402/5590 (25.08%)
+illumination: 29/5590 (0.52%)
+contrast: 3/5590 (0.05%)
+fov: 0/5590 (0.00%)
+
+=== POR SPLIT ===
+
+test_images
+  SUFICIENTE: 1656/1928 (85.89%)
+  INSUFICIENTE: 272/1928 (14.11%)
+
+train_images
+  SUFICIENTE: 2525/3662 (68.95%)
+  INSUFICIENTE: 1137/3662 (31.05%)
+
+Resultado: experiments/us12-image-quality/results/aptos_quality_gate_corrected.csv

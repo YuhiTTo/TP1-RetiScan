@@ -1,0 +1,15 @@
+
+=== CLARITY GT ===
+Clarity 1: n=29 | mean=111.95 | median=110.89 | min=52.79 | max=232.40
+Clarity 4: n=85 | mean=132.96 | median=126.75 | min=62.87 | max=296.19
+Clarity 6: n=258 | mean=143.47 | median=135.29 | min=65.20 | max=867.56
+Clarity 8: n=397 | mean=150.17 | median=145.68 | min=69.92 | max=836.57
+Clarity 10: n=431 | mean=213.09 | median=164.26 | min=73.00 | max=2070.46
+
+=== OVERALL QUALITY ===
+INSUFICIENTE: n=624 | mean=153.84 | median=144.53 | min=52.79 | max=1142.80
+SUFICIENTE: n=576 | mean=185.81 | median=145.16 | min=69.92 | max=2070.46
+
+=== CORRELACIÓN SPEARMAN ===
+rho = 0.300061
+p-value = 2.173659e-26

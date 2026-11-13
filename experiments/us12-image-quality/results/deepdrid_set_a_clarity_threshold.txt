@@ -1,0 +1,19 @@
+=== DeepDRiD Set-A — THRESHOLD DE CLARIDAD ===
+Criterio experto: Clarity >= 8
+Claridad insuficiente: 372
+Claridad suficiente: 828
+
+Mediana Gradient P90 insuficiente: 14.00000000
+Mediana Gradient P90 suficiente: 18.86796226
+AUC: 0.8582
+
+Threshold candidato: 16.06225775
+Balanced Accuracy: 0.7795
+Recall claridad suficiente: 0.7874
+Recall claridad insuficiente: 0.7715
+False Accept Rate: 0.2285
+False Reject Rate: 0.2126
+
+TP=652 | FN=176 | TN=287 | FP=85
+
+Resultado: experiments/us12-image-quality/results/deepdrid_set_a_clarity_threshold.csv

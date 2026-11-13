@@ -15,7 +15,9 @@ from app.services.ai_client_service import (
     AIServiceAnalysisError,
     AIServiceConnectionError,
     AIServicePreprocessingError,
-    request_ai_analysis
+    AIServiceQualityError,
+    request_ai_analysis,
+    request_ai_quality
 )
 
 
@@ -35,6 +37,10 @@ class AIAnalysisExecutionError(Exception):
     pass
 
 class AIAnalysisPreprocessingError(Exception):
+    pass
+
+
+class AIAnalysisImageQualityInsufficientError(Exception):
     pass
 
 def _get_active_models(
@@ -101,6 +107,68 @@ def run_ai_analysis(
 
     if retinography is None:
         raise AIAnalysisRetinographyNotFoundError()
+
+    # ========================================================
+    # US-12 — Control mínimo de calidad
+    #
+    # Debe ejecutarse ANTES de crear ANALISIS_IA o
+    # ModelExecution.
+    # ========================================================
+
+    try:
+        quality_response = request_ai_quality(
+            evaluation_id=evaluation_id,
+            s3_path=retinography.ruta_original_s3
+        )
+
+    except (
+        AIServiceConnectionError,
+        AIServiceQualityError
+    ) as error:
+
+        raise AIAnalysisExecutionError(
+            str(error)[:1000]
+        ) from error
+
+    try:
+        quality_status = quality_response[
+            "estado"
+        ]
+
+        if quality_status not in {
+            "SUFICIENTE",
+            "INSUFICIENTE"
+        }:
+            raise ValueError()
+
+    except (
+        KeyError,
+        TypeError,
+        ValueError
+    ) as error:
+
+        raise AIAnalysisExecutionError(
+            "El Servicio IA devolvió una "
+            "respuesta de calidad inválida."
+        ) from error
+
+    retinography.calidad_imagen = (
+        quality_status
+    )
+
+    db.commit()
+
+    if quality_status == "INSUFICIENTE":
+        raise AIAnalysisImageQualityInsufficientError(
+            "La retinografía no cumple con la "
+            "calidad mínima requerida para "
+            "realizar el análisis."
+        )
+
+    # ========================================================
+    # La imagen superó US-12.
+    # Recién ahora se preparan los registros del análisis IA.
+    # ========================================================
 
     models = _get_active_models(
         db=db

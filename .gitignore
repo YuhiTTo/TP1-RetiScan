@@ -16,3 +16,6 @@ retina-support-backend/.env
 # OS
 .DS_Store
 Thumbs.db
+# US-12 image-quality experiment datasets
+experiments/us12-image-quality/data/
+experiments/us12-image-quality/tmp/
