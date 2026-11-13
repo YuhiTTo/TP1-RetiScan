@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.api.dependencies import get_db
 from app.core.security import create_access_token
 from app.schemas.auth import LoginRequest, LoginResponse
-from app.services.auth_service import authenticate_account
+from app.services.auth_service import ( authenticate_account, AccountInactiveError )
 
 
 router = APIRouter(
@@ -23,11 +23,20 @@ def login(
     db: Session = Depends(get_db)
 ):
 
-    account = authenticate_account(
-        db=db,
-        email=data.email,
-        password=data.password
-    )
+    try:
+
+        account = authenticate_account(
+            db=db,
+            email=data.email,
+            password=data.password
+        )
+
+    except AccountInactiveError:
+
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="La cuenta se encuentra inactiva. Contacte al administrador."
+        )
 
     if account is None:
         raise HTTPException(

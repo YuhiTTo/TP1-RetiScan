@@ -49,6 +49,7 @@ def upload_evaluation_retinography(
     if not content:
         raise RetinographyEmptyFileError()
 
+
     original_filename = Path(filename).name
 
     extension = (
@@ -58,23 +59,36 @@ def upload_evaluation_retinography(
         .lstrip(".")
     )
 
+    # Relacionar extensiones con formatos reales
     allowed_extensions = {
-        "jpg",
-        "jpeg",
-        "png"
+        "jpg": "jpeg",
+        "jpeg": "jpeg",
+        "png": "png"
     }
 
     if extension not in allowed_extensions:
         raise RetinographyUnsupportedFormatError()
 
+    # Verificar que el contenido sea una imagen legible
     try:
         with Image.open(BytesIO(content)) as image:
-            image.verify()
-
-        with Image.open(BytesIO(content)) as image:
-            width, height = image.size
 
             detected_format = (
+                image.format.lower()
+                if image.format
+                else ""
+            )
+
+            image.verify()
+
+    # Reabrir para comprobar la decodificación completa
+        with Image.open(BytesIO(content)) as image:
+
+            image.load()
+
+            width, height = image.size
+
+            loaded_format = (
                 image.format.lower()
                 if image.format
                 else ""
@@ -83,14 +97,21 @@ def upload_evaluation_retinography(
     except Exception as error:
         raise RetinographyUnreadableError() from error
 
-    allowed_formats = {
-        "jpeg",
-        "png"
-    }
+    # Comprobar el formato real
+    expected_format = allowed_extensions[extension]
 
-    if detected_format not in allowed_formats:
+    if detected_format not in {"jpeg", "png"}:
         raise RetinographyUnsupportedFormatError()
-    
+
+    if detected_format != expected_format:
+        raise RetinographyUnsupportedFormatError()
+
+    if loaded_format != detected_format:
+        raise RetinographyUnreadableError()
+
+    if width <= 0 or height <= 0:
+        raise RetinographyUnreadableError()
+
     s3_path = upload_retinography(
         content=content,
         evaluation_id=evaluation_id,

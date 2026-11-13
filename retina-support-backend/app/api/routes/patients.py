@@ -63,8 +63,7 @@ def register_patient(
 )
 def search_registered_patients(
     search: str = Query(
-        ...,
-        min_length=1,
+        "",
         max_length=150
     ),
     db: Session = Depends(get_db),

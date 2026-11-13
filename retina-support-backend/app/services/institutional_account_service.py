@@ -1,5 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+from uuid import uuid4
 
 from app.core.security import hash_password
 from app.models.account import Account
@@ -24,26 +25,35 @@ def create_institutional_account(
     data: InstitutionalAccountCreate
 ) -> tuple[Establishment, Account]:
 
-    codigo = (
-        data.establecimiento.codigo_institucional
-        .strip()
-        .upper()
-    )
+    provided_code = (
+    data.establecimiento.codigo_institucional
+)
+
+    if provided_code:
+        codigo = (
+        provided_code
+            .strip()
+            .upper()
+        )
+
+        existing_establishment = get_establishment_by_code(
+            db,
+            codigo
+        )
+
+        if existing_establishment is not None:
+            raise InstitutionalCodeAlreadyExistsError()
+    else:
+
+        # Código temporal para poder insertar el establecimiento
+        codigo = f"TEMP-{uuid4().hex.upper()}"
+
 
     email = (
         data.cuenta.correo_electronico
         .strip()
         .lower()
     )
-
-    existing_establishment = get_establishment_by_code(
-        db=db,
-        codigo_institucional=codigo
-    )
-
-    if existing_establishment is not None:
-        raise InstitutionalCodeAlreadyExistsError()
-
     existing_account = get_account_by_email(
         db=db,
         email=email
@@ -63,7 +73,7 @@ def create_institutional_account(
         direccion=data.establecimiento.direccion.strip(),
         distrito=data.establecimiento.distrito.strip(),
         telefono=data.establecimiento.telefono.strip(),
-        estado=True
+        estado=data.establecimiento.estado
     )
 
     try:
@@ -72,6 +82,11 @@ def create_institutional_account(
         # Ejecuta el INSERT sin hacer todavía COMMIT.
         # Así obtenemos id_establecimiento.
         db.flush()
+
+        if provided_code is None:
+            establishment.codigo_institucional = (
+                f"EST-{establishment.id_establecimiento:06d}"
+            )
 
         account = Account(
             id_establecimiento=establishment.id_establecimiento,
@@ -85,7 +100,7 @@ def create_institutional_account(
                 if data.cuenta.nombre_mostrado
                 else establishment.nombre
             ),
-            estado=True
+            estado=data.establecimiento.estado
         )
 
         db.add(account)

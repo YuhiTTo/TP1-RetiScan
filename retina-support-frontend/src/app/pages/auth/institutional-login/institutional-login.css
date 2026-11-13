@@ -1,0 +1,151 @@
+:host {
+    display: block;
+    min-height: 100vh;
+}
+
+.login-page {
+    min-height: 100vh;
+    background: #2f4f7f;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 360px;
+    min-height: 470px;
+
+    background: white;
+    border-radius: 8px;
+
+    padding: 3px 36px 30px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+h1 {
+    font-size: 20px;
+    color: #263f63;
+    margin: 0 0 8px;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #687280;
+
+    text-align: center;
+
+    margin: 0 0 24px;
+}
+
+form {
+    width: 100%;
+}
+
+.input-group {
+    height: 48px;
+
+    border: 1px solid #cfd6df;
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 14px;
+
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.input-group:focus-within {
+    border-color: #2870cc;
+}
+
+input {
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    font-size: 13px;
+    color: #344054;
+
+    background: transparent;
+}
+
+input::placeholder {
+    color: #9CA3AF;
+}
+
+button {
+    width: 100%;
+    height: 46px;
+
+    margin-top: 6px;
+
+    border: none;
+    border-radius: 5px;
+
+    background: #2870cc;
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #215eab;
+}
+
+.logo-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin-top: -20px;
+    margin-bottom: -40px;
+    display: block;
+}
+
+.input-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    margin-right: 12px;
+
+    filter: brightness(0) saturate(100%);
+    opacity: 0.45;
+}
+
+.eye-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+
+    filter: brightness(0) saturate(100%);
+    opacity: 0.45;
+
+    cursor: pointer;
+}
+
+.error-message {
+    color: #c62828;
+    font-size: 12px;
+    text-align: center;
+    margin: 0 0 12px;
+}

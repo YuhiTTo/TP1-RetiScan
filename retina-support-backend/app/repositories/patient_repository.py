@@ -59,8 +59,8 @@ def search_patients(
             )
         )
         .order_by(
-            Patient.apellidos,
-            Patient.nombres
+            Patient.fecha_registro.desc(),
+            Patient.id_paciente.desc()
         )
     )
 

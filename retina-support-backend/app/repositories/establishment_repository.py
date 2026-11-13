@@ -9,9 +9,52 @@ def get_establishment_by_code(
     codigo_institucional: str
 ) -> Establishment | None:
 
-    statement = select(Establishment).where(
+    normalized_code = (
+        codigo_institucional
+        .strip()
+        .upper()
+    )
+
+    statement = select(
+        Establishment
+    ).where(
         Establishment.codigo_institucional
-        == codigo_institucional.strip().upper()
+        == normalized_code
+    )
+
+    return db.execute(
+        statement
+    ).scalar_one_or_none()
+
+
+def get_establishments(
+    db: Session
+) -> list[Establishment]:
+
+    statement = (
+        select(Establishment)
+        .order_by(
+            Establishment.fecha_registro.desc(),
+            Establishment.id_establecimiento.desc()
+        )
+    )
+
+    return list(
+        db.execute(statement)
+        .scalars()
+        .all()
+    )
+
+def get_establishment_by_id(
+    db: Session,
+    id_establecimiento: int
+) -> Establishment | None:
+
+    statement = select(
+        Establishment
+    ).where(
+        Establishment.id_establecimiento
+        == id_establecimiento
     )
 
     return db.execute(

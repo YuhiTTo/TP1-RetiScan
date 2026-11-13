@@ -1,0 +1,662 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.page-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f1f3f6;
+}
+
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 230px;
+    min-height: 100vh;
+
+    background: #2f507f;
+
+    display: flex;
+    flex-direction: column;
+
+    flex-shrink: 0;
+}
+
+.sidebar-logo {
+    height: 135px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-logo img {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 0 10px;
+}
+
+.menu-item {
+    width: 100%;
+    height: 50px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+    color: #dbe5f1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 16px;
+
+    font-size: 17px;
+
+    cursor: pointer;
+    text-align: left;
+}
+
+.menu-item.active {
+    background: #1e67c6;
+    color: white;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.menu-icon {
+    width: 25px;
+    font-size: 23px;
+    text-align: center;
+}
+
+.logout-button {
+    margin-top: auto;
+
+    height: 65px;
+
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+
+    background: transparent;
+    color: #dbe5f1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 25px;
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+
+/* CONTENIDO */
+
+.main-content {
+    flex: 1;
+
+    padding: 18px 28px 35px;
+}
+
+
+/* CABECERA */
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 38px;
+}
+
+.back-button {
+    border: none;
+    background: transparent;
+
+    color: #1767c6;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.establishment-card {
+    min-width: 190px;
+    height: 60px;
+
+    background: white;
+
+    border: 1px solid #cbd3dd;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    padding: 0 20px;
+}
+
+.establishment-icon {
+    font-size: 28px;
+}
+
+.establishment-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* RESUMEN PACIENTE */
+
+.patient-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 0 15px 30px;
+}
+
+.patient-profile {
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+}
+
+
+.patient-profile h1 {
+    margin: 0 0 8px;
+
+    font-size: 24px;
+
+    color: #171e2d;
+}
+
+.patient-profile p {
+    margin: 3px 0;
+
+    font-size: 14px;
+
+    color: #303846;
+}
+
+.evaluation-button {
+    height: 48px;
+
+    padding: 0 25px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #246dcc;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    cursor: pointer;
+}
+
+.plus {
+    font-size: 25px;
+}
+
+
+/* TABS */
+
+.tabs {
+    display: flex;
+
+    gap: 40px;
+
+    border-bottom: 1px solid #d3d9e1;
+
+    margin-bottom: 15px;
+}
+
+.tab {
+    padding: 12px 15px;
+
+    border: none;
+    border-bottom: 2px solid transparent;
+
+    background: transparent;
+
+    color: #242c3b;
+
+    cursor: pointer;
+}
+
+.tab.active {
+    color: #1767c6;
+    border-bottom-color: #1767c6;
+}
+
+
+/* INFORMACIÓN */
+
+.information-section {
+    padding: 0 15px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #1767c6;
+}
+
+.edit-button {
+    padding: 9px 14px;
+
+    border: 1px solid #58a9ee;
+    border-radius: 6px;
+
+    background: #eef8ff;
+    color: #2781cf;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* CAMPOS */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    column-gap: 130px;
+    row-gap: 15px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.field label {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #202736;
+}
+
+.field input {
+    height: 38px;
+
+    padding: 0 14px;
+
+    border: 1px solid #bdc6d1;
+    border-radius: 5px;
+
+    background: white;
+
+    color: #8b96a5;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+
+/* ESTADOS */
+
+.status-message {
+    padding: 35px;
+
+    text-align: center;
+
+    color: #687386;
+}
+
+.status-message.error {
+    color: #c62828;
+}
+
+
+.menu-icon-image {
+    width: 23px;
+    height: 23px;
+    object-fit: contain;
+
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+
+.establishment-icon-image {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.avatar-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.section-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.section-icon {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+}
+
+.edit-button {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.edit-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+
+    filter: brightness(0) invert(47%) sepia(93%) saturate(1160%) hue-rotate(181deg) brightness(70%) contrast(89%);
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+
+    filter: brightness(0) invert(36%) sepia(97%) saturate(1326%) hue-rotate(187deg) brightness(70%) contrast(91%);
+}
+
+.evaluations-section {
+    padding: 10px 15px;
+}
+
+.empty-evaluations {
+    padding: 45px;
+    text-align: center;
+
+    color: #6f7a89;
+
+    background: white;
+
+    border: 1px solid #d5dce5;
+    border-radius: 7px;
+}
+
+.evaluations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+}
+
+.evaluations-table thead {
+    background: #b9d8f6;
+}
+
+.evaluations-table th,
+.evaluations-table td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 13px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.evaluations-table th {
+    margin: 0;
+}
+
+.evaluation-view-button {
+    min-width: 88px;
+    height: 40px;
+    padding: 0 18px;
+    border: 1.5px solid #6bb6ff;
+    border-radius: 10px;
+    background-color: #f4fbff;
+    color: #4a90e2;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.evaluation-view-button:hover {
+    background-color: #e8f4ff;
+}
+
+.evaluation-view-button:active {
+    transform: scale(0.98);
+}
+
+.evaluations-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    color: #1767c6;
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+.section-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+
+    filter: brightness(0) saturate(100%) invert(34%) sepia(94%) saturate(1268%) hue-rotate(185deg) brightness(70%) contrast(92%);
+}
+
+.evaluations-table-container {
+    background: white;
+    border: 1px solid #82b9ec;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.evaluations-table td {
+    border-top: 1px solid #e4edf6;
+}
+
+/* =========================
+   MODAL EDITAR PACIENTE
+========================= */
+
+.modal-backdrop {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(10, 16, 24, 0.72);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1000;
+}
+
+.edit-modal {
+    width: 560px;
+
+    background: white;
+
+    border-radius: 8px;
+
+    padding: 22px 24px 20px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.modal-header h2 {
+    margin: 0;
+
+    font-size: 21px;
+    color: #202838;
+}
+
+.close-button {
+    border: none;
+    background: transparent;
+
+    font-size: 32px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.modal-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px 28px;
+}
+
+.modal-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.modal-field label {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #202838;
+}
+
+.modal-field label span {
+    color: red;
+}
+
+.modal-field input,
+.modal-field select {
+    height: 40px;
+
+    border: 1px solid #c2cad5;
+    border-radius: 5px;
+
+    padding: 0 12px;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.modal-field input:focus,
+.modal-field select:focus {
+    border-color: #2870cc;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+
+    gap: 40px;
+
+    margin-top: 30px;
+}
+
+.cancel-button,
+.update-button {
+    width: 150px;
+    height: 42px;
+
+    border-radius: 5px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.cancel-button {
+    border: 1px solid #6eb4ef;
+
+    background: #eef8ff;
+    color: #2374bf;
+}
+
+.update-button {
+    border: none;
+
+    background: #246dcc;
+    color: white;
+}
+
+.update-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.modal-error {
+    margin: 15px 0 0;
+
+    text-align: center;
+
+    color: #c62828;
+
+    font-size: 13px;
+}

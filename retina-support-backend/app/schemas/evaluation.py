@@ -44,3 +44,23 @@ class EvaluationResponse(BaseModel):
     estado: str
     fecha_creacion: datetime
     fecha_finalizacion: datetime | None
+
+class EvaluationDetailResponse(BaseModel):
+    id_evaluacion: int
+
+    fecha_evaluacion: datetime
+    ojo_evaluado: str
+    estado: str
+
+    id_paciente: int
+    numero_documento: str
+    nombres_paciente: str
+    apellidos_paciente: str
+    fecha_nacimiento: date
+    sexo: str
+
+    id_medico: int
+    medico_responsable: str
+
+class EvaluationListResponse(EvaluationResponse):
+    medico_responsable: str

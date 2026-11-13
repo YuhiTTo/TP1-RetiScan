@@ -1,0 +1,40 @@
+<div class="login-page">
+    <div class="login-card">
+
+        <div class="logo">
+            <img class="logo-image" src="/icons/retiscan.jpeg" alt="RetiScan">
+        </div>
+
+        <h1>Acceso Institucional</h1>
+
+        <p class="subtitle">
+            Ingresa con las credenciales de tu establecimiento de salud
+        </p>
+
+        <form (ngSubmit)="login()">
+            <div class="input-group">
+                <img class="input-icon" src="/icons/correo-electronico.png" alt="">
+
+                <input type="email" name="email" [(ngModel)]="email" placeholder="Correo electrónico" required>
+            </div>
+
+            <div class="input-group">
+                <img class="input-icon" src="/icons/cerrar-con-llave.png" alt="">
+
+                <input [type]="showPassword ? 'text' : 'password'" name="password" [(ngModel)]="password"
+                    placeholder="Contraseña" required>
+
+                <img class="eye-icon" src="/icons/ojo-abierto.png" alt="Mostrar contraseña" (click)="togglePassword()">
+            </div>
+
+            <p class="error-message" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </p>
+
+            <button type="submit" [disabled]="loading">
+                {{ loading ? 'Ingresando...' : 'Iniciar sesión' }}
+            </button>
+        </form>
+
+    </div>
+</div>

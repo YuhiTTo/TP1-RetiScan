@@ -1,0 +1,231 @@
+<div class="page-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="/icons/retiscan2.png" alt="RetiScan">
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <button class="menu-item">
+                <img src="/icons/home.png" class="menu-icon-image" alt="">
+                <span>Inicio</span>
+            </button>
+
+            <button class="menu-item active" (click)="cancel()">
+                <img src="/icons/patients.png" class="menu-icon-image" alt="">
+                <span>Pacientes</span>
+            </button>
+
+            <button class="menu-item">
+                <img src="/icons/evaluacion.png" class="menu-icon-image" alt="">
+                <span>Evaluaciones</span>
+            </button>
+
+            <button class="menu-item">
+                <img src="/icons/reporte.png" class="menu-icon-image" alt="">
+                <span>Reportes</span>
+            </button>
+
+        </nav>
+
+        <button class="logout-button" (click)="logout()">
+            <img src="/icons/logout.png" class="menu-icon-image" alt="">
+            <span>Cerrar sesión</span>
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+        <!-- ESTABLECIMIENTO -->
+        <header class="top-header">
+
+            <div class="establishment-card">
+
+                <img src="/icons/hospital.png" class="establishment-icon" alt="">
+
+                <span>
+                    {{ displayName }}
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- TÍTULO -->
+        <section class="title-section">
+
+            <h1>Registrar Paciente</h1>
+
+            <p>
+                Completa los datos del paciente para registrarlo en el sistema
+            </p>
+
+        </section>
+
+
+        <!-- INFORMACIÓN PERSONAL -->
+        <section class="form-section">
+
+            <h2 class="section-title">
+
+                <img src="/icons/usersmall.png" alt="">
+
+                Información Personal
+
+            </h2>
+
+
+            <div class="form-grid">
+
+                <!-- NOMBRES -->
+                <div class="field">
+
+                    <label>
+                        Nombres
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text" [(ngModel)]="nombres" placeholder="Nombres del paciente">
+
+                </div>
+
+
+                <!-- APELLIDOS -->
+                <div class="field">
+
+                    <label>
+                        Apellidos
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text" [(ngModel)]="apellidos" placeholder="Apellidos del paciente">
+
+                </div>
+
+
+                <!-- DNI -->
+                <div class="field">
+
+                    <label>
+                        Documento de identidad (DNI)
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text" [(ngModel)]="numeroDocumento" placeholder="Número de documento">
+
+                </div>
+
+
+                <!-- FECHA -->
+                <div class="field">
+
+                    <label>
+                        Fecha de nacimiento
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="date" [(ngModel)]="fechaNacimiento">
+
+                </div>
+
+
+                <!-- SEXO -->
+                <div class="field">
+
+                    <label>
+                        Sexo
+                        <span class="required">*</span>
+                    </label>
+
+                    <select [(ngModel)]="sexo">
+
+                        <option value="" disabled>
+                            Seleccionar
+                        </option>
+
+                        <option value="F">
+                            Femenino
+                        </option>
+
+                        <option value="M">
+                            Masculino
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- TELÉFONO -->
+                <div class="field">
+
+                    <label>
+                        Teléfono
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text" [(ngModel)]="telefono" placeholder="Teléfono">
+
+                </div>
+
+
+                <!-- CORREO -->
+                <div class="field">
+
+                    <label>
+                        Correo (opcional)
+                    </label>
+
+                    <input type="email" [(ngModel)]="correo" placeholder="correo@ejemplo.com">
+
+                </div>
+
+
+                <!-- DIRECCIÓN -->
+                <div class="field">
+
+                    <label>
+                        Dirección (opcional)
+                    </label>
+
+                    <input type="text" [(ngModel)]="direccion" placeholder="Dirección">
+
+                </div>
+
+            </div>
+
+
+            <!-- ERROR -->
+            <p class="form-error" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </p>
+
+
+            <!-- BOTONES -->
+            <div class="form-actions">
+
+                <button type="button" class="cancel-button" (click)="cancel()">
+                    Cancelar
+                </button>
+
+                <button type="button" class="register-patient-button" [disabled]="saving" (click)="registerPatient()">
+                    {{
+                    saving
+                    ? 'Registrando...'
+                    : 'Registrar paciente'
+                    }}
+                </button>
+
+            </div>
+
+        </section>
+    </main>
+
+</div>

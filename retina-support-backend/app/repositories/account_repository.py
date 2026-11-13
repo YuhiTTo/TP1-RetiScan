@@ -17,3 +17,17 @@ def get_account_by_email(
     return db.execute(
         statement
     ).scalar_one_or_none()
+
+def get_account_by_establishment_id(
+    db: Session,
+    id_establecimiento: int
+) -> Account | None:
+
+    statement = select(Account).where(
+        Account.id_establecimiento
+        == id_establecimiento
+    )
+
+    return db.execute(
+        statement
+    ).scalar_one_or_none()
