@@ -3,11 +3,19 @@ from fastapi import FastAPI, HTTPException, status
 from app.schemas.analysis import (
     AnalysisRequest,
     AnalysisResponse,
+    ImageQualityChecks,
+    ImageQualityMetrics,
+    ImageQualityResponse,
     ModelResult,
 )
 from app.services.inference_service import (
     RetinalPreprocessingError,
     predict_retiscan,
+)
+
+from app.services.image_quality_service import (
+    ImageQualityEvaluationError,
+    assess_image_quality,
 )
 
 from app.services.storage_service import (
@@ -112,4 +120,77 @@ def analyze_retinography(
         requiere_revision=result[
             "requires_review"
         ],
+    )
+
+@app.post(
+    "/api/v1/quality",
+    response_model=ImageQualityResponse,
+    status_code=status.HTTP_200_OK,
+)
+def evaluate_retinography_quality(
+    request: AnalysisRequest
+):
+    try:
+        content = download_retinography(
+            request.ruta_s3
+        )
+
+    except StorageDownloadError:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=(
+                "No se pudo obtener la retinografía "
+                "desde Amazon S3."
+            )
+        )
+
+    try:
+        result = assess_image_quality(
+            content
+        )
+
+    except ImageQualityEvaluationError as error:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(error)
+        )
+
+    checks = result["checks"]
+    metrics = result["metrics"]
+
+    return ImageQualityResponse(
+        id_evaluacion=request.id_evaluacion,
+        estado=result["status"],
+        criterios_fallidos=result[
+            "failed_criteria"
+        ],
+        criterios=ImageQualityChecks(
+            claridad=checks["clarity"],
+            iluminacion=checks["illumination"],
+            contraste=checks["contrast"],
+            fov=checks["fov"],
+        ),
+        metricas=ImageQualityMetrics(
+            clarity_gradient_p90=metrics[
+                "clarity_gradient_p90"
+            ],
+            dark_ratio_30=metrics[
+                "dark_ratio_30"
+            ],
+            contrast_cv=metrics[
+                "contrast_cv"
+            ],
+            fov_area_ratio=metrics[
+                "fov_area_ratio"
+            ],
+            fov_width_ratio=metrics[
+                "fov_width_ratio"
+            ],
+            fov_height_ratio=metrics[
+                "fov_height_ratio"
+            ],
+            fov_center_offset=metrics[
+                "fov_center_offset"
+            ],
+        ),
     )

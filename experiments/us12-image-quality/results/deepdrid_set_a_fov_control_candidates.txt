@@ -1,0 +1,94 @@
+=== DeepDRiD Set-A — CONTROLES TÉCNICOS FOV ===
+Observaciones válidas: 1200
+Overall suficiente: 576
+Overall insuficiente: 624
+
+=== DISTRIBUCIÓN EN IMÁGENES SUFICIENTES ===
+
+fov_area_ratio
+  min=0.63487400
+  P0.5=0.65079775
+  P1=0.65180525
+  P2.5=0.65267738
+  P5=0.65290875
+  mediana=0.68280300
+  P95=0.68473200
+  P97.5=1.00000000
+  P99=1.00000000
+  P99.5=1.00000000
+  max=1.00000000
+
+fov_width_ratio
+  min=0.89112900
+  P0.5=0.91093100
+  P1=0.91143700
+  P2.5=0.91194300
+  P5=0.91244900
+  mediana=0.95449300
+  P95=0.95564500
+  P97.5=1.00000000
+  P99=1.00000000
+  P99.5=1.00000000
+  max=1.00000000
+
+fov_height_ratio
+  min=0.90625000
+  P0.5=0.90625000
+  P1=0.90675400
+  P2.5=0.90725800
+  P5=0.90739175
+  mediana=0.90877000
+  P95=0.90953900
+  P97.5=1.00000000
+  P99=1.00000000
+  P99.5=1.00000000
+  max=1.00000000
+
+fov_center_offset
+  min=0.00012500
+  P0.5=0.00028863
+  P1=0.00032350
+  P2.5=0.00036600
+  P5=0.00037125
+  mediana=0.00071100
+  P95=0.00114200
+  P97.5=0.00128575
+  P99=0.00147375
+  P99.5=0.00175000
+  max=0.03135900
+
+=== REGLAS FOV CONJUNTAS ===
+
+Nivel extremo: 0.5%
+  fov_area_ratio >= 0.65079775
+  fov_width_ratio >= 0.91093100
+  fov_height_ratio >= 0.90625000
+  fov_center_offset <= 0.00175000
+  Rechazo Overall=1: 5/576 (0.87%)
+  Rechazo Overall=0: 22/624 (3.53%)
+
+Nivel extremo: 1%
+  fov_area_ratio >= 0.65180525
+  fov_width_ratio >= 0.91143700
+  fov_height_ratio >= 0.90675400
+  fov_center_offset <= 0.00147375
+  Rechazo Overall=1: 13/576 (2.26%)
+  Rechazo Overall=0: 43/624 (6.89%)
+
+Nivel extremo: 2.5%
+  fov_area_ratio >= 0.65267738
+  fov_width_ratio >= 0.91194300
+  fov_height_ratio >= 0.90725800
+  fov_center_offset <= 0.00128575
+  Rechazo Overall=1: 31/576 (5.38%)
+  Rechazo Overall=0: 83/624 (13.30%)
+
+Nivel extremo: 5%
+  fov_area_ratio >= 0.65290875
+  fov_width_ratio >= 0.91244900
+  fov_height_ratio >= 0.90739175
+  fov_center_offset <= 0.00114200
+  Rechazo Overall=1: 65/576 (11.28%)
+  Rechazo Overall=0: 119/624 (19.07%)
+
+Resultado: experiments/us12-image-quality/results/deepdrid_set_a_fov_control_candidates.csv

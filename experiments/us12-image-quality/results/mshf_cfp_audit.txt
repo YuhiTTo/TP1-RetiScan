@@ -1,0 +1,50 @@
+=== MSHF CFP — AUDITORÍA DEFINITIVA ===
+Imágenes CFP: 500
+Imágenes con ground truth: 499
+Imágenes sin ground truth: 1
+
+=== SIN GROUND TRUTH ===
+DR-ZJU: DR-ZJU-23.jpg
+
+=== DISTRIBUCIONES USADAS ===
+
+DR-XJU
+  illumination: 0=37 | 1=198
+  clarity: 0=121 | 1=114
+  contrast: 0=79 | 1=156
+  overall: 0=117 | 1=118
+
+DR-ZJU
+  illumination: 0=30 | 1=156
+  clarity: 0=33 | 1=153
+  contrast: 0=5 | 1=181
+  overall: 0=39 | 1=147
+
+Glaucoma
+  illumination: 0=45 | 1=7
+  clarity: 0=48 | 1=4
+  contrast: 0=42 | 1=10
+  overall: 0=50 | 1=2
+
+Healthy
+  illumination: 0=2 | 1=24
+  clarity: 0=0 | 1=26
+  contrast: 0=0 | 1=26
+  overall: 0=0 | 1=26
+
+=== TOTAL 499 ETIQUETADAS ===
+illumination: 0=114 | 1=385
+clarity: 0=202 | 1=297
+contrast: 0=126 | 1=373
+overall: 0=206 | 1=293
+
+Coincidencias recuperadas sin extensión: 2
+  DR-XJU fila 31 -> DR-XJU-30.png
+  DR-XJU fila 32 -> DR-XJU-31.png
+
+=== DECISIÓN METODOLÓGICA ===
+RESULTADO: DATASET VERIFICADO ✅
+MSHF contiene 500 CFP; 499 disponen de ground truth individual verificable en v1.
+DR-ZJU-23.jpg se excluye de la evaluación supervisada por inconsistencia de anotación entre versiones.
+
+CSV generado: experiments/us12-image-quality/results/mshf_cfp_labels.csv

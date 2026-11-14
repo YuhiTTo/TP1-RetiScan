@@ -1,0 +1,40 @@
+
+Imágenes válidas: 1200
+
+=== DISTRIBUCIÓN POR FIELD DEFINITION ===
+
+Field definition 1 (n=7)
+  fov_area_ratio: median=0.680251 | mean=0.670266 | min=0.651964 | max=0.684583
+  fov_width_ratio: median=0.952765 | mean=0.936704 | min=0.911437 | max=0.955645
+  fov_height_ratio: median=0.908266 | mean=0.908502 | min=0.906798 | max=0.909539
+  fov_center_offset: median=0.000696 | mean=0.000692 | min=0.000484 | max=0.000846
+
+Field definition 4 (n=48)
+  fov_area_ratio: median=0.667053 | mean=0.668632 | min=0.652476 | max=0.684760
+  fov_width_ratio: median=0.932825 | mean=0.933958 | min=0.911437 | max=0.955645
+  fov_height_ratio: median=0.908770 | mean=0.908839 | min=0.906250 | max=0.909539
+  fov_center_offset: median=0.000698 | mean=0.000732 | min=0.000125 | max=0.001709
+
+Field definition 6 (n=180)
+  fov_area_ratio: median=0.674416 | mean=0.667606 | min=0.573382 | max=0.684849
+  fov_width_ratio: median=0.950749 | mean=0.933917 | min=0.908401 | max=0.955645
+  fov_height_ratio: median=0.908354 | mean=0.908185 | min=0.879386 | max=0.909539
+  fov_center_offset: median=0.000763 | mean=0.001226 | min=0.000313 | max=0.065232
+
+Field definition 8 (n=801)
+  fov_area_ratio: median=0.683582 | mean=0.681838 | min=0.504404 | max=1.000000
+  fov_width_ratio: median=0.955069 | mean=0.943391 | min=0.807604 | max=1.000000
+  fov_height_ratio: median=0.908991 | mean=0.910968 | min=0.894189 | max=1.000000
+  fov_center_offset: median=0.000719 | mean=0.000978 | min=0.000036 | max=0.106559
+
+Field definition 10 (n=164)
+  fov_area_ratio: median=0.682974 | mean=0.673515 | min=0.650918 | max=1.000000
+  fov_width_ratio: median=0.955069 | mean=0.938734 | min=0.911943 | max=1.000000
+  fov_height_ratio: median=0.908770 | mean=0.909303 | min=0.906250 | max=1.000000
+  fov_center_offset: median=0.000700 | mean=0.000703 | min=0.000287 | max=0.001245
+
+=== CORRELACIÓN SPEARMAN ===
+fov_area_ratio: rho=0.101160 | p-value=4.487148e-04
+fov_width_ratio: rho=0.147991 | p-value=2.610438e-07
+fov_height_ratio: rho=0.100790 | p-value=4.710053e-04
+fov_center_offset: rho=-0.070201 | p-value=1.500339e-02

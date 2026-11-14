@@ -1,0 +1,320 @@
+=== MSHF — ANÁLISIS DE MÉTRICAS DE CALIDAD ===
+
+========================================================================
+TARGET: ILLUMINATION
+========================================================================
+
+--- ALL ---
+
+luminance_mean
+  n0=114 | n1=385
+  GT=0 mediana=71.898021 | GT=1 mediana=88.420261
+  AUC separación=0.6220 | dirección=HIGHER_IS_1 | delta=0.2439
+
+luminance_median
+  n0=114 | n1=385
+  GT=0 mediana=74.000000 | GT=1 mediana=89.000000
+  AUC separación=0.6158 | dirección=HIGHER_IS_1 | delta=0.2317
+
+luminance_p05
+  n0=114 | n1=385
+  GT=0 mediana=26.000000 | GT=1 mediana=42.000000
+  AUC separación=0.5972 | dirección=HIGHER_IS_1 | delta=0.1943
+
+luminance_p95
+  n0=114 | n1=385
+  GT=0 mediana=107.500000 | GT=1 mediana=122.000000
+  AUC separación=0.6036 | dirección=HIGHER_IS_1 | delta=0.2072
+
+dark_ratio_30
+  n0=114 | n1=385
+  GT=0 mediana=0.057763 | GT=1 mediana=0.031635
+  AUC separación=0.6492 | dirección=LOWER_IS_1 | delta=-0.2985
+
+bright_ratio_225
+  n0=114 | n1=385
+  GT=0 mediana=0.000000 | GT=1 mediana=0.000000
+  AUC separación=0.5135 | dirección=LOWER_IS_1 | delta=-0.0270
+
+--- DR-XJU ---
+
+luminance_mean
+  n0=37 | n1=198
+  GT=0 mediana=90.510715 | GT=1 mediana=94.986899
+  AUC separación=0.5674 | dirección=HIGHER_IS_1 | delta=0.1349
+
+luminance_median
+  n0=37 | n1=198
+  GT=0 mediana=100.000000 | GT=1 mediana=97.500000
+  AUC separación=0.5179 | dirección=HIGHER_IS_1 | delta=0.0359
+
+luminance_p05
+  n0=37 | n1=198
+  GT=0 mediana=11.000000 | GT=1 mediana=22.000000
+  AUC separación=0.6124 | dirección=HIGHER_IS_1 | delta=0.2248
+
+luminance_p95
+  n0=37 | n1=198
+  GT=0 mediana=129.000000 | GT=1 mediana=128.000000
+  AUC separación=0.5030 | dirección=LOWER_IS_1 | delta=-0.0060
+
+dark_ratio_30
+  n0=37 | n1=198
+  GT=0 mediana=0.062721 | GT=1 mediana=0.051878
+  AUC separación=0.5857 | dirección=LOWER_IS_1 | delta=-0.1714
+
+bright_ratio_225
+  n0=37 | n1=198
+  GT=0 mediana=0.000000 | GT=1 mediana=0.000000
+  AUC separación=0.5780 | dirección=LOWER_IS_1 | delta=-0.1560
+
+--- DR-ZJU ---
+
+luminance_mean
+  n0=30 | n1=156
+  GT=0 mediana=79.452751 | GT=1 mediana=75.026388
+  AUC separación=0.5737 | dirección=LOWER_IS_1 | delta=-0.1474
+
+luminance_median
+  n0=30 | n1=156
+  GT=0 mediana=78.000000 | GT=1 mediana=72.000000
+  AUC separación=0.5756 | dirección=LOWER_IS_1 | delta=-0.1513
+
+luminance_p05
+  n0=30 | n1=156
+  GT=0 mediana=57.000000 | GT=1 mediana=55.000000
+  AUC separación=0.5792 | dirección=LOWER_IS_1 | delta=-0.1583
+
+luminance_p95
+  n0=30 | n1=156
+  GT=0 mediana=111.500000 | GT=1 mediana=102.500000
+  AUC separación=0.5678 | dirección=LOWER_IS_1 | delta=-0.1357
+
+dark_ratio_30
+  n0=30 | n1=156
+  GT=0 mediana=0.002437 | GT=1 mediana=0.002334
+  AUC separación=0.5299 | dirección=LOWER_IS_1 | delta=-0.0598
+
+bright_ratio_225
+  n0=30 | n1=156
+  GT=0 mediana=0.000000 | GT=1 mediana=0.000000
+  AUC separación=0.5032 | dirección=HIGHER_IS_1 | delta=0.0064
+
+--- Glaucoma ---
+
+luminance_mean
+  n0=45 | n1=7
+  GT=0 mediana=27.833263 | GT=1 mediana=65.333471
+  AUC separación=0.8032 | dirección=HIGHER_IS_1 | delta=0.6063
+
+luminance_median
+  n0=45 | n1=7
+  GT=0 mediana=26.000000 | GT=1 mediana=60.000000
+  AUC separación=0.8063 | dirección=HIGHER_IS_1 | delta=0.6127
+
+luminance_p05
+  n0=45 | n1=7
+  GT=0 mediana=11.000000 | GT=1 mediana=46.000000
+  AUC separación=0.8063 | dirección=HIGHER_IS_1 | delta=0.6127
+
+luminance_p95
+  n0=45 | n1=7
+  GT=0 mediana=50.000000 | GT=1 mediana=99.000000
+  AUC separación=0.7508 | dirección=HIGHER_IS_1 | delta=0.5016
+
+dark_ratio_30
+  n0=45 | n1=7
+  GT=0 mediana=0.624876 | GT=1 mediana=0.002525
+  AUC separación=0.9302 | dirección=LOWER_IS_1 | delta=-0.8603
+
+bright_ratio_225
+  n0=45 | n1=7
+  GT=0 mediana=0.000000 | GT=1 mediana=0.000000
+  AUC separación=0.5000 | dirección=HIGHER_IS_1 | delta=0.0000
+
+--- Healthy ---
+
+luminance_mean
+  n0=2 | n1=24
+  GT=0 mediana=42.863888 | GT=1 mediana=56.890266
+  AUC separación=1.0000 | dirección=HIGHER_IS_1 | delta=1.0000
+
+luminance_median
+  n0=2 | n1=24
+  GT=0 mediana=38.500000 | GT=1 mediana=52.000000
+  AUC separación=1.0000 | dirección=HIGHER_IS_1 | delta=1.0000
+
+luminance_p05
+  n0=2 | n1=24
+  GT=0 mediana=28.500000 | GT=1 mediana=39.000000
+  AUC separación=1.0000 | dirección=HIGHER_IS_1 | delta=1.0000
+
+luminance_p95
+  n0=2 | n1=24
+  GT=0 mediana=72.000000 | GT=1 mediana=90.500000
+  AUC separación=1.0000 | dirección=HIGHER_IS_1 | delta=1.0000
+
+dark_ratio_30
+  n0=2 | n1=24
+  GT=0 mediana=0.078445 | GT=1 mediana=0.003885
+  AUC separación=1.0000 | dirección=LOWER_IS_1 | delta=-1.0000
+
+bright_ratio_225
+  n0=2 | n1=24
+  GT=0 mediana=0.000000 | GT=1 mediana=0.000000
+  AUC separación=0.5208 | dirección=HIGHER_IS_1 | delta=0.0417
+
+========================================================================
+TARGET: CONTRAST
+========================================================================
+
+--- ALL ---
+
+contrast_std
+  n0=126 | n1=373
+  GT=0 mediana=25.959758 | GT=1 mediana=21.073709
+  AUC separación=0.5877 | dirección=LOWER_IS_1 | delta=-0.1755
+
+contrast_iqr
+  n0=126 | n1=373
+  GT=0 mediana=22.000000 | GT=1 mediana=21.000000
+  AUC separación=0.5296 | dirección=LOWER_IS_1 | delta=-0.0593
+
+contrast_p90_range
+  n0=126 | n1=373
+  GT=0 mediana=97.500000 | GT=1 mediana=57.000000
+  AUC separación=0.6068 | dirección=LOWER_IS_1 | delta=-0.2136
+
+contrast_cv
+  n0=126 | n1=373
+  GT=0 mediana=0.304456 | GT=1 mediana=0.275805
+  AUC separación=0.6677 | dirección=LOWER_IS_1 | delta=-0.3354
+
+--- DR-XJU ---
+
+contrast_std
+  n0=79 | n1=156
+  GT=0 mediana=29.768455 | GT=1 mediana=26.503482
+  AUC separación=0.6583 | dirección=LOWER_IS_1 | delta=-0.3166
+
+contrast_iqr
+  n0=79 | n1=156
+  GT=0 mediana=27.000000 | GT=1 mediana=24.000000
+  AUC separación=0.5695 | dirección=LOWER_IS_1 | delta=-0.1391
+
+contrast_p90_range
+  n0=79 | n1=156
+  GT=0 mediana=123.000000 | GT=1 mediana=92.500000
+  AUC separación=0.7189 | dirección=LOWER_IS_1 | delta=-0.4378
+
+contrast_cv
+  n0=79 | n1=156
+  GT=0 mediana=0.288976 | GT=1 mediana=0.282658
+  AUC separación=0.5553 | dirección=LOWER_IS_1 | delta=-0.1105
+
+--- DR-ZJU ---
+
+contrast_std
+  n0=5 | n1=181
+  GT=0 mediana=18.697197 | GT=1 mediana=17.397330
+  AUC separación=0.5702 | dirección=LOWER_IS_1 | delta=-0.1403
+
+contrast_iqr
+  n0=5 | n1=181
+  GT=0 mediana=21.000000 | GT=1 mediana=19.000000
+  AUC separación=0.6083 | dirección=LOWER_IS_1 | delta=-0.2166
+
+contrast_p90_range
+  n0=5 | n1=181
+  GT=0 mediana=52.000000 | GT=1 mediana=48.000000
+  AUC separación=0.5492 | dirección=LOWER_IS_1 | delta=-0.0983
+
+contrast_cv
+  n0=5 | n1=181
+  GT=0 mediana=0.260006 | GT=1 mediana=0.239772
+  AUC separación=0.5414 | dirección=LOWER_IS_1 | delta=-0.0829
+
+--- Glaucoma ---
+
+contrast_std
+  n0=42 | n1=10
+  GT=0 mediana=12.263558 | GT=1 mediana=17.987661
+  AUC separación=0.8167 | dirección=HIGHER_IS_1 | delta=0.6333
+
+contrast_iqr
+  n0=42 | n1=10
+  GT=0 mediana=14.500000 | GT=1 mediana=22.000000
+  AUC separación=0.7452 | dirección=HIGHER_IS_1 | delta=0.4905
+
+contrast_p90_range
+  n0=42 | n1=10
+  GT=0 mediana=37.500000 | GT=1 mediana=59.000000
+  AUC separación=0.8190 | dirección=HIGHER_IS_1 | delta=0.6381
+
+contrast_cv
+  n0=42 | n1=10
+  GT=0 mediana=0.444873 | GT=1 mediana=0.281344
+  AUC separación=0.7286 | dirección=LOWER_IS_1 | delta=-0.4571
+
+--- Healthy ---
+
+contrast_std
+  n0=0 | n1=26
+  GT=0 mediana=NA | GT=1 mediana=18.790920
+  AUC: no calculable (una sola clase)
+
+contrast_iqr
+  n0=0 | n1=26
+  GT=0 mediana=NA | GT=1 mediana=20.000000
+  AUC: no calculable (una sola clase)
+
+contrast_p90_range
+  n0=0 | n1=26
+  GT=0 mediana=NA | GT=1 mediana=51.500000
+  AUC: no calculable (una sola clase)
+
+contrast_cv
+  n0=0 | n1=26
+  GT=0 mediana=NA | GT=1 mediana=0.330636
+  AUC: no calculable (una sola clase)
+
+========================================================================
+TARGET: CLARITY
+========================================================================
+
+--- ALL ---
+
+clarity_laplacian
+  n0=202 | n1=297
+  GT=0 mediana=240.341296 | GT=1 mediana=124.754027
+  AUC separación=0.5794 | dirección=LOWER_IS_1 | delta=-0.1587
+
+--- DR-XJU ---
+
+clarity_laplacian
+  n0=121 | n1=114
+  GT=0 mediana=329.786038 | GT=1 mediana=246.079805
+  AUC separación=0.6773 | dirección=LOWER_IS_1 | delta=-0.3546
+
+--- DR-ZJU ---
+
+clarity_laplacian
+  n0=33 | n1=153
+  GT=0 mediana=87.230019 | GT=1 mediana=103.199778
+  AUC separación=0.6647 | dirección=HIGHER_IS_1 | delta=0.3294
+
+--- Glaucoma ---
+
+clarity_laplacian
+  n0=48 | n1=4
+  GT=0 mediana=36.930634 | GT=1 mediana=57.034864
+  AUC separación=0.5469 | dirección=HIGHER_IS_1 | delta=0.0938
+
+--- Healthy ---
+
+clarity_laplacian
+  n0=0 | n1=26
+  GT=0 mediana=NA | GT=1 mediana=87.584105
+  AUC: no calculable (una sola clase)
+
+Resultado: experiments/us12-image-quality/results/mshf_quality_metric_analysis.csv

@@ -1,0 +1,161 @@
+=== MSHF — COMPARACIÓN DE MÉTRICAS DE CLARIDAD ===
+
+========================================================================
+GRUPO: ALL
+========================================================================
+
+clarity_laplacian
+  n0=202 | n1=297
+  GT=0 mediana=240.34129597 | GT=1 mediana=124.75402679
+  AUC separación=0.5794 | dirección=LOWER_IS_1 | delta=-0.1587
+
+clarity_laplacian_norm
+  n0=202 | n1=297
+  GT=0 mediana=0.03204026 | GT=1 mediana=0.02404042
+  AUC separación=0.6886 | dirección=LOWER_IS_1 | delta=-0.3772
+
+clarity_tenengrad
+  n0=202 | n1=297
+  GT=0 mediana=398.35882367 | GT=1 mediana=215.04484630
+  AUC separación=0.5882 | dirección=LOWER_IS_1 | delta=-0.1764
+
+clarity_tenengrad_norm
+  n0=202 | n1=297
+  GT=0 mediana=0.05177701 | GT=1 mediana=0.03979428
+  AUC separación=0.6588 | dirección=LOWER_IS_1 | delta=-0.3176
+
+clarity_gradient_p90
+  n0=202 | n1=297
+  GT=0 mediana=12.00000000 | GT=1 mediana=15.03329638
+  AUC separación=0.8232 | dirección=HIGHER_IS_1 | delta=0.6464
+
+clarity_gradient_p90_norm
+  n0=202 | n1=297
+  GT=0 mediana=0.12993663 | GT=1 mediana=0.18134150
+  AUC separación=0.6898 | dirección=HIGHER_IS_1 | delta=0.3795
+
+========================================================================
+GRUPO: DR-XJU
+========================================================================
+
+clarity_laplacian
+  n0=121 | n1=114
+  GT=0 mediana=329.78603822 | GT=1 mediana=246.07980431
+  AUC separación=0.6773 | dirección=LOWER_IS_1 | delta=-0.3546
+
+clarity_laplacian_norm
+  n0=121 | n1=114
+  GT=0 mediana=0.03464755 | GT=1 mediana=0.02917706
+  AUC separación=0.6551 | dirección=LOWER_IS_1 | delta=-0.3101
+
+clarity_tenengrad
+  n0=121 | n1=114
+  GT=0 mediana=529.00193443 | GT=1 mediana=392.86808424
+  AUC separación=0.6769 | dirección=LOWER_IS_1 | delta=-0.3538
+
+clarity_tenengrad_norm
+  n0=121 | n1=114
+  GT=0 mediana=0.05527701 | GT=1 mediana=0.04651060
+  AUC separación=0.6560 | dirección=LOWER_IS_1 | delta=-0.3120
+
+clarity_gradient_p90
+  n0=121 | n1=114
+  GT=0 mediana=12.00000000 | GT=1 mediana=13.92838828
+  AUC separación=0.8396 | dirección=HIGHER_IS_1 | delta=0.6793
+
+clarity_gradient_p90_norm
+  n0=121 | n1=114
+  GT=0 mediana=0.11781727 | GT=1 mediana=0.16025749
+  AUC separación=0.8967 | dirección=HIGHER_IS_1 | delta=0.7934
+
+========================================================================
+GRUPO: DR-ZJU
+========================================================================
+
+clarity_laplacian
+  n0=33 | n1=153
+  GT=0 mediana=87.23001902 | GT=1 mediana=103.19977787
+  AUC separación=0.6647 | dirección=HIGHER_IS_1 | delta=0.3294
+
+clarity_laplacian_norm
+  n0=33 | n1=153
+  GT=0 mediana=0.01932210 | GT=1 mediana=0.01847707
+  AUC separación=0.5159 | dirección=LOWER_IS_1 | delta=-0.0319
+
+clarity_tenengrad
+  n0=33 | n1=153
+  GT=0 mediana=143.97724588 | GT=1 mediana=154.59407529
+  AUC separación=0.5928 | dirección=HIGHER_IS_1 | delta=0.1856
+
+clarity_tenengrad_norm
+  n0=33 | n1=153
+  GT=0 mediana=0.02891384 | GT=1 mediana=0.02677904
+  AUC separación=0.5403 | dirección=LOWER_IS_1 | delta=-0.0806
+
+clarity_gradient_p90
+  n0=33 | n1=153
+  GT=0 mediana=15.23154621 | GT=1 mediana=15.23154621
+  AUC separación=0.5283 | dirección=HIGHER_IS_1 | delta=0.0566
+
+clarity_gradient_p90_norm
+  n0=33 | n1=153
+  GT=0 mediana=0.23915958 | GT=1 mediana=0.20719433
+  AUC separación=0.5597 | dirección=LOWER_IS_1 | delta=-0.1194
+
+========================================================================
+GRUPO: Glaucoma
+========================================================================
+
+clarity_laplacian
+  n0=48 | n1=4
+  GT=0 mediana=36.93063376 | GT=1 mediana=57.03486326
+  AUC separación=0.5469 | dirección=HIGHER_IS_1 | delta=0.0938
+
+clarity_laplacian_norm
+  n0=48 | n1=4
+  GT=0 mediana=0.03257839 | GT=1 mediana=0.02733517
+  AUC separación=0.5885 | dirección=LOWER_IS_1 | delta=-0.1771
+
+clarity_tenengrad
+  n0=48 | n1=4
+  GT=0 mediana=59.83125374 | GT=1 mediana=105.49855854
+  AUC separación=0.5833 | dirección=HIGHER_IS_1 | delta=0.1667
+
+clarity_tenengrad_norm
+  n0=48 | n1=4
+  GT=0 mediana=0.05334726 | GT=1 mediana=0.04937276
+  AUC separación=0.5521 | dirección=LOWER_IS_1 | delta=-0.1042
+
+clarity_gradient_p90
+  n0=48 | n1=4
+  GT=0 mediana=9.74341649 | GT=1 mediana=14.91658487
+  AUC separación=0.8307 | dirección=HIGHER_IS_1 | delta=0.6615
+
+clarity_gradient_p90_norm
+  n0=48 | n1=4
+  GT=0 mediana=0.30276314 | GT=1 mediana=0.31037499
+  AUC separación=0.5885 | dirección=HIGHER_IS_1 | delta=0.1771
+
+========================================================================
+GRUPO: Healthy
+========================================================================
+
+clarity_laplacian
+  No calculable (una sola clase)
+
+clarity_laplacian_norm
+  No calculable (una sola clase)
+
+clarity_tenengrad
+  No calculable (una sola clase)
+
+clarity_tenengrad_norm
+  No calculable (una sola clase)
+
+clarity_gradient_p90
+  No calculable (una sola clase)
+
+clarity_gradient_p90_norm
+  No calculable (una sola clase)
+
+Resultado: experiments/us12-image-quality/results/mshf_clarity_candidate_analysis.csv

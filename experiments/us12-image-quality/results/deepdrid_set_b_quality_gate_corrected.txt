@@ -1,0 +1,50 @@
+=== DeepDRiD Set-B — VALIDACIÓN SIN REAJUSTE ===
+Observaciones: 400
+
+=== THRESHOLDS CONGELADOS DESDE SET-A ===
+clarity_gradient_p90 >= 16.06225775
+dark_ratio_30 <= 0.33113740
+contrast_cv <= 0.63830344
+fov_area_ratio >= 0.65079775
+fov_width_ratio >= 0.91093100
+fov_height_ratio >= 0.90625000
+fov_center_offset <= 0.00175000
+
+=== VALIDACIÓN DE CLARIDAD ===
+Ground truth: Clarity >= 8
+Accuracy: 0.7775
+Balanced Accuracy: 0.7744
+Recall claridad suficiente: 0.7826
+Recall claridad insuficiente: 0.7661
+False Accept Rate: 0.2339
+False Reject Rate: 0.2174
+TP=216 | FN=60 | TN=95 | FP=29
+
+=== QUALITY GATE COMPLETO VS OVERALL ===
+Accuracy: 0.6775
+Balanced Accuracy: 0.6869
+Recall SUFICIENTE: 0.7912
+Recall INSUFICIENTE: 0.5826
+False Accept Rate: 0.4174
+False Reject Rate: 0.2088
+TP=144 | FN=38 | TN=127 | FP=91
+
+=== RECHAZOS POR CRITERIO ===
+clarity: 155 | GT Overall=0: 121 | GT Overall=1: 34
+illumination: 16 | GT Overall=0: 15 | GT Overall=1: 1
+contrast: 12 | GT Overall=0: 10 | GT Overall=1: 2
+fov: 14 | GT Overall=0: 10 | GT Overall=1: 4
+
+=== COMBINACIONES DE FALLO ===
+clarity: 142
+clarity+contrast+fov+illumination: 5
+clarity+illumination: 4
+fov: 3
+clarity+fov+illumination: 3
+contrast+illumination: 3
+contrast: 2
+clarity+fov: 1
+contrast+fov: 1
+contrast+fov+illumination: 1
+
+Resultado: experiments/us12-image-quality/results/deepdrid_set_b_quality_gate_corrected.csv
