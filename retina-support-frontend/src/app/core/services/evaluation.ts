@@ -39,6 +39,24 @@ export interface EvaluationDetail {
   medico_responsable: string;
 }
 
+export interface AIModelResult {
+  estado: string;
+  resultado: string | null;
+  confianza: number | null;
+  tiempo_inferencia_ms?: number | null;
+  requiere_revision: boolean;
+  detalle_error: string | null;
+}
+
+export interface AIAnalysisResponse {
+  id_analisis: number;
+  id_evaluacion: number;
+  estado: string;
+  retinopatia_diabetica: AIModelResult;
+  glaucoma: AIModelResult;
+  requiere_revision: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -86,7 +104,6 @@ export class EvaluationService {
     );
   }
 
-
   uploadRetinography(
     evaluationId: number,
     file: File
@@ -102,5 +119,13 @@ export class EvaluationService {
     );
   }
 
+  analyzeEvaluation(
+    evaluationId: number
+  ): Observable<AIAnalysisResponse> {
 
+    return this.http.post<AIAnalysisResponse>(
+      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/analysis`,
+      {}
+    );
+  }
 }

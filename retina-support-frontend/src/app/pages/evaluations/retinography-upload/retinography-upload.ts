@@ -29,14 +29,16 @@ export class RetinographyUpload implements OnInit {
   fileFormat = '';
 
   fileErrorMessage = '';
-  // Estado de carga
+
   isUploading = false;
 
-  // Mensaje de carga exitosa
   uploadSuccessMessage = '';
 
-  // Indica si ya existe una retinografía cargada
   retinographyUploaded = false;
+
+  isAnalyzing = false;
+
+  analysisErrorMessage = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -333,6 +335,66 @@ export class RetinographyUpload implements OnInit {
       });
   }
 
+  analyzeRetinography(): void {
+
+    if (
+      !this.retinographyUploaded ||
+      this.isAnalyzing ||
+      this.isUploading
+    ) {
+      return;
+    }
+
+    this.isAnalyzing = true;
+    this.analysisErrorMessage = '';
+
+    this.evaluationService
+      .analyzeEvaluation(this.evaluationId)
+      .subscribe({
+
+        next: (response) => {
+
+          this.isAnalyzing = false;
+
+          if (
+            response.estado === 'COMPLETADO' ||
+            response.estado === 'PARCIAL'
+          ) {
+
+            // La pantalla de resultados se conectará
+            // en el siguiente paso.
+            console.log(
+              'Análisis recibido:',
+              response
+            );
+
+          } else {
+
+            this.analysisErrorMessage =
+              'No se pudo completar el análisis. Puedes intentar nuevamente o reemplazar la retinografía.';
+          }
+
+          this.cdr.markForCheck();
+        },
+
+        error: (error) => {
+
+          this.isAnalyzing = false;
+
+          if (error.status === 401) {
+            this.logout();
+            return;
+          }
+
+          this.analysisErrorMessage =
+            typeof error?.error?.detail === 'string'
+              ? error.error.detail
+              : 'Ocurrió un error durante el análisis. Puedes intentar nuevamente o reemplazar la retinografía.';
+
+          this.cdr.markForCheck();
+        }
+      });
+  }
 
   logout(): void {
 
