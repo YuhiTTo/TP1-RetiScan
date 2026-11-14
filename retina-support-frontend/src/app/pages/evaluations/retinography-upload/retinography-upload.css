@@ -777,3 +777,41 @@
     box-sizing: border-box;
     margin: 0;
 }
+
+
+/* ========================================
+   BOTÓN DE ANÁLISIS DE RETINOGRAFÍA
+======================================== */
+
+.upload-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Animación dentro del botón */
+.upload-button .loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+/* Mensajes de error del análisis */
+.upload-feedback.error {
+    background: #fdecec;
+    border: 1px solid #e9aaaa;
+    color: #b42318;
+}
+
+/* Evita interacciones durante el proceso */
+.upload-button:disabled {
+    cursor: not-allowed;
+}

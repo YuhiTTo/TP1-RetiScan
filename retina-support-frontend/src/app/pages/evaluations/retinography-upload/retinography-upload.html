@@ -327,6 +327,12 @@
 
                     </div>
 
+                    <!-- ERROR DURANTE EL ANÁLISIS -->
+                    <div class="upload-feedback error" *ngIf="analysisErrorMessage">
+                        {{ analysisErrorMessage }}
+                    </div>
+
+
                 </div>
 
             </section>
@@ -342,24 +348,29 @@
 
                 </button>
 
-
                 <button type="button" class="upload-button"
-                    [disabled]="!selectedFile || isUploading || retinographyUploaded" (click)="uploadRetinography()">
+                    [disabled]="isUploading || isAnalyzing || (!selectedFile && !retinographyUploaded)"
+                    (click)="retinographyUploaded ? analyzeRetinography() : uploadRetinography()">
 
+                    <!-- Cargando imagen -->
                     <ng-container *ngIf="isUploading">
-                        Cargando...
+                        Cargando retinografía...
                     </ng-container>
 
-                    <ng-container *ngIf="!isUploading && !retinographyUploaded">
+                    <!-- Procesando con IA -->
+                    <ng-container *ngIf="!isUploading && isAnalyzing">
+                        <span class="loading-spinner"></span>
+                        Procesando retinografía...
+                    </ng-container>
+
+                    <!-- Antes de cargar -->
+                    <ng-container *ngIf="!isUploading && !isAnalyzing && !retinographyUploaded">
                         Cargar retinografía
                     </ng-container>
 
-                    <ng-container *ngIf="!isUploading && retinographyUploaded">
-
-                        {{ selectedFile
-                        ? 'Reemplazar retinografía'
-                        : 'Retinografía cargada' }}
-
+                    <!-- Imagen cargada correctamente -->
+                    <ng-container *ngIf="!isUploading && !isAnalyzing && retinographyUploaded">
+                        Analizar retinografía
                     </ng-container>
 
                 </button>

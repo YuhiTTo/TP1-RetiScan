@@ -361,12 +361,15 @@ export class RetinographyUpload implements OnInit {
             response.estado === 'PARCIAL'
           ) {
 
-            // La pantalla de resultados se conectará
-            // en el siguiente paso.
-            console.log(
-              'Análisis recibido:',
-              response
-            );
+            // Guardar temporalmente los resultados del análisis
+            this.evaluationService.saveAnalysisResult(response);
+
+            // Navegar automáticamente a la pantalla de resultados
+            this.router.navigate([
+              '/evaluations',
+              this.evaluationId,
+              'results'
+            ]);
 
           } else {
 

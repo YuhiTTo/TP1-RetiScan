@@ -1,24 +1,16 @@
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status, Response
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.api.dependencies import (
-    get_db,
-    require_institutional_account
-)
+from app.api.dependencies import ( get_db, require_institutional_account )
 from app.models.account import Account
 from app.schemas.retinography import RetinographyResponse
-from app.services.retinography_service import (
-    RetinographyEmptyFileError,
-    RetinographyEvaluationNotFoundError,
-    RetinographyUnreadableError,
-    RetinographyUnsupportedFormatError,
-    upload_evaluation_retinography
-)
-from app.services.storage_service import (
-    StorageConfigurationError,
-    StorageUploadError
-)
+from app.services.retinography_service import ( RetinographyEmptyFileError, RetinographyEvaluationNotFoundError, RetinographyUnreadableError, RetinographyUnsupportedFormatError, upload_evaluation_retinography )
+from app.services.storage_service import ( StorageConfigurationError, StorageUploadError, StorageDownloadError, download_retinography )
+
+from app.repositories.evaluation_repository import ( get_evaluation_by_id )
+
+from app.repositories.retinography_repository import ( get_retinography_by_evaluation )
 
 
 router = APIRouter(
@@ -104,3 +96,75 @@ async def upload_retinography(
         await file.close()
 
     return retinography
+
+
+@router.get("/{evaluation_id}/retinography/image")
+def get_retinography_image(
+    evaluation_id: int,
+    db: Session = Depends(get_db),
+    institutional_account: Account = Depends(
+        require_institutional_account
+    )
+):
+    # Verificar que la evaluación pertenezca
+    # al establecimiento autenticado.
+    evaluation = get_evaluation_by_id(
+        db=db,
+        establishment_id=institutional_account.id_establecimiento,
+        evaluation_id=evaluation_id
+    )
+
+    if evaluation is None:
+        raise HTTPException(
+            status_code=404,
+            detail="La evaluación retiniana no fue encontrada."
+        )
+
+    # Buscar la retinografía asociada.
+    retinography = get_retinography_by_evaluation(
+        db=db,
+        evaluation_id=evaluation_id
+    )
+
+    if retinography is None:
+        raise HTTPException(
+            status_code=404,
+            detail="La evaluación no tiene una retinografía registrada."
+        )
+
+    # Determinar el formato de imagen.
+    image_format = retinography.formato.lower()
+
+    if image_format not in {"jpg", "jpeg", "png"}:
+        raise HTTPException(
+            status_code=415,
+            detail="Formato de imagen no admitido."
+        )
+
+    media_type = (
+        "image/png"
+        if image_format == "png"
+        else "image/jpeg"
+    )
+
+    # Recuperar la imagen original desde S3.
+    try:
+        image_bytes = download_retinography(
+            retinography.ruta_original_s3
+        )
+
+    except StorageDownloadError:
+        raise HTTPException(
+            status_code=502,
+            detail="No se pudo recuperar la retinografía."
+        )
+
+    # Enviar los bytes de imagen al frontend.
+    return Response(
+        content=image_bytes,
+        media_type=media_type,
+        headers={
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff"
+        }
+    )

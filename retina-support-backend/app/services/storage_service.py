@@ -11,6 +11,8 @@ class StorageConfigurationError(Exception):
 class StorageUploadError(Exception):
     pass
 
+class StorageDownloadError(Exception):
+    pass
 
 def get_s3_client():
     client_config = {
@@ -72,3 +74,31 @@ def upload_retinography(
         f"s3://{settings.aws_s3_bucket}/"
         f"{object_key}"
     )
+
+def download_retinography(s3_path: str) -> bytes:
+    from urllib.parse import urlparse
+
+    parsed = urlparse(s3_path)
+
+    if (
+        parsed.scheme != "s3"
+        or not settings.aws_s3_bucket
+        or parsed.netloc != settings.aws_s3_bucket
+        or not parsed.path.lstrip("/")
+    ):
+        raise StorageDownloadError(
+            "La ubicación de la retinografía no es válida."
+        )
+
+    try:
+        response = get_s3_client().get_object(
+            Bucket=settings.aws_s3_bucket,
+            Key=parsed.path.lstrip("/")
+        )
+
+        return response["Body"].read()
+
+    except (BotoCoreError, ClientError) as error:
+        raise StorageDownloadError(
+            "No se pudo recuperar la retinografía de Amazon S3."
+        ) from error

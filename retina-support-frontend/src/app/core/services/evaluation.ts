@@ -65,6 +65,8 @@ export class EvaluationService {
   private readonly apiUrl =
     'http://127.0.0.1:8000/api/v1/patients';
 
+  private analysisResult: AIAnalysisResponse | null = null;
+
   constructor(
     private http: HttpClient
   ) {
@@ -119,6 +121,15 @@ export class EvaluationService {
     );
   }
 
+  getRetinographyImage(evaluationId: number): Observable<Blob> {
+    return this.http.get(
+      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/retinography/image`,
+      {
+        responseType: 'blob'
+      }
+    );
+  }
+
   analyzeEvaluation(
     evaluationId: number
   ): Observable<AIAnalysisResponse> {
@@ -127,5 +138,17 @@ export class EvaluationService {
       `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/analysis`,
       {}
     );
+  }
+
+  saveAnalysisResult(result: AIAnalysisResponse): void {
+    this.analysisResult = result;
+  }
+
+  getAnalysisResult(evaluationId: number): AIAnalysisResponse | null {
+    if (this.analysisResult?.id_evaluacion === evaluationId) {
+      return this.analysisResult;
+    }
+
+    return null;
   }
 }
