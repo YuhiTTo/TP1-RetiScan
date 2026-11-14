@@ -1,0 +1,434 @@
+from datetime import datetime
+
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from app.models.ai_analysis import AIAnalysis
+from app.models.ai_model import AIModel
+from app.models.ai_result import AIResult
+from app.models.model_execution import ModelExecution
+from app.repositories.evaluation_repository import get_evaluation_by_id
+from app.repositories.retinography_repository import (
+    get_retinography_by_evaluation
+)
+from app.services.ai_client_service import (
+    AIServiceAnalysisError,
+    AIServiceConnectionError,
+    AIServicePreprocessingError,
+    request_ai_analysis
+)
+
+
+class AIAnalysisEvaluationNotFoundError(Exception):
+    pass
+
+
+class AIAnalysisRetinographyNotFoundError(Exception):
+    pass
+
+
+class AIModelConfigurationError(Exception):
+    pass
+
+
+class AIAnalysisExecutionError(Exception):
+    pass
+
+class AIAnalysisPreprocessingError(Exception):
+    pass
+
+def _get_active_models(
+    db: Session
+) -> dict[str, AIModel]:
+
+    statement = select(AIModel).where(
+        AIModel.estado == "ACTIVO"
+    )
+
+    models = list(
+        db.execute(statement).scalars().all()
+    )
+
+    models_by_objective: dict[str, AIModel] = {}
+
+    for model in models:
+
+        if model.objetivo in models_by_objective:
+            raise AIModelConfigurationError(
+                "Existe más de un modelo activo "
+                f"para {model.objetivo}."
+            )
+
+        models_by_objective[
+            model.objetivo
+        ] = model
+
+    required_objectives = {
+        "RETINOPATIA_DIABETICA",
+        "GLAUCOMA"
+    }
+
+    if not required_objectives.issubset(
+        models_by_objective
+    ):
+        raise AIModelConfigurationError(
+            "No están configurados todos "
+            "los modelos IA requeridos."
+        )
+
+    return models_by_objective
+
+
+def run_ai_analysis(
+    db: Session,
+    establishment_id: int,
+    evaluation_id: int
+) -> dict:
+
+    evaluation = get_evaluation_by_id(
+        db=db,
+        establishment_id=establishment_id,
+        evaluation_id=evaluation_id
+    )
+
+    if evaluation is None:
+        raise AIAnalysisEvaluationNotFoundError()
+
+    retinography = get_retinography_by_evaluation(
+        db=db,
+        evaluation_id=evaluation_id
+    )
+
+    if retinography is None:
+        raise AIAnalysisRetinographyNotFoundError()
+
+    models = _get_active_models(
+        db=db
+    )
+
+    analysis = AIAnalysis(
+        id_retinografia=(
+            retinography.id_retinografia
+        ),
+        estado="PENDIENTE"
+    )
+
+    db.add(analysis)
+    db.flush()
+
+    rd_execution = ModelExecution(
+        id_analisis=analysis.id_analisis,
+        id_modelo=models[
+            "RETINOPATIA_DIABETICA"
+        ].id_modelo,
+        estado="PENDIENTE"
+    )
+
+    glaucoma_execution = ModelExecution(
+        id_analisis=analysis.id_analisis,
+        id_modelo=models[
+            "GLAUCOMA"
+        ].id_modelo,
+        estado="PENDIENTE"
+    )
+
+    db.add_all([
+        rd_execution,
+        glaucoma_execution
+    ])
+
+    db.commit()
+
+    try:
+        response = request_ai_analysis(
+            evaluation_id=evaluation_id,
+            s3_path=retinography.ruta_original_s3
+        )
+
+    except AIServicePreprocessingError as error:
+
+        now = datetime.now()
+        error_detail = str(error)[:1000]
+
+        analysis.estado = "ERROR"
+        analysis.fecha_fin = now
+
+        rd_execution.estado = "ERROR"
+        rd_execution.fecha_fin = now
+        rd_execution.detalle_error = (
+            error_detail
+        )
+
+        glaucoma_execution.estado = "ERROR"
+        glaucoma_execution.fecha_fin = now
+        glaucoma_execution.detalle_error = (
+            error_detail
+        )
+
+        db.commit()
+
+        raise AIAnalysisPreprocessingError(
+            error_detail
+        ) from error
+
+    except (
+        AIServiceConnectionError,
+        AIServiceAnalysisError
+    ) as error:
+
+        now = datetime.now()
+        error_detail = str(error)[:1000]
+
+        analysis.estado = "ERROR"
+        analysis.fecha_fin = now
+
+        rd_execution.estado = "ERROR"
+        rd_execution.fecha_fin = now
+        rd_execution.detalle_error = error_detail
+
+        glaucoma_execution.estado = "ERROR"
+        glaucoma_execution.fecha_fin = now
+        glaucoma_execution.detalle_error = (
+            error_detail
+        )
+
+        db.commit()
+
+        raise AIAnalysisExecutionError(
+            error_detail
+        ) from error
+
+    try:
+
+        rd_data = response[
+            "retinopatia_diabetica"
+        ]
+
+        glaucoma_data = response[
+            "glaucoma"
+        ]
+
+        rd_status = rd_data[
+            "estado"
+        ]
+
+        glaucoma_status = glaucoma_data[
+            "estado"
+        ]
+
+        if rd_status not in {
+            "COMPLETADO",
+            "ERROR"
+        }:
+            raise ValueError()
+
+        if glaucoma_status not in {
+            "COMPLETADO",
+            "ERROR"
+        }:
+            raise ValueError()
+
+        if (
+            rd_status == "COMPLETADO"
+            and (
+                rd_data.get("resultado") is None
+                or rd_data.get("confianza") is None
+            )
+        ):
+            raise ValueError()
+
+        if (
+            glaucoma_status == "COMPLETADO"
+            and (
+                glaucoma_data.get("resultado") is None
+                or glaucoma_data.get("confianza") is None
+            )
+        ):
+            raise ValueError()
+
+    except (
+        KeyError,
+        TypeError,
+        ValueError
+    ) as error:
+
+        now = datetime.now()
+
+        analysis.estado = "ERROR"
+        analysis.fecha_fin = now
+
+        rd_execution.estado = "ERROR"
+        rd_execution.fecha_fin = now
+        rd_execution.detalle_error = (
+            "Respuesta inválida del Servicio IA."
+        )
+
+        glaucoma_execution.estado = "ERROR"
+        glaucoma_execution.fecha_fin = now
+        glaucoma_execution.detalle_error = (
+            "Respuesta inválida del Servicio IA."
+        )
+
+        db.commit()
+
+        raise AIAnalysisExecutionError(
+            "El Servicio IA devolvió "
+            "una respuesta inválida."
+        ) from error
+
+    now = datetime.now()
+
+    rd_execution.estado = rd_status
+    rd_execution.fecha_fin = now
+    rd_execution.tiempo_inferencia_ms = rd_data.get(
+    "tiempo_inferencia_ms"
+    )
+
+    rd_execution.detalle_error = (
+        rd_data.get("detalle_error")
+        if rd_status == "ERROR"
+        else None
+    )
+
+    glaucoma_execution.estado = (
+        glaucoma_status
+    )
+    glaucoma_execution.fecha_fin = now
+    glaucoma_execution.tiempo_inferencia_ms = glaucoma_data.get(
+    "tiempo_inferencia_ms"
+    )
+
+    glaucoma_execution.detalle_error = (
+        glaucoma_data.get("detalle_error")
+        if glaucoma_status == "ERROR"
+        else None
+    )
+
+    if (
+        rd_status == "COMPLETADO"
+        and glaucoma_status == "COMPLETADO"
+    ):
+        analysis.estado = "COMPLETADO"
+
+    elif (
+        rd_status == "COMPLETADO"
+        or glaucoma_status == "COMPLETADO"
+    ):
+        analysis.estado = "PARCIAL"
+
+    else:
+        analysis.estado = "ERROR"
+
+    analysis.fecha_fin = now
+
+    rd_result = None
+    glaucoma_result = None
+
+    if rd_status == "COMPLETADO":
+
+        rd_result = AIResult(
+            id_ejecucion=(
+                rd_execution.id_ejecucion
+            ),
+            resultado=rd_data[
+                "resultado"
+            ],
+            nivel_confianza=rd_data[
+                "confianza"
+            ]
+        )
+
+        db.add(rd_result)
+
+    if glaucoma_status == "COMPLETADO":
+
+        glaucoma_result = AIResult(
+            id_ejecucion=(
+                glaucoma_execution.id_ejecucion
+            ),
+            resultado=glaucoma_data[
+                "resultado"
+            ],
+            nivel_confianza=glaucoma_data[
+                "confianza"
+            ]
+        )
+
+        db.add(glaucoma_result)
+
+    db.commit()
+
+    db.refresh(analysis)
+
+    if rd_result is not None:
+        db.refresh(rd_result)
+
+    if glaucoma_result is not None:
+        db.refresh(glaucoma_result)
+
+    return {
+        "id_analisis": (
+            analysis.id_analisis
+        ),
+        "id_evaluacion": evaluation_id,
+        "estado": analysis.estado,
+
+        "retinopatia_diabetica": {
+            "estado": rd_execution.estado,
+            "tiempo_inferencia_ms": (
+                rd_execution.tiempo_inferencia_ms
+            ),
+            "resultado": (
+                rd_result.resultado
+                if rd_result is not None
+                else None
+            ),
+            "confianza": (
+                rd_result.nivel_confianza
+                if rd_result is not None
+                else None
+            ),
+            "requiere_revision": (
+                rd_data.get(
+                    "requiere_revision",
+                    False
+                )
+            ),
+            "detalle_error": (
+                rd_execution.detalle_error
+            )
+        },
+
+        "glaucoma": {
+            "estado": (
+                glaucoma_execution.estado
+            ),
+            "tiempo_inferencia_ms": (
+                glaucoma_execution.tiempo_inferencia_ms
+            ),
+            "resultado": (
+                glaucoma_result.resultado
+                if glaucoma_result is not None
+                else None
+            ),
+            "confianza": (
+                glaucoma_result.nivel_confianza
+                if glaucoma_result is not None
+                else None
+            ),
+            "requiere_revision": (
+                glaucoma_data.get(
+                    "requiere_revision",
+                    False
+                )
+            ),
+            "detalle_error": (
+                glaucoma_execution.detalle_error
+            )
+        },
+
+        "requiere_revision": response.get(
+            "requiere_revision",
+            False
+        )
+    }

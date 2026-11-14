@@ -1,0 +1,19 @@
+{
+    "task": "glaucoma",
+    "model": "ResNet50V2 Fine-Tuning",
+    "method": "platt_scaling",
+    "a": 0.7882374024841463,
+    "b": -0.5499764599494648,
+    "log_a": -0.23795596230960764,
+    "raw_threshold": 0.100155,
+    "calibrated_threshold": 0.0927462872218843,
+    "validation_samples": 202,
+    "negative_samples": 175,
+    "positive_samples": 27,
+    "nll_before": 0.2747078462459658,
+    "nll_after": 0.2650960595009896,
+    "labels": {
+        "0": "Bajo riesgo de Glaucoma",
+        "1": "Alto riesgo de Glaucoma"
+    }
+}
