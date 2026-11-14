@@ -28,6 +28,11 @@ class RetinographyUnreadableError(Exception):
 class RetinographyUnsupportedFormatError(Exception):
     pass
 
+
+class RetinographyReplacementNotAllowedError(Exception):
+    pass
+
+
 def upload_evaluation_retinography(
     db: Session,
     establishment_id: int,
@@ -45,6 +50,22 @@ def upload_evaluation_retinography(
 
     if evaluation is None:
         raise RetinographyEvaluationNotFoundError()
+
+    # Impedir modificar una retinografía ya analizada
+    # o una evaluación finalizada.
+    retinography = get_retinography_by_evaluation(
+        db=db,
+        evaluation_id=evaluation_id
+    )
+
+    if (
+        evaluation.estado == "FINALIZADA"
+        or (
+            retinography is not None
+            and retinography.estado == "ANALIZADA"
+        )
+    ):
+        raise RetinographyReplacementNotAllowedError()
 
     if not content:
         raise RetinographyEmptyFileError()
@@ -96,11 +117,6 @@ def upload_evaluation_retinography(
         evaluation_id=evaluation_id,
         content_type=content_type
     )
-    
-    retinography = get_retinography_by_evaluation(
-        db=db,
-        evaluation_id=evaluation_id
-    )
 
     if retinography is None:
 
@@ -131,6 +147,9 @@ def upload_evaluation_retinography(
         retinography.estado_validacion = "VALIDADA"
         retinography.calidad_imagen = None
         retinography.estado = "CARGADA"
+
+    # US-16: invalidar la prioridad al cargar otra imagen
+    evaluation.prioridad_sugerida = None
 
     try:
         db.commit()

@@ -12,6 +12,7 @@ from app.services.retinography_service import (
     RetinographyEmptyFileError,
     RetinographyEvaluationNotFoundError,
     RetinographyUnreadableError,
+    RetinographyReplacementNotAllowedError,
     RetinographyUnsupportedFormatError,
     upload_evaluation_retinography
 )
@@ -59,6 +60,16 @@ async def upload_retinography(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="La evaluación retiniana no fue encontrada."
+        )
+
+    except RetinographyReplacementNotAllowedError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "No se puede cargar o reemplazar la retinografía "
+                "porque ya fue analizada o la evaluación "
+                "se encuentra finalizada."
+            )
         )
 
     except RetinographyEmptyFileError:

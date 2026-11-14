@@ -1,4 +1,4 @@
-from sqlalchemy import Float, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
@@ -27,4 +27,9 @@ class AIResult(Base):
     nivel_confianza: Mapped[float] = mapped_column(
         Float,
         nullable=False
+    )
+
+    requiere_revision: Mapped[bool | None] = mapped_column(
+        Boolean,
+        nullable=True
     )

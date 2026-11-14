@@ -14,9 +14,18 @@ from app.models.account import Account
 from app.schemas.ai_analysis import (
     AIAnalysisResponse
 )
+from app.schemas.ai_results import (
+    AIEvaluationResultsResponse
+)
+from app.services.ai_results_service import (
+    AIResultsEvaluationNotFoundError,
+    AIResultsNotAvailableError,
+    get_ai_evaluation_results
+)
 from app.services.ai_analysis_service import (
     AIAnalysisEvaluationNotFoundError,
     AIAnalysisExecutionError,
+    AIAnalysisNotAllowedError,
     AIAnalysisImageQualityInsufficientError,
     AIAnalysisPreprocessingError,
     AIAnalysisRetinographyNotFoundError,
@@ -71,6 +80,17 @@ def analyze_evaluation(
             )
         )
 
+    except AIAnalysisNotAllowedError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "No se puede ejecutar el análisis "
+                "porque la retinografía ya fue "
+                "analizada o la evaluación "
+                "se encuentra finalizada."
+            )
+        )
+
     except AIModelConfigurationError:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -101,4 +121,43 @@ def analyze_evaluation(
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail=str(error)
+        )
+
+
+
+@router.get(
+    "/{evaluation_id}/results",
+    response_model=AIEvaluationResultsResponse,
+    status_code=status.HTTP_200_OK
+)
+def get_evaluation_results(
+    evaluation_id: int,
+    db: Session = Depends(get_db),
+    institutional_account: Account = Depends(
+        require_institutional_account
+    )
+):
+    try:
+        return get_ai_evaluation_results(
+            db=db,
+            establishment_id=(
+                institutional_account.id_establecimiento
+            ),
+            evaluation_id=evaluation_id
+        )
+
+    except AIResultsEvaluationNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="La evaluación retiniana no fue encontrada."
+        )
+
+    except AIResultsNotAvailableError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "Los resultados de inteligencia artificial "
+                "todavía no están disponibles para "
+                "esta evaluación."
+            )
         )
