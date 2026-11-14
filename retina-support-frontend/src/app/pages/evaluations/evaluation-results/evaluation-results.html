@@ -273,9 +273,16 @@
                             Sugerencia de soporte clínico
                         </h2>
 
-                        <p class="priority-pending">
-                            Prioridad de atención pendiente de definición
-                            de criterios clínicos.
+                        <p class="priority-pending" *ngIf="prioritySuggested">
+                            <strong>Prioridad sugerida: {{ prioritySuggested }}</strong>
+                            <span>
+                                Clasificación experimental de soporte clínico,
+                                pendiente de validación médica.
+                            </span>
+                        </p>
+
+                        <p class="priority-pending" *ngIf="!prioritySuggested">
+                            Prioridad sugerida no disponible para esta evaluación.
                         </p>
 
                         <p>

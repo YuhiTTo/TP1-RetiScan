@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AIAnalysisResponse, EvaluationDetail, EvaluationService } from '../../../core/services/evaluation';
+import { AIEvaluationResultsResponse, AIAnalysisResponse, EvaluationDetail, EvaluationService } from '../../../core/services/evaluation';
 
 @Component({
   selector: 'app-evaluation-results',
@@ -15,7 +15,9 @@ export class EvaluationResults implements OnInit, OnDestroy {
 
   evaluationId = 0;
 
-  analysis: AIAnalysisResponse | null = null;
+  analysis: AIAnalysisResponse | AIEvaluationResultsResponse | null = null;
+  loadingResults = false;
+  prioritySuggested: string | null = null;
   evaluation: EvaluationDetail | null = null;
   retinographyUrl: string | null = null;
   loadingRetinography = false;
@@ -52,13 +54,60 @@ export class EvaluationResults implements OnInit, OnDestroy {
     this.analysis = this.evaluationService
       .getAnalysisResult(this.evaluationId);
 
-    if (!this.analysis) {
-      this.errorMessage =
-        'Los resultados no están disponibles en esta sesión.';
-    }
+    this.prioritySuggested =
+      this.analysis?.prioridad_sugerida ?? null;
 
+    this.loadStoredResults();
     this.loadEvaluation();
     this.loadRetinographyImage();
+  }
+
+  loadStoredResults(): void {
+
+    this.loadingResults = true;
+
+    this.evaluationService
+      .getStoredEvaluationResults(this.evaluationId)
+      .subscribe({
+
+        next: (results) => {
+          this.analysis = results;
+          this.prioritySuggested = results.prioridad_sugerida;
+          this.errorMessage = '';
+          this.loadingResults = false;
+          this.cdr.markForCheck();
+        },
+
+        error: (error) => {
+          this.loadingResults = false;
+
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+            return;
+          }
+
+          if (error.status === 409 && this.analysis) {
+            this.cdr.markForCheck();
+            return;
+          }
+
+          this.analysis = null;
+          this.prioritySuggested = null;
+
+          if (error.status === 409) {
+            this.errorMessage =
+              'Los resultados todavía no están disponibles.';
+          } else if (error.status === 404) {
+            this.errorMessage =
+              'La evaluación retiniana no fue encontrada.';
+          } else {
+            this.errorMessage =
+              'No se pudieron recuperar los resultados.';
+          }
+
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   loadEvaluation(): void {

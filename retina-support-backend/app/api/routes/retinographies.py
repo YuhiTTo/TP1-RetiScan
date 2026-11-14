@@ -5,12 +5,24 @@ from sqlalchemy.orm import Session
 from app.api.dependencies import ( get_db, require_institutional_account )
 from app.models.account import Account
 from app.schemas.retinography import RetinographyResponse
-from app.services.retinography_service import ( RetinographyEmptyFileError, RetinographyEvaluationNotFoundError, RetinographyUnreadableError, RetinographyUnsupportedFormatError, upload_evaluation_retinography )
-from app.services.storage_service import ( StorageConfigurationError, StorageUploadError, StorageDownloadError, download_retinography )
+from app.repositories.evaluation_repository import get_evaluation_by_id
+from app.repositories.retinography_repository import get_retinography_by_evaluation
 
-from app.repositories.evaluation_repository import ( get_evaluation_by_id )
+from app.services.retinography_service import (
+    RetinographyEmptyFileError,
+    RetinographyEvaluationNotFoundError,
+    RetinographyReplacementNotAllowedError,
+    RetinographyUnreadableError,
+    RetinographyUnsupportedFormatError,
+    upload_evaluation_retinography,
+)
 
-from app.repositories.retinography_repository import ( get_retinography_by_evaluation )
+from app.services.storage_service import (
+    StorageConfigurationError,
+    StorageDownloadError,
+    StorageUploadError,
+    download_retinography,
+)
 
 
 router = APIRouter(
@@ -51,6 +63,16 @@ async def upload_retinography(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="La evaluación retiniana no fue encontrada."
+        )
+
+    except RetinographyReplacementNotAllowedError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "No se puede cargar o reemplazar la retinografía "
+                "porque ya fue analizada o la evaluación "
+                "se encuentra finalizada."
+            )
         )
 
     except RetinographyEmptyFileError:

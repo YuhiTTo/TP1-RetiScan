@@ -31,3 +31,4 @@ class AIAnalysisResponse(BaseModel):
     glaucoma: AIModelResultResponse
 
     requiere_revision: bool
+    prioridad_sugerida: str | None = None

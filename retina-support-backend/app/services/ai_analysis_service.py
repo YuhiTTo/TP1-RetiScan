@@ -7,6 +7,7 @@ from app.models.ai_analysis import AIAnalysis
 from app.models.ai_model import AIModel
 from app.models.ai_result import AIResult
 from app.models.model_execution import ModelExecution
+from app.services.clinical_priority_service import calculate_suggested_priority
 from app.repositories.evaluation_repository import get_evaluation_by_id
 from app.repositories.retinography_repository import (
     get_retinography_by_evaluation
@@ -28,6 +29,8 @@ class AIAnalysisEvaluationNotFoundError(Exception):
 class AIAnalysisRetinographyNotFoundError(Exception):
     pass
 
+class AIAnalysisNotAllowedError(Exception):
+    pass
 
 class AIModelConfigurationError(Exception):
     pass
@@ -107,6 +110,14 @@ def run_ai_analysis(
 
     if retinography is None:
         raise AIAnalysisRetinographyNotFoundError()
+
+    # Impedir reanalizar una retinografía ya analizada
+    # o una evaluación finalizada.
+    if (
+        evaluation.estado == "FINALIZADA"
+        or retinography.estado == "ANALIZADA"
+    ):
+        raise AIAnalysisNotAllowedError()
 
     # ========================================================
     # US-12 — Control mínimo de calidad
@@ -377,6 +388,7 @@ def run_ai_analysis(
         and glaucoma_status == "COMPLETADO"
     ):
         analysis.estado = "COMPLETADO"
+        retinography.estado = "ANALIZADA"
 
     elif (
         rd_status == "COMPLETADO"
@@ -403,7 +415,10 @@ def run_ai_analysis(
             ],
             nivel_confianza=rd_data[
                 "confianza"
-            ]
+            ],
+            requiere_revision=rd_data.get(
+                "requiere_revision"
+            )
         )
 
         db.add(rd_result)
@@ -419,10 +434,27 @@ def run_ai_analysis(
             ],
             nivel_confianza=glaucoma_data[
                 "confianza"
-            ]
+            ],
+            requiere_revision=glaucoma_data.get(
+                "requiere_revision"
+            )
         )
 
         db.add(glaucoma_result)
+
+
+    # ========================================================
+    # US-16 — Sugerencia de prioridad de atención
+    # ========================================================
+
+    if rd_result is not None and glaucoma_result is not None:
+        evaluation.prioridad_sugerida = calculate_suggested_priority(
+            rd_result.resultado,
+            glaucoma_result.resultado
+        )
+    else:
+        evaluation.prioridad_sugerida = None
+
 
     db.commit()
 
@@ -494,6 +526,8 @@ def run_ai_analysis(
                 glaucoma_execution.detalle_error
             )
         },
+
+        "prioridad_sugerida": evaluation.prioridad_sugerida,
 
         "requiere_revision": response.get(
             "requiere_revision",

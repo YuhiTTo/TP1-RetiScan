@@ -55,6 +55,36 @@ export interface AIAnalysisResponse {
   retinopatia_diabetica: AIModelResult;
   glaucoma: AIModelResult;
   requiere_revision: boolean;
+  prioridad_sugerida?: string | null;
+}
+
+
+export interface StoredModelResult {
+  estado: string;
+  resultado: string;
+  confianza: number;
+  requiere_revision: boolean | null;
+}
+
+export interface StoredRetinography {
+  id_retinografia: number;
+  nombre_archivo: string;
+  formato: string;
+  ancho_px: number;
+  alto_px: number;
+}
+
+export interface AIEvaluationResultsResponse {
+  id_evaluacion: number;
+  id_analisis: number;
+  estado: string;
+  retinografia: StoredRetinography;
+  retinopatia_diabetica: StoredModelResult;
+  glaucoma: StoredModelResult;
+  requiere_revision: boolean | null;
+  prioridad_sugerida: string | null;
+  resumen: string | null;
+  aviso_soporte_clinico: string;
 }
 
 @Injectable({
@@ -127,6 +157,15 @@ export class EvaluationService {
       {
         responseType: 'blob'
       }
+    );
+  }
+
+  getStoredEvaluationResults(
+    evaluationId: number
+  ): Observable<AIEvaluationResultsResponse> {
+
+    return this.http.get<AIEvaluationResultsResponse>(
+      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/results`
     );
   }
 
