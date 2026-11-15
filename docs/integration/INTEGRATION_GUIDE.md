@@ -552,120 +552,148 @@ Estados utilizados:
 
 ## Estado
 
-**BACKEND IMPLEMENTADO Y PROBADO PARCIALMENTE**
+**IMPLEMENTADA Y PROBADA — INTEGRACIÓN TÉCNICA PRINCIPAL**
 
-La recuperación de resultados está implementada y probada.
-La integración final con Angular y la visualización de la
-retinografía deben verificarse antes de cerrar US-16.
+**Fecha de las verificaciones:** 14 de noviembre de 2026.
+**Rama base:** `Build/Integration-US16-FrontendSprint3`.
+**Commit de integración evaluado:** `e5699e0`.
 
-## Ejecución del análisis
+Se comprobó la consulta de resultados persistidos mediante FastAPI, su presentación en Angular, la recuperación tras recargar y reiniciar los servidores, y los errores HTTP 404 y 409. La prioridad **MEDIA** se comprobó mediante ejecución directa de la función Python, **no** mediante una evaluación almacenada y visualizada de extremo a extremo. No se ha realizado validación clínica.
 
-Endpoint:
+Las pruebas detalladas y las capturas recortadas se registran en el [Informe de pruebas US-16](../qa/INFORME_PRUEBAS_US16_2026-11-14.md).
+
+## Alcance y componentes integrados
+
+- **Frontend:** Angular, componentes `evaluation-results.ts` y `evaluation-results.html`.
+- **Cliente HTTP:** `core/services/evaluation.ts`, método `getStoredEvaluationResults(evaluationId)`.
+- **Backend:** FastAPI y servicios `ai_analysis_service.py`, `ai_results_service.py` y `clinical_priority_service.py`.
+- **Persistencia:** PostgreSQL para análisis, resultados, indicadores de revisión y prioridad sugerida.
+- **Servicio IA:** procesamiento de Retinopatía Diabética y Glaucoma mediante los modelos previamente configurados; su ejecución no es necesaria para realizar la consulta GET de resultados ya existentes.
+
+La pantalla conserva también la visualización de la retinografía mediante la solicitud independiente de imagen del Backend. En las pruebas se comprobó que la imagen aparece en Angular; no se efectuó una auditoría de seguridad de S3 ni de las políticas de acceso al almacenamiento.
+
+## Endpoints y comportamiento comprobado
+
+### POST — Ejecución del análisis
 
 `POST /api/v1/evaluations/{evaluation_id}/analysis`
 
-El Backend ejecuta los modelos de Retinopatía Diabética
-y Glaucoma mediante el Servicio IA.
+El Backend ejecuta la verificación de calidad y, cuando corresponde, el análisis de RD y Glaucoma. Al completar correctamente ambos resultados:
 
-Cuando ambos modelos terminan correctamente:
+- `ANALISIS_IA` queda en estado `COMPLETADO`;
+- la retinografía queda `ANALIZADA`;
+- se almacenan las clasificaciones y sus indicadores de confianza;
+- se conservan los indicadores `requiere_revision` de ambos modelos;
+- se calcula y persiste `prioridad_sugerida`.
 
-- El análisis queda en estado `COMPLETADO`.
-- La retinografía pasa a estado `ANALIZADA`.
-- Se almacenan los resultados y niveles de confianza.
-- Se registra `requiere_revision` para cada modelo.
-- Se calcula y almacena `prioridad_sugerida`.
+La prueba previa del POST para la evaluación 2 obtuvo HTTP 200. Se comprobó también que volver a analizar una retinografía ya analizada es rechazado con HTTP 409. La consulta posterior de resultados no invoca nuevamente el POST.
 
-## Prioridad sugerida
-
-La prioridad se calcula a partir de las dos clasificaciones:
-
-- `ALTA`
-- `MEDIA`
-- `BAJA`
-
-Se utiliza la mayor prioridad correspondiente a los
-resultados de ambas patologías.
-
-La prioridad constituye información de soporte clínico,
-no una decisión médica definitiva.
-
-## Persistencia de advertencias
-
-Se incorporó el campo nullable:
-
-`RESULTADO_IA.requiere_revision`
-
-Mediante la migración Alembic:
-
-`c3cde9d8a14c`
-
-Los nuevos análisis almacenan los indicadores devueltos
-por el Servicio IA.
-
-Los registros históricos pueden conservar `NULL`, que no
-debe interpretarse automáticamente como `False`.
-
-## Consulta de resultados
-
-Endpoint:
+### GET — Consulta de resultados persistidos
 
 `GET /api/v1/evaluations/{evaluation_id}/results`
 
-Autenticación:
+La ruta requiere autenticación institucional (`require_institutional_account`) y, por diseño, comprueba la pertenencia de la evaluación al establecimiento autenticado. **Las pruebas manuales aquí registradas no sustituyen pruebas de seguridad con cuentas de diferentes establecimientos.**
 
-`require_institutional_account`
+La respuesta incluye, entre otros:
 
-La consulta verifica que la evaluación pertenezca al
-establecimiento autenticado.
+- `id_evaluacion`, `id_analisis`, `estado` del análisis;
+- metadatos de `retinografia`;
+- `retinopatia_diabetica` y `glaucoma` (estado, resultado, confianza y `requiere_revision`);
+- `requiere_revision` general;
+- `prioridad_sugerida`;
+- `resumen` (nullable);
+- `aviso_soporte_clinico`.
 
-Recupera desde PostgreSQL:
+**HTTP observados en las pruebas del 14/11/2026:**
 
-- Identificador y estado del análisis.
-- Metadatos de la retinografía.
-- Clasificación de Retinopatía Diabética.
-- Clasificación de riesgo de Glaucoma.
-- Confianza independiente por modelo.
-- Indicador de revisión independiente por modelo.
-- Prioridad sugerida.
-- Resumen `Sin indicios de las patologías evaluadas`
-  cuando corresponde.
-- Aviso de que los resultados y la prioridad no
-  sustituyen el criterio del oftalmólogo.
+| Escenario | Resultado observado | Comportamiento en Angular |
+|---|---|---|
+| Evaluación 2 con análisis completo | `200 OK` | Resultados RD y Glaucoma, advertencias y prioridad ALTA |
+| Evaluación inexistente (`999999999`) | `404 Not Found` | «La evaluación retiniana no fue encontrada.» |
+| Evaluación 3 existente, sin análisis | `409 Conflict` | «Los resultados todavía no están disponibles.» |
 
-El GET no vuelve a ejecutar los modelos CNN.
+La evaluación 3 no tenía retinografía; una solicitud adicional a `/retinography/image` devolvió 404. Esto es independiente del 409 correspondiente a `/results`.
 
-## Reglas de protección
+### GET — Imagen de retinografía
 
-No se permite reemplazar la retinografía si está
-`ANALIZADA` o la evaluación está `FINALIZADA`.
+`GET /api/v1/evaluations/{evaluation_id}/retinography/image`
 
-Tampoco se permite repetir el análisis sobre una
-retinografía `ANALIZADA` o evaluación `FINALIZADA`.
+En las evaluaciones 1 y 2, Angular mostró la retinografía correspondiente junto a los resultados. Se verificó su persistencia visual después de F5, pero **no** se completaron pruebas de autorización, aislamiento entre establecimientos ni seguridad de almacenamiento.
 
-Estos intentos son rechazados mediante HTTP 409.
+## Reglas de prioridad sugerida
 
-Las evaluaciones nuevas pueden utilizar imágenes
-idénticas a las de otras evaluaciones.
+La función `calculate_suggested_priority()` utiliza la prioridad más alta entre RD y glaucoma, siempre que ambas categorías estén reconocidas. Si falta una clasificación o alguna categoría es desconocida, devuelve `None`.
 
-## Pruebas funcionales realizadas
+| Clasificación RD | Prioridad RD |
+|---|---|
+| Sin indicios de Retinopatía Diabética | BAJA |
+| Leve | BAJA |
+| Moderada | MEDIA |
+| Severa | ALTA |
+| Proliferativa | ALTA |
 
-Evaluación 2, análisis 14:
+| Clasificación glaucoma | Prioridad glaucoma |
+|---|---|
+| Bajo riesgo de Glaucoma | BAJA |
+| Alto riesgo de Glaucoma | ALTA |
 
-- POST de análisis: HTTP 200.
-- Retinopatía Diabética: Moderada.
-- Glaucoma: Alto riesgo de Glaucoma.
-- Ambos indicadores `requiere_revision`: `true`.
-- Prioridad sugerida: `ALTA`.
-- Persistencia verificada en PostgreSQL.
-- GET de resultados: HTTP 200.
-- Reanálisis de la evaluación 2: HTTP 409.
+Orden: `BAJA < MEDIA < ALTA`.
 
-## Funcionalidades pendientes de verificar
+**Prueba de cálculo:** se ejecutaron cinco aserciones Python y todas pasaron. Entre ellas, RD `Moderada` + glaucoma `Bajo riesgo de Glaucoma` devolvió **MEDIA**; RD `Moderada` + glaucoma `Alto riesgo de Glaucoma` devolvió **ALTA**. El caso con un resultado faltante devolvió `None`.
 
-- Presentación completa de resultados en Angular.
-- Visualización segura de la retinografía almacenada en S3.
-- Prueba específica del resumen `Sin indicios`.
-- Pruebas adicionales de acceso y errores del GET.
+Las reglas son **experimentales y pendientes de validación por especialistas**. Las cifras de confianza de los modelos no deben presentarse como probabilidades clínicas sin justificar su interpretación y calibración.
 
-Estas funcionalidades no se consideran todavía
-completamente validadas.
+## Persistencia de indicadores de revisión
+
+La migración Alembic `c3cde9d8a14c` incorporó el campo nullable `RESULTADO_IA.requiere_revision`.
+
+- Los análisis nuevos pueden almacenar los valores recibidos del Servicio IA.
+- Los registros históricos pueden conservar `NULL`, que no debe equipararse automáticamente a `False`.
+- En la evaluación 2, la respuesta del GET presentó `requiere_revision = true` para RD, glaucoma y el resultado general; Angular mostró ambas advertencias.
+
+## Casos de prueba ejecutados
+
+| Identificador | Caso | Evidencia | Veredicto |
+|---|---|---|---|
+| US16-T01 | Evaluación 2: RD Moderada, glaucoma Alto riesgo, prioridad ALTA | GET 200, JSON y pantalla | Aprobado |
+| US16-T02 | Evaluación 1: RD Sin indicios, glaucoma Bajo riesgo, prioridad BAJA | Pantalla Angular | Aprobado (visual) |
+| US16-T03 | Recargar evaluación 2 con F5 | GET 200 y resultados reaparecen | Aprobado |
+| US16-T04 | Consultar evaluación inexistente `999999999` | GET 404 y mensaje Angular | Aprobado |
+| US16-T05 | Consultar evaluación 3 sin análisis | GET 409 y mensaje Angular | Aprobado |
+| US16-T06 | Cálculo Python de prioridades y resultado faltante | 5 aserciones correctas, incluida MEDIA | Aprobado (función) |
+| US16-T07 | «Finalizar evaluación» de evaluación 2 | Navegación a `/patients/1` | Aprobado (solo navegación) |
+| US16-T08 | Detener/reiniciar FastAPI y Angular | Servicios y resultados de evaluación 2 disponibles | Aprobado (operación local) |
+| US16-T09 | Commit de integración y publicación de rama | `e5699e0`, push de rama de integración | Aprobado |
+| US16-T10 | Prioridad MEDIA persistida y visualizada en Angular | No se creó caso E2E | Pendiente |
+
+Los valores observados en la evaluación 2 incluyen `id_analisis = 14`, confianza RD ~39,37 % y confianza glaucoma ~3,67 %. En la evaluación 1, la pantalla mostró RD ~99,23 % y glaucoma ~58,12 %. Son **indicadores del modelo**, no probabilidades clínicas validadas.
+
+## Integración Angular y comportamiento de navegación
+
+El componente de resultados solicita al Backend los datos persistidos al acceder a `/evaluations/{evaluationId}/results`; por ello, una recarga F5 permite recuperar los resultados sin depender únicamente del estado temporal del frontend.
+
+El botón **«Finalizar evaluación»** está conectado a `goToPatient()` y **solo navega** a `/patients/{id}`. En las pruebas, desde la evaluación 2 redirigió a `/patients/1`. **No cambia el estado a `FINALIZADA` ni realiza cierre formal en PostgreSQL.**
+
+El botón **«Ver»** de la pestaña de historial del paciente continúa sin acción implementada; el enlace provisional añadido durante las pruebas fue revertido deliberadamente para no invadir la funcionalidad pendiente del frontend.
+
+## Observaciones y pendientes identificados
+
+1. **Consistencia de estados:** las evaluaciones 1 y 2 figuraban `PENDIENTE` en `evaluacion_retiniana` pese a disponer de análisis IA `COMPLETADO`. Definir claramente la diferencia entre estado de evaluación, análisis y retinografía antes de corregirlos; no modificarlos manualmente.
+2. **Cierre formal:** establecer el significado clínico y transaccional de «Finalizar evaluación» y sus criterios de aceptación.
+3. **Historial:** implementar y validar la acción «Ver» y la navegación correspondiente, coordinando el trabajo de frontend.
+4. **Prueba MEDIA extremo a extremo:** observar un caso legítimo/controlado con resultado persistido y visualización en Angular; no alterar los resultados existentes para forzar un caso.
+5. **Seguridad/autorización:** probar acceso sin sesión, acceso denegado y aislamiento por establecimiento para resultados e imagen. La existencia de validaciones en código no equivale a prueba de seguridad concluida.
+6. **Resumen «Sin indicios»:** falta una verificación específica del campo `resumen` en la respuesta y su presentación, cuando aplique.
+7. **Mensajes y estilos:** en los escenarios 404/409, la pantalla sigue intentando obtener la imagen; revisar manejo de estado vacío y apariencia del botón «Volver a la retinografía».
+8. **Interpretación clínica:** validar con oftalmólogos la matriz ALTA/MEDIA/BAJA, las advertencias y los indicadores de confianza, especialmente los valores bajos asociados a categorías de alto riesgo.
+9. **Reproducibilidad:** en una terminal WSL se observó `conda: command not found` aun cuando Python pudo iniciar Uvicorn; revisar la inicialización de Conda sin confundirlo con un fallo del backend.
+10. **Configuración de modelos en otro equipo:** la tabla `modelo_ia` estaba vacía y el análisis mostraba un error de configuración; se confirmó su resolución mediante `app/scripts/seed_ai_models.py`. Esto no representa un error de inferencia del modelo.
+
+## Referencias internas
+
+- [Informe detallado de pruebas y evidencias](../qa/INFORME_PRUEBAS_US16_2026-11-14.md).
+- `retina-support-backend/app/services/clinical_priority_service.py`.
+- `retina-support-backend/app/services/ai_results_service.py`.
+- `retina-support-frontend/src/app/pages/evaluations/evaluation-results/`.
+
+**Nota de alcance:** las pruebas corresponden al prototipo en un entorno local de desarrollo, no a un despliegue clínico, certificación regulatoria ni validación diagnóstica.
