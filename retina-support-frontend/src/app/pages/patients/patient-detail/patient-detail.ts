@@ -306,6 +306,67 @@ export class PatientDetail implements OnInit {
       });
   }
 
+  getEvaluationResultState(
+    evaluation: Evaluation
+  ): 'pending' | 'incomplete' | 'clear' | 'high' | 'medium' | 'neutral' {
+
+    const rd = evaluation.retinopatia_diabetica;
+    const glaucoma = evaluation.glaucoma;
+
+    if (!rd && !glaucoma) {
+      return 'pending';
+    }
+
+    if (!rd || !glaucoma) {
+      return 'incomplete';
+    }
+
+    const prioridad =
+      (evaluation.prioridad_sugerida ?? '').trim().toUpperCase();
+
+    const sinIndicios =
+      rd.resultado.trim() === 'Sin indicios de Retinopatía Diabética' &&
+      glaucoma.resultado.trim() === 'Bajo riesgo de Glaucoma';
+
+    if (
+      sinIndicios &&
+      (prioridad === '' || prioridad === 'BAJA')
+    ) {
+      return 'clear';
+    }
+
+    if (prioridad === 'ALTA') {
+      return 'high';
+    }
+
+    if (prioridad === 'MEDIA') {
+      return 'medium';
+    }
+
+    return 'neutral';
+  }
+
+  formatHistoryConfidence(
+    confianza: number | null | undefined
+  ): string {
+
+    if (confianza == null || !Number.isFinite(confianza)) {
+      return 'No disponible';
+    }
+
+    return `${(confianza * 100).toFixed(2)} %`;
+  }
+
+
+  viewEvaluation(evaluationId: number): void {
+    this.router.navigate([
+      '/evaluations',
+      evaluationId,
+      'detail'
+    ]);
+  }
+
+
   newEvaluation(): void {
 
     if (!this.patient) {

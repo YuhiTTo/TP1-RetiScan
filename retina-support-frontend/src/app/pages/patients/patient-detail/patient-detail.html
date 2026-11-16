@@ -263,8 +263,33 @@
                                 <!-- RESULTADO IA -->
                                 <td>
 
-                                    <div class="result-badge pending">
-                                        Pendiente de análisis
+                                    <div class="result-badge"
+                                         [ngClass]="'result-badge--' + getEvaluationResultState(evaluation)"
+                                         [ngSwitch]="getEvaluationResultState(evaluation)">
+
+                                        <span *ngSwitchCase="'pending'">
+                                            Pendiente de análisis
+                                        </span>
+
+                                        <span *ngSwitchCase="'incomplete'">
+                                            Resultados incompletos
+                                        </span>
+
+                                        <span *ngSwitchCase="'clear'">
+                                            Sin indicios de las patologías evaluadas
+                                        </span>
+
+                                        <ng-container *ngSwitchDefault>
+                                            <span>
+                                                RD: {{ evaluation.retinopatia_diabetica?.resultado }}
+                                                ({{ formatHistoryConfidence(evaluation.retinopatia_diabetica?.confianza) }})
+                                            </span>
+                                            <span>
+                                                Glaucoma: {{ evaluation.glaucoma?.resultado }}
+                                                ({{ formatHistoryConfidence(evaluation.glaucoma?.confianza) }})
+                                            </span>
+                                        </ng-container>
+
                                     </div>
 
                                 </td>
@@ -279,7 +304,7 @@
                                 <!-- ACCIÓN -->
                                 <td>
 
-                                    <button class="evaluation-view-button">
+                                    <button class="evaluation-view-button" (click)="viewEvaluation(evaluation.id_evaluacion)">
                                         Ver
                                     </button>
 

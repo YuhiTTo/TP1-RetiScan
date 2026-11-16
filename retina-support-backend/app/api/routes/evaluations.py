@@ -5,9 +5,36 @@ from sqlalchemy.orm import Session
 from app.api.dependencies import ( get_db, require_institutional_account )
 from app.models.account import Account
 from app.models.doctor import Doctor
+from app.schemas.evaluation import (
+    MedicalObservationUpdate,
+    MedicalObservationResponse
+)
+from app.services.medical_observation_service import (
+    MedicalObservationNotFoundError,
+    MedicalObservationResultsNotAvailableError,
+    MedicalObservationNotFinalizedError,
+    save_medical_observation
+)
 from app.schemas.evaluation import ( EvaluationCreate, EvaluationResponse, EvaluationListResponse, EvaluationDetailResponse )
 from app.services.evaluation_service import ( EvaluationDoctorNotFoundError, EvaluationPatientNotFoundError, EvaluationNotFoundError, get_patient_evaluations, get_evaluation_detail, create_evaluation )
 
+
+from app.schemas.evaluation import (
+    EvaluationFinalizeRequest,
+    EvaluationFinalizeResponse,
+)
+from app.services.evaluation_finalization_service import (
+    EvaluationFinalizationNotFoundError,
+    EvaluationAlreadyFinalizedError,
+    EvaluationInvalidStateError,
+    EvaluationFinalizationResultsNotAvailableError,
+    finalize_evaluation,
+)
+
+from app.services.ai_results_service import (
+    AIResultsNotAvailableError,
+    get_ai_evaluation_results,
+)
 
 router = APIRouter(
     prefix="/api/v1/patients",
@@ -102,6 +129,33 @@ def list_patient_evaluations(
                 else "Médico no disponible"
             )
 
+            rd_history = None
+            glaucoma_history = None
+
+            try:
+                stored = get_ai_evaluation_results(
+                    db=db,
+                    establishment_id=current_account.id_establecimiento,
+                    evaluation_id=evaluation.id_evaluacion
+                )
+
+                rd_history = {
+                    "resultado": stored[
+                        "retinopatia_diabetica"
+                    ]["resultado"],
+                    "confianza": stored[
+                        "retinopatia_diabetica"
+                    ]["confianza"]
+                }
+
+                glaucoma_history = {
+                    "resultado": stored["glaucoma"]["resultado"],
+                    "confianza": stored["glaucoma"]["confianza"]
+                }
+
+            except AIResultsNotAvailableError:
+                pass
+
             response.append({
                 "id_evaluacion": evaluation.id_evaluacion,
                 "id_paciente": evaluation.id_paciente,
@@ -130,7 +184,9 @@ def list_patient_evaluations(
                 ),
                 "medico_responsable": (
                     medico_responsable
-                )
+                ),
+                "retinopatia_diabetica": rd_history,
+                "glaucoma": glaucoma_history
             })
 
         return response
@@ -193,6 +249,7 @@ def get_evaluation(
         fecha_evaluacion=evaluation.fecha_evaluacion,
         ojo_evaluado=evaluation.ojo_evaluado,
         estado=evaluation.estado,
+        observacion_medica=evaluation.observacion_medica,
 
         id_paciente=patient.id_paciente,
         numero_documento=patient.numero_documento,
@@ -206,4 +263,139 @@ def get_evaluation(
         medico_responsable=(
             f"{doctor.nombres} {doctor.apellidos}"
         )
+    )
+
+
+@detail_router.patch(
+    "/{evaluation_id}/medical-observation",
+    response_model=MedicalObservationResponse,
+    status_code=status.HTTP_200_OK,
+    responses={
+        401: {"description": "No autenticado"},
+        403: {"description": "Cuenta sin permisos"},
+        404: {"description": "Evaluación no encontrada"},
+        409: {
+            "description": (
+                "Evaluación sin resultados IA completos "
+                "o evaluación no finalizada"
+            )
+        },
+        422: {"description": "Observación inválida"}
+    }
+)
+def update_medical_observation(
+    evaluation_id: int,
+    data: MedicalObservationUpdate,
+    db: Session = Depends(get_db),
+    institutional_account: Account = Depends(
+        require_institutional_account
+    )
+):
+    try:
+        evaluation = save_medical_observation(
+            db=db,
+            establishment_id=(
+                institutional_account.id_establecimiento
+            ),
+            evaluation_id=evaluation_id,
+            observation=data.observacion_medica
+        )
+
+    except MedicalObservationNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="La evaluación retiniana no fue encontrada."
+        )
+
+    except MedicalObservationResultsNotAvailableError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "La evaluación todavía no tiene resultados "
+                "de inteligencia artificial completos."
+            )
+        )
+
+    except MedicalObservationNotFinalizedError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "Solo se puede modificar la observación de una evaluación finalizada."
+            )
+        )
+
+    return MedicalObservationResponse(
+        id_evaluacion=evaluation.id_evaluacion,
+        observacion_medica=evaluation.observacion_medica,
+        estado=evaluation.estado
+    )
+
+
+@detail_router.post(
+    "/{evaluation_id}/finalize",
+    response_model=EvaluationFinalizeResponse,
+    status_code=status.HTTP_200_OK,
+    responses={
+        401: {"description": "No autenticado"},
+        403: {"description": "Cuenta sin permisos"},
+        404: {"description": "Evaluación no encontrada"},
+        409: {
+            "description": (
+                "Evaluación ya finalizada, estado inválido "
+                "o resultados IA incompletos"
+            )
+        },
+        422: {"description": "Datos de finalización inválidos"},
+    },
+)
+def finalize_retinal_evaluation(
+    evaluation_id: int,
+    data: EvaluationFinalizeRequest,
+    db: Session = Depends(get_db),
+    institutional_account: Account = Depends(
+        require_institutional_account
+    ),
+):
+    try:
+        evaluation = finalize_evaluation(
+            db=db,
+            establishment_id=(
+                institutional_account.id_establecimiento
+            ),
+            evaluation_id=evaluation_id,
+            observation=data.observacion_medica,
+        )
+
+    except EvaluationFinalizationNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="La evaluación retiniana no fue encontrada.",
+        )
+
+    except EvaluationAlreadyFinalizedError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="La evaluación ya se encuentra finalizada.",
+        )
+
+    except EvaluationInvalidStateError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="El estado de la evaluación no permite finalizarla.",
+        )
+
+    except EvaluationFinalizationResultsNotAvailableError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "La evaluación todavía no tiene resultados "
+                "de inteligencia artificial completos."
+            ),
+        )
+
+    return EvaluationFinalizeResponse(
+        id_evaluacion=evaluation.id_evaluacion,
+        estado=evaluation.estado,
+        observacion_medica=evaluation.observacion_medica,
+        fecha_finalizacion=evaluation.fecha_finalizacion,
     )

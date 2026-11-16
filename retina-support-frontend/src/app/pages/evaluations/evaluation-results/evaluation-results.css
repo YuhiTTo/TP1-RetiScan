@@ -436,6 +436,73 @@ button.menu-item:hover {
     font-size: 13px;
 }
 
+/* FORMULARIO DE OBSERVACION MEDICA - US-17 */
+.observation-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #172033;
+}
+
+.observation-textarea {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd3dd;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #172033;
+    font: inherit;
+    resize: vertical;
+}
+
+.observation-textarea:focus-visible {
+    outline: 2px solid #246dcc;
+    outline-offset: 1px;
+}
+
+.observation-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.observation-count {
+    color: #687386;
+    font-size: 12px;
+}
+
+.observation-save-button {
+    border: none;
+    border-radius: 5px;
+    background: #246dcc;
+    color: #ffffff;
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.observation-save-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.observation-success {
+    color: #166534;
+}
+
+.observation-error {
+    color: #b42318;
+}
+
+.observation-info {
+    color: #687386;
+}
+
 /* ACCIONES */
 .page-actions {
     display: flex;

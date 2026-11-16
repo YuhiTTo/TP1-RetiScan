@@ -9,6 +9,7 @@ import { PatientDetail } from './pages/patients/patient-detail/patient-detail';
 import { EvaluationCreate } from './pages/evaluations/evaluation-create/evaluation-create';
 import { RetinographyUpload } from './pages/evaluations/retinography-upload/retinography-upload';
 import { EvaluationResults } from './pages/evaluations/evaluation-results/evaluation-results';
+import { EvaluationDetail } from './pages/evaluations/evaluation-detail/evaluation-detail';
 
 
 export const routes: Routes = [
@@ -48,6 +49,10 @@ export const routes: Routes = [
     {
         path: 'evaluations/:evaluationId/retinography',
         component: RetinographyUpload
+    },
+    {
+        path: 'evaluations/:evaluationId/detail',
+        component: EvaluationDetail
     },
     {
         path: 'evaluations/:evaluationId/results',

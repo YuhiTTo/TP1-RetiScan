@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AIEvaluationResultsResponse, AIAnalysisResponse, EvaluationDetail, EvaluationService } from '../../../core/services/evaluation';
 
 @Component({
   selector: 'app-evaluation-results',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './evaluation-results.html',
   styleUrl: './evaluation-results.css'
 })
@@ -22,6 +23,11 @@ export class EvaluationResults implements OnInit, OnDestroy {
   retinographyUrl: string | null = null;
   loadingRetinography = false;
   retinographyError = '';
+
+  observationText = '';
+
+  finalizingEvaluation = false;
+  finalizationError = '';
 
   loadingEvaluation = false;
   errorMessage = '';
@@ -121,6 +127,7 @@ export class EvaluationResults implements OnInit, OnDestroy {
         next: (response) => {
 
           this.evaluation = response;
+          this.observationText = response.observacion_medica ?? '';
           this.loadingEvaluation = false;
 
           this.cdr.markForCheck();
@@ -144,6 +151,101 @@ export class EvaluationResults implements OnInit, OnDestroy {
         }
       });
   }
+
+  finalizeRetinalEvaluation(): void {
+
+    if (!this.evaluation || this.finalizingEvaluation) {
+      return;
+    }
+
+    this.finalizationError = '';
+
+    if (this.evaluation.estado === 'FINALIZADA') {
+      this.finalizationError =
+        'Esta evaluación ya se encuentra finalizada.';
+      this.cdr.markForCheck();
+      return;
+    }
+
+    if (this.loadingResults || !this.analysis) {
+      this.finalizationError =
+        'Los resultados del análisis todavía no están disponibles.';
+      this.cdr.markForCheck();
+      return;
+    }
+
+    const observation = this.observationText.trim();
+
+    if (observation.length > 1000) {
+      this.finalizationError =
+        'La observación no puede superar los 1000 caracteres.';
+      this.cdr.markForCheck();
+      return;
+    }
+
+    this.finalizingEvaluation = true;
+
+    this.evaluationService
+      .finalizeEvaluation(
+        this.evaluationId,
+        observation || null
+      )
+      .subscribe({
+
+        next: (response) => {
+          this.finalizingEvaluation = false;
+
+          if (!this.evaluation) {
+            return;
+          }
+
+          this.evaluation.estado = response.estado;
+          this.evaluation.observacion_medica =
+            response.observacion_medica;
+
+          this.router.navigate([
+            '/patients',
+            this.evaluation.id_paciente
+          ]);
+        },
+
+        error: (error) => {
+          this.finalizingEvaluation = false;
+
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+            return;
+          }
+
+          if (error.status === 403) {
+            this.finalizationError =
+              'No tienes permisos para finalizar esta evaluación.';
+
+          } else if (error.status === 404) {
+            this.finalizationError =
+              'La evaluación retiniana no fue encontrada.';
+
+          } else if (error.status === 409) {
+            this.finalizationError =
+              'No se pudo finalizar la evaluación. ' +
+              'Verifica que no esté finalizada y que ' +
+              'los resultados del análisis estén completos.';
+
+          } else if (error.status === 422) {
+            this.finalizationError =
+              'Los datos de finalización no son válidos.';
+
+          } else {
+            this.finalizationError =
+              'Ocurrió un error al finalizar la evaluación. ' +
+              'Puedes volver a intentarlo.';
+          }
+
+          this.cdr.markForCheck();
+        }
+      });
+  }
+
 
   goBack(): void {
 

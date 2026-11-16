@@ -20,6 +20,14 @@ export interface Evaluation {
   fecha_creacion: string;
   fecha_finalizacion: string | null;
   medico_responsable: string;
+
+  retinopatia_diabetica: EvaluationHistoryModelResult | null;
+  glaucoma: EvaluationHistoryModelResult | null;
+}
+
+export interface EvaluationHistoryModelResult {
+  resultado: string;
+  confianza: number;
 }
 
 export interface EvaluationDetail {
@@ -27,6 +35,7 @@ export interface EvaluationDetail {
   fecha_evaluacion: string;
   ojo_evaluado: string;
   estado: string;
+  observacion_medica: string | null;
 
   id_paciente: number;
   numero_documento: string;
@@ -37,6 +46,19 @@ export interface EvaluationDetail {
 
   id_medico: number;
   medico_responsable: string;
+}
+
+export interface MedicalObservationResponse {
+  id_evaluacion: number;
+  observacion_medica: string;
+  estado: string;
+}
+
+export interface EvaluationFinalizeResponse {
+  id_evaluacion: number;
+  estado: string;
+  observacion_medica: string | null;
+  fecha_finalizacion: string;
 }
 
 export interface AIModelResult {
@@ -133,6 +155,28 @@ export class EvaluationService {
 
     return this.http.get<EvaluationDetail>(
       `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}`
+    );
+  }
+
+  updateMedicalObservation(
+    evaluationId: number,
+    observation: string
+  ): Observable<MedicalObservationResponse> {
+
+    return this.http.patch<MedicalObservationResponse>(
+      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/medical-observation`,
+      { observacion_medica: observation }
+    );
+  }
+
+  finalizeEvaluation(
+    evaluationId: number,
+    observation: string | null
+  ): Observable<EvaluationFinalizeResponse> {
+
+    return this.http.post<EvaluationFinalizeResponse>(
+      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/finalize`,
+      { observacion_medica: observation }
     );
   }
 

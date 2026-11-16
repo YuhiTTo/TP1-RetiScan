@@ -1,0 +1,88 @@
+
+
+
+/* US-19: Igualar observación médica a pantalla de resultados */
+
+.observation-form textarea {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 62px;
+    box-sizing: border-box;
+
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+
+    background: #ffffff;
+    color: #172033;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+
+    resize: vertical;
+    outline: none;
+}
+
+.observation-form textarea:focus {
+    border-color: #3182ce;
+}
+
+.observation-counter {
+    margin-top: 7px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.observation-success {
+    color: #166534;
+    font-size: 13px;
+}
+
+.observation-error {
+    color: #b42318;
+    font-size: 13px;
+}
+
+.observation-notice {
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* US-19: aviso informativo de análisis pendiente */
+
+.pending-analysis-notice {
+    margin: 12px 0 18px;
+    padding: 15px 18px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #64748b;
+    border-radius: 8px;
+    color: #334155;
+}
+
+.pending-analysis-notice strong {
+    font-size: 14px;
+}
+
+.pending-analysis-notice p {
+    margin: 7px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* US-19: botón Guardar deshabilitado */
+
+.page-actions .back-action:disabled {
+    background: #94a3b8;
+    color: #ffffff;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.page-actions .back-action:disabled:hover {
+    background: #94a3b8;
+}

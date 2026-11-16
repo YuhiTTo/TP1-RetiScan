@@ -51,6 +51,7 @@ class EvaluationDetailResponse(BaseModel):
     fecha_evaluacion: datetime
     ojo_evaluado: str
     estado: str
+    observacion_medica: str | None
 
     id_paciente: int
     numero_documento: str
@@ -62,5 +63,53 @@ class EvaluationDetailResponse(BaseModel):
     id_medico: int
     medico_responsable: str
 
+class EvaluationHistoryModelResult(BaseModel):
+    resultado: str
+    confianza: float = Field(ge=0, le=1)
+
+
 class EvaluationListResponse(EvaluationResponse):
     medico_responsable: str
+    retinopatia_diabetica: EvaluationHistoryModelResult | None = None
+    glaucoma: EvaluationHistoryModelResult | None = None
+
+
+class MedicalObservationUpdate(BaseModel):
+    observacion_medica: str = Field(
+        min_length=1,
+        max_length=1000
+    )
+
+    @field_validator("observacion_medica", mode="before")
+    @classmethod
+    def validate_observation(cls, value):
+        if isinstance(value, str):
+            return value.strip()
+        return value
+
+
+class MedicalObservationResponse(BaseModel):
+    id_evaluacion: int
+    observacion_medica: str
+    estado: str
+
+
+class EvaluationFinalizeRequest(BaseModel):
+    observacion_medica: str | None = Field(
+        default=None,
+        max_length=1000
+    )
+
+    @field_validator("observacion_medica", mode="before")
+    @classmethod
+    def normalize_observation(cls, value):
+        if isinstance(value, str):
+            return value.strip() or None
+        return value
+
+
+class EvaluationFinalizeResponse(BaseModel):
+    id_evaluacion: int
+    estado: str
+    observacion_medica: str | None
+    fecha_finalizacion: datetime

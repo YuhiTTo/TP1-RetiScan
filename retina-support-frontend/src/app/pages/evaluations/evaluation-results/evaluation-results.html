@@ -306,18 +306,44 @@
                     Observación médica
                 </h2>
 
-                <div class="observation-placeholder">
-                    El registro y la consulta de observaciones
-                    médicas se habilitarán con la US-17.
+                <div class="observation-placeholder observation-form">
+
+                    <textarea
+                        id="medical-observation-input"
+                        class="observation-textarea"
+                        aria-label="Observación médica"
+                        [(ngModel)]="observationText"
+                        [readonly]="finalizingEvaluation || loadingEvaluation || evaluation?.estado === 'FINALIZADA'"
+                        maxlength="1000"
+                        rows="3"
+                        placeholder="Escribe aquí la observación médica de la evaluación..."></textarea>
+
+                    <div class="observation-footer">
+                        <span class="observation-count">
+                            {{ observationText.length }} / 1000 caracteres
+                        </span>
+                    </div>
+
                 </div>
 
             </section>
 
             <!-- ACCIONES -->
+            <p
+                *ngIf="finalizationError"
+                class="observation-error"
+                role="alert">
+                {{ finalizationError }}
+            </p>
+
             <div class="page-actions">
 
-                <button type="button" class="back-action" (click)="goToPatient()">
-                    Finalizar evaluación
+                <button
+                    type="button"
+                    class="back-action"
+                    (click)="finalizeRetinalEvaluation()"
+                    [disabled]="finalizingEvaluation || loadingEvaluation || loadingResults || !evaluation || !analysis || evaluation.estado === 'FINALIZADA'">
+                    {{ finalizingEvaluation ? 'Finalizando...' : 'Finalizar evaluación' }}
                 </button>
 
             </div>
