@@ -9,3 +9,4 @@ from app.models.ai_model import AIModel
 from app.models.ai_analysis import AIAnalysis
 from app.models.model_execution import ModelExecution
 from app.models.ai_result import AIResult
+from app.models.report import Report

@@ -319,10 +319,166 @@
 
             </div>
 
+
+            <!-- US-20: REPORTES DEL PACIENTE -->
+            <section class="reports-section"
+                     *ngIf="activeTab === 'reports'">
+
+                <h2 class="reports-title">
+                    <img src="/icons/reporte.png"
+                         alt=""
+                         class="section-icon">
+                    Reportes médicos
+                </h2>
+
+                <p class="reports-description">
+                    Reportes de evaluaciones retinianas finalizadas.
+                </p>
+
+                <div class="status-message"
+                     *ngIf="reportsLoading">
+                    Cargando reportes...
+                </div>
+
+                <div class="status-message error"
+                     role="alert"
+                     *ngIf="reportsError">
+                    {{ reportsError }}
+                </div>
+
+                <p class="report-success"
+                   role="status"
+                   *ngIf="reportActionMessage && !reportsError">
+                    {{ reportActionMessage }}
+                </p>
+
+                <div class="empty-evaluations"
+                     *ngIf="!reportsLoading &&
+                            !reportsError &&
+                            patientReports.length === 0">
+                    Este paciente todavía no tiene
+                    evaluaciones finalizadas para generar reportes.
+                </div>
+
+                <div class="reports-table-container"
+                     *ngIf="!reportsLoading &&
+                            patientReports.length > 0">
+
+                    <table class="reports-table">
+
+                        <thead>
+                            <tr>
+                                <th>Fecha de evaluación</th>
+                                <th>Ojo</th>
+                                <th>Fecha de generación</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let report of patientReports">
+
+                                <td>
+                                    {{ report.fecha_evaluacion |
+                                       date:'dd/MM/yyyy' }}
+                                </td>
+
+                                <td>
+                                    {{ report.ojo_evaluado }}
+                                </td>
+
+                                <td>
+                                    {{ report.fecha_generacion
+                                       ? (report.fecha_generacion |
+                                          date:'dd/MM/yyyy HH:mm')
+                                       : '—' }}
+                                </td>
+
+                                <td>
+                                    <div class="report-actions">
+
+                                        <button
+                                            *ngIf="!report.tiene_reporte"
+                                            type="button"
+                                            class="report-button report-generate"
+                                            [disabled]="reportGeneratingId !== null"
+                                            (click)="generateReport(report.id_evaluacion)">
+                                            {{ reportGeneratingId === report.id_evaluacion
+                                               ? 'Generando...'
+                                               : 'Generar PDF' }}
+                                        </button>
+
+                                        <button
+                                            *ngIf="report.tiene_reporte"
+                                            type="button"
+                                            class="report-button report-view"
+                                            [disabled]="reportViewingId !== null"
+                                            (click)="viewReport(report.id_evaluacion)">
+                                            {{ reportViewingId === report.id_evaluacion
+                                               ? 'Abriendo...'
+                                               : 'Ver PDF' }}
+                                        </button>
+
+                                        <button
+                                            *ngIf="report.tiene_reporte"
+                                            type="button"
+                                            class="report-button report-download"
+                                            [disabled]="reportDownloadingId !== null"
+                                            (click)="downloadReport(report.id_evaluacion)">
+                                            {{ reportDownloadingId === report.id_evaluacion
+                                               ? 'Descargando...'
+                                               : 'Descargar PDF' }}
+                                        </button>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </section>
+
         </div>
 
     </main>
 
+</div>
+
+
+<!-- US-20: VISTA PREVIA DEL PDF -->
+<div class="modal-backdrop report-preview-backdrop"
+     *ngIf="reportPreviewOpen">
+
+    <div class="report-preview-modal"
+         role="dialog"
+         aria-modal="true"
+         aria-label="Vista previa del reporte médico">
+
+        <div class="report-preview-header">
+
+            <h2>Vista previa del reporte médico</h2>
+
+            <button
+                type="button"
+                class="report-preview-close"
+                aria-label="Cerrar vista previa"
+                (click)="closeReportPreview()">
+                ×
+            </button>
+
+        </div>
+
+        <iframe
+            *ngIf="reportPreviewUrl"
+            class="report-preview-frame"
+            [src]="reportPreviewUrl"
+            title="Documento PDF del reporte médico">
+        </iframe>
+
+    </div>
 </div>
 
 <div class="modal-backdrop" *ngIf="showEditModal">

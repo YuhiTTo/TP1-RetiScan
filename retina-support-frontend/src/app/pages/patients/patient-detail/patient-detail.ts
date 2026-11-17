@@ -1,11 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Patient, PatientService } from '../../../core/services/patient';
 import { Evaluation, EvaluationService } from '../../../core/services/evaluation';
+import { PatientReport, ReportService } from '../../../core/services/report';
 
 @Component({
   selector: 'app-patient-detail',
@@ -16,7 +18,7 @@ import { Evaluation, EvaluationService } from '../../../core/services/evaluation
   templateUrl: './patient-detail.html',
   styleUrl: './patient-detail.css'
 })
-export class PatientDetail implements OnInit {
+export class PatientDetail implements OnInit, OnDestroy {
 
   patient: Patient | null = null;
 
@@ -27,6 +29,22 @@ export class PatientDetail implements OnInit {
   evaluationsLoading = false;
 
   evaluationsError = '';
+
+  patientReports: PatientReport[] = [];
+
+  reportsLoading = false;
+  reportsError = '';
+  reportGeneratingId: number | null = null;
+  reportActionMessage = '';
+
+  reportPreviewOpen = false;
+  reportPreviewUrl: SafeResourceUrl | null = null;
+
+  reportViewingId: number | null = null;
+  reportDownloadingId: number | null = null;
+
+  private reportObjectUrl: string | null = null;
+
 
   loading = true;
 
@@ -56,6 +74,8 @@ export class PatientDetail implements OnInit {
     private router: Router,
     private patientService: PatientService,
     private evaluationService: EvaluationService,
+    private reportService: ReportService,
+    private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef
   ) {
   }
@@ -255,12 +275,239 @@ export class PatientDetail implements OnInit {
 
     this.activeTab = tab;
 
+    if (tab === 'reports') {
+      this.loadReports();
+    }
+
+
     if (
       tab === 'evaluations' &&
       this.evaluations.length === 0
     ) {
       this.loadEvaluations();
     }
+  }
+
+
+
+  loadReports(): void {
+
+    if (!this.patient) {
+      return;
+    }
+
+    this.reportsLoading = true;
+    this.reportsError = '';
+
+    this.reportService
+      .getPatientReports(this.patient.id_paciente)
+      .subscribe({
+
+        next: (response) => {
+          this.patientReports = response;
+          this.reportsLoading = false;
+          this.cdr.markForCheck();
+        },
+
+        error: (error) => {
+          this.reportsLoading = false;
+
+          if (error.status === 401) {
+            this.logout();
+          } else {
+            this.reportsError =
+              'No se pudieron cargar los reportes del paciente.';
+          }
+
+          this.cdr.markForCheck();
+        }
+      });
+  }
+
+
+  generateReport(evaluationId: number): void {
+
+    if (this.reportGeneratingId !== null) {
+      return;
+    }
+
+    const report = this.patientReports.find(
+      item => item.id_evaluacion === evaluationId
+    );
+
+    if (!report || report.tiene_reporte) {
+      return;
+    }
+
+    this.reportGeneratingId = evaluationId;
+    this.reportsError = '';
+    this.reportActionMessage = '';
+
+    this.reportService
+      .generateReport(evaluationId)
+      .subscribe({
+
+        next: () => {
+          this.reportGeneratingId = null;
+
+          this.reportActionMessage =
+            'Reporte PDF generado correctamente.';
+
+          this.loadReports();
+          this.cdr.markForCheck();
+        },
+
+        error: (error) => {
+          this.reportGeneratingId = null;
+
+          if (error.status === 401) {
+            this.logout();
+
+          } else if (error.status === 409) {
+            this.reportsError =
+              'El reporte ya existe o la evaluación ' +
+              'todavía no está lista para generarlo.';
+
+          } else if (error.status === 503) {
+            this.reportsError =
+              'No se pudo confirmar la generación. ' +
+              'Consulta nuevamente el listado antes de reintentar.';
+
+          } else {
+            this.reportsError =
+              'No se pudo generar el reporte PDF.';
+          }
+
+          this.cdr.markForCheck();
+        }
+      });
+  }
+
+
+
+  viewReport(evaluationId: number): void {
+
+    if (this.reportViewingId !== null) {
+      return;
+    }
+
+    this.reportViewingId = evaluationId;
+    this.reportsError = '';
+
+    this.reportService.viewReport(evaluationId).subscribe({
+
+      next: (blob) => {
+        this.reportViewingId = null;
+
+        if (!blob.size) {
+          this.reportsError = 'El archivo PDF está vacío.';
+          this.cdr.markForCheck();
+          return;
+        }
+
+        this.closeReportPreview();
+
+        const pdfBlob = new Blob(
+          [blob],
+          { type: 'application/pdf' }
+        );
+
+        this.reportObjectUrl = URL.createObjectURL(pdfBlob);
+
+        this.reportPreviewUrl =
+          this.sanitizer.bypassSecurityTrustResourceUrl(
+            this.reportObjectUrl + '#toolbar=0&navpanes=0'
+          );
+
+        this.reportPreviewOpen = true;
+        this.cdr.markForCheck();
+      },
+
+      error: (error) => {
+        this.reportViewingId = null;
+
+        if (error.status === 401) {
+          this.logout();
+        } else {
+          this.reportsError =
+            'No se pudo visualizar el reporte PDF.';
+        }
+
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+
+  downloadReport(evaluationId: number): void {
+
+    if (this.reportDownloadingId !== null) {
+      return;
+    }
+
+    this.reportDownloadingId = evaluationId;
+    this.reportsError = '';
+
+    this.reportService.downloadReport(evaluationId).subscribe({
+
+      next: (blob) => {
+        this.reportDownloadingId = null;
+
+        if (!blob.size) {
+          this.reportsError = 'El archivo PDF está vacío.';
+          this.cdr.markForCheck();
+          return;
+        }
+
+        const url = URL.createObjectURL(
+          new Blob([blob], { type: 'application/pdf' })
+        );
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `RetiScan_reporte_${evaluationId}.pdf`;
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 60000);
+
+        this.cdr.markForCheck();
+      },
+
+      error: (error) => {
+        this.reportDownloadingId = null;
+
+        if (error.status === 401) {
+          this.logout();
+        } else {
+          this.reportsError =
+            'No se pudo descargar el reporte PDF.';
+        }
+
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+
+  closeReportPreview(): void {
+
+    this.reportPreviewOpen = false;
+    this.reportPreviewUrl = null;
+
+    if (this.reportObjectUrl !== null) {
+      URL.revokeObjectURL(this.reportObjectUrl);
+      this.reportObjectUrl = null;
+    }
+  }
+
+
+  ngOnDestroy(): void {
+    this.closeReportPreview();
   }
 
 

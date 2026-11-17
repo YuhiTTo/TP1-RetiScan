@@ -1,10 +1,11 @@
 from sqlalchemy.orm import Session
 
 from app.models.evaluation import RetinalEvaluation
-from app.repositories.evaluation_repository import get_evaluation_by_id
-from app.services.ai_results_service import (
-    AIResultsNotAvailableError,
-    get_ai_evaluation_results,
+from app.services.report_update_service import (
+    ReportUpdateEvaluationNotFoundError,
+    ReportUpdateNotFinalizedError,
+    ReportUpdateResultsNotAvailableError,
+    update_observation_and_report,
 )
 
 
@@ -24,37 +25,23 @@ def save_medical_observation(
     db: Session,
     establishment_id: int,
     evaluation_id: int,
-    observation: str
+    observation: str,
 ) -> RetinalEvaluation:
-
-    evaluation = get_evaluation_by_id(
-        db=db,
-        establishment_id=establishment_id,
-        evaluation_id=evaluation_id
-    )
-
-    if evaluation is None:
-        raise MedicalObservationNotFoundError()
-
-    if evaluation.estado != "FINALIZADA":
-        raise MedicalObservationNotFinalizedError()
+    """Conserva la interfaz de US-17 e integra US-20."""
 
     try:
-        get_ai_evaluation_results(
+        return update_observation_and_report(
             db=db,
             establishment_id=establishment_id,
-            evaluation_id=evaluation_id
+            evaluation_id=evaluation_id,
+            observation=observation,
         )
-    except AIResultsNotAvailableError as exc:
+
+    except ReportUpdateEvaluationNotFoundError as exc:
+        raise MedicalObservationNotFoundError() from exc
+
+    except ReportUpdateNotFinalizedError as exc:
+        raise MedicalObservationNotFinalizedError() from exc
+
+    except ReportUpdateResultsNotAvailableError as exc:
         raise MedicalObservationResultsNotAvailableError() from exc
-
-    evaluation.observacion_medica = observation
-
-    try:
-        db.commit()
-        db.refresh(evaluation)
-    except Exception:
-        db.rollback()
-        raise
-
-    return evaluation

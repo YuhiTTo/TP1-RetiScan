@@ -2,6 +2,21 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from sqlalchemy.exc import SQLAlchemyError
+
+from app.services.report_update_service import (
+    ReportUpdateCommitUncertainError,
+    ReportUpdateCleanupFailedError,
+)
+from app.services.report_data_service import (
+    ReportDataIncompleteError,
+)
+from app.services.storage_service import (
+    StorageConfigurationError,
+    StorageUploadError,
+    StorageDownloadError,
+)
+
 from app.api.dependencies import ( get_db, require_institutional_account )
 from app.models.account import Account
 from app.models.doctor import Doctor
@@ -322,6 +337,54 @@ def update_medical_observation(
             detail=(
                 "Solo se puede modificar la observación de una evaluación finalizada."
             )
+        )
+
+    except ReportDataIncompleteError:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "Faltan datos clinicos para actualizar "
+                "el reporte PDF."
+            ),
+        )
+
+    except ReportUpdateCommitUncertainError:
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "No se pudo confirmar la actualizacion. "
+                "Consulte el estado antes de reintentar."
+            ),
+        )
+
+    except ReportUpdateCleanupFailedError:
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "La actualizacion fallo y no se pudo "
+                "completar la limpieza del PDF."
+            ),
+        )
+
+    except StorageConfigurationError:
+        raise HTTPException(
+            status_code=503,
+            detail="Amazon S3 no esta configurado.",
+        )
+
+    except (StorageUploadError, StorageDownloadError):
+        raise HTTPException(
+            status_code=502,
+            detail=(
+                "No se pudo actualizar el archivo "
+                "del reporte en Amazon S3."
+            ),
+        )
+
+    except SQLAlchemyError:
+        raise HTTPException(
+            status_code=503,
+            detail="No se pudo acceder a PostgreSQL.",
         )
 
     return MedicalObservationResponse(
