@@ -24,6 +24,59 @@ export class PatientList implements OnInit {
 
   patients: Patient[] = [];
 
+  readonly pageSize = 5;
+  currentPage = 1;
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.patients.length / this.pageSize));
+  }
+
+  get paginatedPatients(): Patient[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.patients.slice(start, start + this.pageSize);
+  }
+
+  get pageNumbers(): number[] {
+    const first = Math.max(
+      1,
+      Math.min(this.currentPage - 2, this.totalPages - 4)
+    );
+
+    const last = Math.min(this.totalPages, first + 4);
+
+    return Array.from(
+      { length: last - first + 1 },
+      (_, index) => first + index
+    );
+  }
+
+  get shownStart(): number {
+    return this.patients.length === 0
+      ? 0
+      : (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get shownEnd(): number {
+    return Math.min(
+      this.currentPage * this.pageSize,
+      this.patients.length
+    );
+  }
+
+  changePage(page: number): void {
+    if (
+      !Number.isInteger(page) ||
+      page < 1 ||
+      page > this.totalPages
+    ) {
+      return;
+    }
+
+    this.currentPage = page;
+    this.cdr.markForCheck();
+  }
+
+
   loading = false;
 
   errorMessage = '';
@@ -46,6 +99,7 @@ export class PatientList implements OnInit {
 
   loadPatients(): void {
 
+    this.currentPage = 1;
     this.loading = true;
     this.errorMessage = '';
 

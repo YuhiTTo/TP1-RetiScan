@@ -422,3 +422,25 @@ tbody tr:last-child td {
     filter: brightness(0);
     opacity: 0.5;
 }
+
+/* Paginacion funcional */
+.pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+}
+
+.pagination button:disabled:hover {
+    background: transparent;
+}
+
+.pagination button:focus-visible {
+    outline: 2px solid #246dcc;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .table-footer {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+}

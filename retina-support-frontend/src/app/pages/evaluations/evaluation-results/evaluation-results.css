@@ -786,3 +786,80 @@ button.menu-item:hover {
 .glaucoma-card .result-icon img {
     filter: invert(35%) sepia(45%) saturate(1100%) hue-rotate(310deg);
 }
+
+/* Correccion visual: prioridad clinica dinamica */
+
+.clinical-support .priority-level {
+    --priority-bg: #f1f5f9;
+    --priority-text: #475569;
+    --priority-border: #cbd5e1;
+    --priority-badge: #e2e8f0;
+
+    margin-top: 8px;
+    padding: 12px 14px;
+    border: 1px solid var(--priority-border);
+    border-left: 4px solid var(--priority-text);
+    border-radius: 7px;
+    background: var(--priority-bg);
+}
+
+.clinical-support .priority-level--baja {
+    --priority-bg: #e8f7ed;
+    --priority-text: #176239;
+    --priority-border: #96d5ad;
+    --priority-badge: #c5ebd2;
+}
+
+.clinical-support .priority-level--media {
+    --priority-bg: #fff3d7;
+    --priority-text: #865109;
+    --priority-border: #efc67a;
+    --priority-badge: #ffe0a0;
+}
+
+.clinical-support .priority-level--alta {
+    --priority-bg: #fde8ea;
+    --priority-text: #962631;
+    --priority-border: #e9a0a6;
+    --priority-badge: #f9c7cc;
+}
+
+.clinical-support .priority-level__headline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    color: var(--priority-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.clinical-support .priority-level__headline strong {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background: var(--priority-badge);
+    color: var(--priority-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.clinical-support .priority-level__recommendation {
+    margin: 9px 0 0;
+    color: var(--priority-text);
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+.clinical-support .priority-disclaimer {
+    margin-top: 12px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.clinical-support .priority-pending {
+    color: #475569;
+    background: #f1f5f9;
+}

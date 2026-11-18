@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EvaluationDetail, EvaluationService } from '../../../core/services/evaluation';
+import { EvaluationDetail, EvaluationService, RetinographyResume } from '../../../core/services/evaluation';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { EvaluationDetail, EvaluationService } from '../../../core/services/eval
   templateUrl: './retinography-upload.html',
   styleUrl: './retinography-upload.css'
 })
-export class RetinographyUpload implements OnInit {
+export class RetinographyUpload implements OnInit, OnDestroy {
 
   evaluationId = 0;
   evaluation: EvaluationDetail | null = null;
@@ -39,6 +39,9 @@ export class RetinographyUpload implements OnInit {
   isAnalyzing = false;
 
   analysisErrorMessage = '';
+
+  loadingStoredRetinography = false;
+  private destroyed = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -87,6 +90,10 @@ export class RetinographyUpload implements OnInit {
 
           this.loading = false;
 
+          if (response.estado === 'PENDIENTE') {
+            this.loadStoredRetinography();
+          }
+
           this.cdr.markForCheck();
         },
 
@@ -107,6 +114,102 @@ export class RetinographyUpload implements OnInit {
 
             this.errorMessage =
               'No se pudo cargar la información de la evaluación.';
+          }
+
+          this.cdr.markForCheck();
+        }
+      });
+  }
+
+  loadStoredRetinography(): void {
+
+    this.loadingStoredRetinography = true;
+
+    this.evaluationService
+      .getRetinographyResume(this.evaluationId)
+      .subscribe({
+
+        next: (metadata: RetinographyResume) => {
+
+          if (this.destroyed) {
+            return;
+          }
+
+          this.fileName = metadata.nombre_archivo;
+          this.fileSize = (
+            metadata.tamano_bytes / (1024 * 1024)
+          ).toFixed(2) + ' MB';
+          this.fileFormat = metadata.formato.toUpperCase();
+
+          this.evaluationService
+            .getRetinographyImage(this.evaluationId)
+            .subscribe({
+
+              next: (imageBlob) => {
+
+                if (this.destroyed) {
+                  return;
+                }
+
+                if (this.previewUrl?.startsWith('blob:')) {
+                  URL.revokeObjectURL(this.previewUrl);
+                }
+
+                this.previewUrl = URL.createObjectURL(imageBlob);
+
+                // Solo permitir el analisis cuando la
+                // imagen sigue cargada y no fue rechazada
+                // por el control de calidad.
+                this.retinographyUploaded = (
+                  metadata.estado === 'CARGADA' &&
+                  metadata.calidad_imagen !== 'INSUFICIENTE'
+                );
+
+                this.loadingStoredRetinography = false;
+                this.cdr.markForCheck();
+              },
+
+              error: (error) => {
+
+                if (this.destroyed) {
+                  return;
+                }
+
+                this.loadingStoredRetinography = false;
+                this.retinographyUploaded = false;
+
+                if (error.status === 401) {
+                  this.logout();
+                  return;
+                }
+
+                this.fileErrorMessage =
+                  'No se pudo mostrar la retinografía registrada. ' +
+                  'Compruebe la conexión y vuelva a abrir la evaluación antes de reemplazarla.';
+
+                this.cdr.markForCheck();
+              }
+            });
+        },
+
+        error: (error) => {
+
+          if (this.destroyed) {
+            return;
+          }
+
+          this.loadingStoredRetinography = false;
+
+          if (error.status === 401) {
+            this.logout();
+            return;
+          }
+
+          // 404 significa que la evaluacion todavia
+          // no tiene una retinografia registrada.
+          if (error.status !== 404) {
+            this.fileErrorMessage =
+              'No se pudo consultar la retinografía existente.';
           }
 
           this.cdr.markForCheck();
@@ -154,6 +257,14 @@ export class RetinographyUpload implements OnInit {
 
 
   onFileSelected(event: Event): void {
+
+    if (
+      this.loadingStoredRetinography ||
+      this.isUploading ||
+      this.isAnalyzing
+    ) {
+      return;
+    }
 
     const input = event.target as HTMLInputElement;
 
@@ -356,10 +467,7 @@ export class RetinographyUpload implements OnInit {
 
           this.isAnalyzing = false;
 
-          if (
-            response.estado === 'COMPLETADO' ||
-            response.estado === 'PARCIAL'
-          ) {
+          if (response.estado === 'COMPLETADO') {
 
             // Guardar temporalmente los resultados del análisis
             this.evaluationService.saveAnalysisResult(response);
@@ -397,6 +505,16 @@ export class RetinographyUpload implements OnInit {
           this.cdr.markForCheck();
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed = true;
+
+    if (this.previewUrl?.startsWith('blob:')) {
+      URL.revokeObjectURL(this.previewUrl);
+    }
+
+    this.previewUrl = null;
   }
 
   logout(): void {

@@ -249,7 +249,7 @@
 
                         <tbody>
 
-                            <tr *ngFor="let evaluation of evaluations">
+                            <tr *ngFor="let evaluation of paginatedEvaluations">
 
                                 <td>
                                     {{ evaluation.fecha_evaluacion | date:'dd/MM/yyyy' }}
@@ -304,8 +304,25 @@
                                 <!-- ACCIÓN -->
                                 <td>
 
-                                    <button class="evaluation-view-button" (click)="viewEvaluation(evaluation.id_evaluacion)">
+                                    <button
+                                        *ngIf="evaluation.estado === 'FINALIZADA'"
+                                        type="button"
+                                        class="evaluation-view-button"
+                                        (click)="viewEvaluation(evaluation.id_evaluacion)">
                                         Ver
+                                    </button>
+
+                                    <button
+                                        *ngIf="evaluation.estado === 'PENDIENTE'"
+                                        type="button"
+                                        class="evaluation-view-button"
+                                        [disabled]="continuingEvaluationId !== null"
+                                        (click)="continueEvaluation(evaluation)">
+                                        {{
+                                          continuingEvaluationId === evaluation.id_evaluacion
+                                            ? 'Cargando...'
+                                            : 'Continuar'
+                                        }}
                                     </button>
 
                                 </td>
@@ -315,6 +332,42 @@
 
                     </table>
 
+                </div>
+
+                <div class="list-pagination-footer"
+                     *ngIf="!evaluationsLoading &&
+                            evaluations.length > 0">
+
+                    <span>
+                        Mostrando {{ evaluationShownStart }}-{{ evaluationShownEnd }}
+                        de {{ evaluations.length }} evaluaciones
+                    </span>
+
+                    <nav class="list-pagination"
+                         aria-label="Paginación de evaluaciones">
+
+                        <button type="button"
+                                aria-label="Página anterior de evaluaciones"
+                                [disabled]="evaluationPage === 1"
+                                (click)="changeEvaluationPage(evaluationPage - 1)">
+                            ‹
+                        </button>
+
+                        <button type="button"
+                                *ngFor="let page of evaluationPageNumbers"
+                                [class.page-active]="page === evaluationPage"
+                                [attr.aria-current]="page === evaluationPage ? 'page' : null"
+                                (click)="changeEvaluationPage(page)">
+                            {{ page }}
+                        </button>
+
+                        <button type="button"
+                                aria-label="Página siguiente de evaluaciones"
+                                [disabled]="evaluationPage === totalEvaluationPages"
+                                (click)="changeEvaluationPage(evaluationPage + 1)">
+                            ›
+                        </button>
+                    </nav>
                 </div>
 
             </div>
@@ -376,7 +429,7 @@
                         </thead>
 
                         <tbody>
-                            <tr *ngFor="let report of patientReports">
+                            <tr *ngFor="let report of paginatedReports">
 
                                 <td>
                                     {{ report.fecha_evaluacion |
@@ -437,6 +490,43 @@
                         </tbody>
 
                     </table>
+                </div>
+
+                <div class="list-pagination-footer"
+                     *ngIf="!reportsLoading &&
+                            !reportsError &&
+                            patientReports.length > 0">
+
+                    <span>
+                        Mostrando {{ reportShownStart }}-{{ reportShownEnd }}
+                        de {{ patientReports.length }} reportes
+                    </span>
+
+                    <nav class="list-pagination"
+                         aria-label="Paginación de reportes">
+
+                        <button type="button"
+                                aria-label="Página anterior de reportes"
+                                [disabled]="reportPage === 1"
+                                (click)="changeReportPage(reportPage - 1)">
+                            ‹
+                        </button>
+
+                        <button type="button"
+                                *ngFor="let page of reportPageNumbers"
+                                [class.page-active]="page === reportPage"
+                                [attr.aria-current]="page === reportPage ? 'page' : null"
+                                (click)="changeReportPage(page)">
+                            {{ page }}
+                        </button>
+
+                        <button type="button"
+                                aria-label="Página siguiente de reportes"
+                                [disabled]="reportPage === totalReportPages"
+                                (click)="changeReportPage(reportPage + 1)">
+                            ›
+                        </button>
+                    </nav>
                 </div>
 
             </section>

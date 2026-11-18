@@ -88,6 +88,18 @@ export interface StoredModelResult {
   requiere_revision: boolean | null;
 }
 
+
+export interface RetinographyResume {
+  id_retinografia: number;
+  id_evaluacion: number;
+  nombre_archivo: string;
+  formato: string;
+  tamano_bytes: number;
+  estado_validacion: string;
+  calidad_imagen: string | null;
+  estado: string;
+}
+
 export interface StoredRetinography {
   id_retinografia: number;
   nombre_archivo: string;
@@ -192,6 +204,14 @@ export class EvaluationService {
     return this.http.put<unknown>(
       `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/retinography`,
       formData
+    );
+  }
+
+  getRetinographyResume(
+    evaluationId: number
+  ): Observable<RetinographyResume> {
+    return this.http.get<RetinographyResume>(
+      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/retinography`
     );
   }
 

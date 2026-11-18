@@ -273,23 +273,32 @@
                             Sugerencia de soporte clínico
                         </h2>
 
-                        <p class="priority-pending" *ngIf="prioritySuggested">
-                            <strong>Prioridad sugerida: {{ prioritySuggested }}</strong>
-                            <span>
-                                Clasificación experimental de soporte clínico,
-                                pendiente de validación médica.
-                            </span>
-                        </p>
+                        <div
+                            class="priority-level"
+                            [ngClass]="priorityStyleClass"
+                            *ngIf="prioritySuggested">
+
+                            <div class="priority-level__headline">
+                                <span>Prioridad sugerida:</span>
+                                <strong>{{ prioritySuggested }}</strong>
+                            </div>
+
+                            <p class="priority-level__recommendation">
+                                {{ priorityRecommendation }}
+                            </p>
+
+                        </div>
 
                         <p class="priority-pending" *ngIf="!prioritySuggested">
                             Prioridad sugerida no disponible para esta evaluación.
                         </p>
 
-                        <p>
+                        <p class="priority-disclaimer">
                             Los resultados generados por inteligencia
                             artificial constituyen información de apoyo
                             y no reemplazan el criterio del médico
-                            oftalmólogo.
+                            oftalmólogo. La prioridad sugerida es
+                            experimental y requiere validación clínica.
                         </p>
 
                     </section>

@@ -19,6 +19,35 @@ export class EvaluationResults implements OnInit, OnDestroy {
   analysis: AIAnalysisResponse | AIEvaluationResultsResponse | null = null;
   loadingResults = false;
   prioritySuggested: string | null = null;
+
+  get priorityStyleClass(): string {
+    switch (this.prioritySuggested?.trim().toUpperCase()) {
+      case 'BAJA':
+        return 'priority-level--baja';
+      case 'MEDIA':
+        return 'priority-level--media';
+      case 'ALTA':
+        return 'priority-level--alta';
+      default:
+        return 'priority-level--neutral';
+    }
+  }
+
+  get priorityRecommendation(): string {
+    switch (this.prioritySuggested?.trim().toUpperCase()) {
+      case 'BAJA':
+        return 'Se sugiere continuar con el seguimiento oftalmológico habitual y revisar los hallazgos según el criterio del especialista.';
+
+      case 'MEDIA':
+        return 'Se sugiere una valoración oftalmológica oportuna para revisar los hallazgos y considerar una evaluación complementaria.';
+
+      case 'ALTA':
+        return 'Se sugiere una revisión oftalmológica prioritaria para valorar los hallazgos y definir las acciones pertinentes.';
+
+      default:
+        return 'La prioridad debe revisarse con el médico oftalmólogo.';
+    }
+  }
   evaluation: EvaluationDetail | null = null;
   retinographyUrl: string | null = null;
   loadingRetinography = false;

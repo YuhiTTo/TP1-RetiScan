@@ -121,7 +121,7 @@
                         </td>
                     </tr>
 
-                    <tr *ngFor="let patient of patients">
+                    <tr *ngFor="let patient of paginatedPatients">
 
                         <td>
                             {{ patient.numero_documento }}
@@ -165,19 +165,41 @@
 
 
         <!-- PIE DE TABLA -->
-        <section class="table-footer">
+        <section class="table-footer"
+                 *ngIf="!loading && !errorMessage">
 
             <span>
-                Mostrando {{ patients.length }} pacientes
+                Mostrando {{ shownStart }}-{{ shownEnd }}
+                de {{ patients.length }} pacientes
             </span>
 
-            <div class="pagination">
-                <button>‹</button>
-                <button class="page-active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>›</button>
-            </div>
+            <nav class="pagination"
+                 *ngIf="patients.length > 0"
+                 aria-label="Paginación de pacientes">
+
+                <button type="button"
+                        aria-label="Página anterior"
+                        [disabled]="currentPage === 1"
+                        (click)="changePage(currentPage - 1)">
+                    ‹
+                </button>
+
+                <button type="button"
+                        *ngFor="let page of pageNumbers"
+                        [class.page-active]="page === currentPage"
+                        [attr.aria-current]="page === currentPage ? 'page' : null"
+                        (click)="changePage(page)">
+                    {{ page }}
+                </button>
+
+                <button type="button"
+                        aria-label="Página siguiente"
+                        [disabled]="currentPage === totalPages"
+                        (click)="changePage(currentPage + 1)">
+                    ›
+                </button>
+
+            </nav>
 
         </section>
 

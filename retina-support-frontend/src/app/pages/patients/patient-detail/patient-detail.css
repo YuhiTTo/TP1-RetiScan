@@ -881,3 +881,57 @@
         font-size: 14px;
     }
 }
+
+
+/* Paginacion de evaluaciones y reportes */
+
+.list-pagination-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 12px;
+    font-size: 13px;
+    color: #303846;
+}
+
+.list-pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.list-pagination button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: #303846;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.list-pagination button:hover:not(:disabled) {
+    background: #e4e9f0;
+}
+
+.list-pagination .page-active {
+    background: #246dcc;
+    color: #ffffff;
+}
+
+.list-pagination .page-active:hover:not(:disabled) {
+    background: #195bb1;
+}
+
+.list-pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+}
+
+.list-pagination button:focus-visible {
+    outline: 2px solid #246dcc;
+    outline-offset: 2px;
+}

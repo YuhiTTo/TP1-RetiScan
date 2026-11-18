@@ -30,7 +30,121 @@ export class PatientDetail implements OnInit, OnDestroy {
 
   evaluationsError = '';
 
+  continuingEvaluationId: number | null = null;
+
   patientReports: PatientReport[] = [];
+
+  readonly pageSize = 5;
+  evaluationPage = 1;
+  reportPage = 1;
+
+  private getVisiblePages(
+    currentPage: number,
+    totalPages: number
+  ): number[] {
+    const first = Math.max(
+      1,
+      Math.min(currentPage - 2, totalPages - 4)
+    );
+
+    const last = Math.min(totalPages, first + 4);
+
+    return Array.from(
+      { length: last - first + 1 },
+      (_, index) => first + index
+    );
+  }
+
+  get totalEvaluationPages(): number {
+    return Math.max(
+      1,
+      Math.ceil(this.evaluations.length / this.pageSize)
+    );
+  }
+
+  get paginatedEvaluations(): Evaluation[] {
+    const start = (this.evaluationPage - 1) * this.pageSize;
+    return this.evaluations.slice(start, start + this.pageSize);
+  }
+
+  get evaluationPageNumbers(): number[] {
+    return this.getVisiblePages(
+      this.evaluationPage,
+      this.totalEvaluationPages
+    );
+  }
+
+  get evaluationShownStart(): number {
+    return this.evaluations.length === 0
+      ? 0
+      : (this.evaluationPage - 1) * this.pageSize + 1;
+  }
+
+  get evaluationShownEnd(): number {
+    return Math.min(
+      this.evaluationPage * this.pageSize,
+      this.evaluations.length
+    );
+  }
+
+  changeEvaluationPage(page: number): void {
+    if (
+      !Number.isInteger(page) ||
+      page < 1 ||
+      page > this.totalEvaluationPages
+    ) {
+      return;
+    }
+
+    this.evaluationPage = page;
+    this.cdr.markForCheck();
+  }
+
+  get totalReportPages(): number {
+    return Math.max(
+      1,
+      Math.ceil(this.patientReports.length / this.pageSize)
+    );
+  }
+
+  get paginatedReports(): PatientReport[] {
+    const start = (this.reportPage - 1) * this.pageSize;
+    return this.patientReports.slice(start, start + this.pageSize);
+  }
+
+  get reportPageNumbers(): number[] {
+    return this.getVisiblePages(
+      this.reportPage,
+      this.totalReportPages
+    );
+  }
+
+  get reportShownStart(): number {
+    return this.patientReports.length === 0
+      ? 0
+      : (this.reportPage - 1) * this.pageSize + 1;
+  }
+
+  get reportShownEnd(): number {
+    return Math.min(
+      this.reportPage * this.pageSize,
+      this.patientReports.length
+    );
+  }
+
+  changeReportPage(page: number): void {
+    if (
+      !Number.isInteger(page) ||
+      page < 1 ||
+      page > this.totalReportPages
+    ) {
+      return;
+    }
+
+    this.reportPage = page;
+    this.cdr.markForCheck();
+  }
+
 
   reportsLoading = false;
   reportsError = '';
@@ -305,6 +419,10 @@ export class PatientDetail implements OnInit, OnDestroy {
 
         next: (response) => {
           this.patientReports = response;
+          this.reportPage = Math.min(
+            this.reportPage,
+            this.totalReportPages
+          );
           this.reportsLoading = false;
           this.cdr.markForCheck();
         },
@@ -529,6 +647,10 @@ export class PatientDetail implements OnInit, OnDestroy {
         next: (response) => {
 
           this.evaluations = response;
+          this.evaluationPage = Math.min(
+            this.evaluationPage,
+            this.totalEvaluationPages
+          );
           this.evaluationsLoading = false;
 
           this.cdr.markForCheck();
@@ -611,6 +733,68 @@ export class PatientDetail implements OnInit, OnDestroy {
       evaluationId,
       'detail'
     ]);
+  }
+
+  continueEvaluation(evaluation: Evaluation): void {
+
+    if (
+      evaluation.estado !== 'PENDIENTE' ||
+      this.continuingEvaluationId !== null
+    ) {
+      return;
+    }
+
+    this.continuingEvaluationId = evaluation.id_evaluacion;
+    this.evaluationsError = '';
+
+    this.evaluationService
+      .getStoredEvaluationResults(evaluation.id_evaluacion)
+      .subscribe({
+
+        next: () => {
+          this.continuingEvaluationId = null;
+
+          // Ya existen resultados IA completos.
+          // Corresponde revisar y finalizar.
+          this.router.navigate([
+            '/evaluations',
+            evaluation.id_evaluacion,
+            'results'
+          ]);
+        },
+
+        error: (error) => {
+          this.continuingEvaluationId = null;
+
+          if (error.status === 401) {
+            this.logout();
+            return;
+          }
+
+          if (error.status === 409) {
+
+            // No existen resultados completos.
+            // Se retomara la etapa de retinografia.
+            this.router.navigate([
+              '/evaluations',
+              evaluation.id_evaluacion,
+              'retinography'
+            ]);
+
+            return;
+          }
+
+          if (error.status === 404) {
+            this.evaluationsError =
+              'La evaluación no fue encontrada.';
+          } else {
+            this.evaluationsError =
+              'No se pudo comprobar el estado de la evaluación. Inténtalo nuevamente.';
+          }
+
+          this.cdr.markForCheck();
+        }
+      });
   }
 
 

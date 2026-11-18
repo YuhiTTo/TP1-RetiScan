@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.api.dependencies import ( get_db, require_institutional_account )
 from app.models.account import Account
-from app.schemas.retinography import RetinographyResponse
+from app.schemas.retinography import RetinographyResponse, RetinographyResumeResponse
 from app.repositories.evaluation_repository import get_evaluation_by_id
 from app.repositories.retinography_repository import get_retinography_by_evaluation
 
@@ -118,6 +118,54 @@ async def upload_retinography(
         await file.close()
 
     return retinography
+
+
+
+@router.get(
+    "/{evaluation_id}/retinography",
+    response_model=RetinographyResumeResponse,
+    status_code=status.HTTP_200_OK
+)
+def get_retinography_resume(
+    evaluation_id: int,
+    db: Session = Depends(get_db),
+    institutional_account: Account = Depends(
+        require_institutional_account
+    )
+):
+    evaluation = get_evaluation_by_id(
+        db=db,
+        establishment_id=institutional_account.id_establecimiento,
+        evaluation_id=evaluation_id
+    )
+
+    if evaluation is None:
+        raise HTTPException(
+            status_code=404,
+            detail="La evaluación retiniana no fue encontrada."
+        )
+
+    retinography = get_retinography_by_evaluation(
+        db=db,
+        evaluation_id=evaluation_id
+    )
+
+    if retinography is None:
+        raise HTTPException(
+            status_code=404,
+            detail="La evaluación todavía no tiene una retinografía registrada."
+        )
+
+    return {
+        "id_retinografia": retinography.id_retinografia,
+        "id_evaluacion": retinography.id_evaluacion,
+        "nombre_archivo": retinography.nombre_archivo,
+        "formato": retinography.formato,
+        "tamano_bytes": retinography.tamano_bytes,
+        "estado_validacion": retinography.estado_validacion,
+        "calidad_imagen": retinography.calidad_imagen,
+        "estado": retinography.estado,
+    }
 
 
 @router.get("/{evaluation_id}/retinography/image")

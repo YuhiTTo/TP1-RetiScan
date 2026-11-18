@@ -221,6 +221,7 @@
                             </label>
 
                             <input id="retinographyFile" type="file" accept=".jpg,.jpeg,.png" hidden
+                                [disabled]="loadingStoredRetinography"
                                 (change)="onFileSelected($event)">
 
                         </div>
@@ -349,7 +350,7 @@
                 </button>
 
                 <button type="button" class="upload-button"
-                    [disabled]="isUploading || isAnalyzing || (!selectedFile && !retinographyUploaded)"
+                    [disabled]="loadingStoredRetinography || isUploading || isAnalyzing || (!selectedFile && !retinographyUploaded)"
                     (click)="retinographyUploaded ? analyzeRetinography() : uploadRetinography()">
 
                     <!-- Cargando imagen -->
