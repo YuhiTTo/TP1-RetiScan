@@ -34,7 +34,8 @@ export class PatientDetail implements OnInit, OnDestroy {
 
   patientReports: PatientReport[] = [];
 
-  readonly pageSize = 5;
+  readonly reportPageSize = 7;
+  readonly evaluationPageSize = 7;
   evaluationPage = 1;
   reportPage = 1;
 
@@ -58,13 +59,13 @@ export class PatientDetail implements OnInit, OnDestroy {
   get totalEvaluationPages(): number {
     return Math.max(
       1,
-      Math.ceil(this.evaluations.length / this.pageSize)
+      Math.ceil(this.evaluations.length / this.evaluationPageSize)
     );
   }
 
   get paginatedEvaluations(): Evaluation[] {
-    const start = (this.evaluationPage - 1) * this.pageSize;
-    return this.evaluations.slice(start, start + this.pageSize);
+    const start = (this.evaluationPage - 1) * this.evaluationPageSize;
+    return this.evaluations.slice(start, start + this.evaluationPageSize);
   }
 
   get evaluationPageNumbers(): number[] {
@@ -77,12 +78,12 @@ export class PatientDetail implements OnInit, OnDestroy {
   get evaluationShownStart(): number {
     return this.evaluations.length === 0
       ? 0
-      : (this.evaluationPage - 1) * this.pageSize + 1;
+      : (this.evaluationPage - 1) * this.evaluationPageSize + 1;
   }
 
   get evaluationShownEnd(): number {
     return Math.min(
-      this.evaluationPage * this.pageSize,
+      this.evaluationPage * this.evaluationPageSize,
       this.evaluations.length
     );
   }
@@ -103,13 +104,13 @@ export class PatientDetail implements OnInit, OnDestroy {
   get totalReportPages(): number {
     return Math.max(
       1,
-      Math.ceil(this.patientReports.length / this.pageSize)
+      Math.ceil(this.patientReports.length / this.reportPageSize)
     );
   }
 
   get paginatedReports(): PatientReport[] {
-    const start = (this.reportPage - 1) * this.pageSize;
-    return this.patientReports.slice(start, start + this.pageSize);
+    const start = (this.reportPage - 1) * this.reportPageSize;
+    return this.patientReports.slice(start, start + this.reportPageSize);
   }
 
   get reportPageNumbers(): number[] {
@@ -122,12 +123,12 @@ export class PatientDetail implements OnInit, OnDestroy {
   get reportShownStart(): number {
     return this.patientReports.length === 0
       ? 0
-      : (this.reportPage - 1) * this.pageSize + 1;
+      : (this.reportPage - 1) * this.reportPageSize + 1;
   }
 
   get reportShownEnd(): number {
     return Math.min(
-      this.reportPage * this.pageSize,
+      this.reportPage * this.reportPageSize,
       this.patientReports.length
     );
   }
@@ -229,6 +230,13 @@ export class PatientDetail implements OnInit, OnDestroy {
 
           this.patient = response;
           this.loading = false;
+
+          if (
+            this.route.snapshot.queryParamMap.get('tab')
+            === 'evaluations'
+          ) {
+            this.selectTab('evaluations');
+          }
 
           this.cdr.markForCheck();
         },
@@ -387,6 +395,17 @@ export class PatientDetail implements OnInit, OnDestroy {
 
   selectTab(tab: string): void {
 
+    if (
+      tab === 'evaluations' &&
+      this.activeTab !== 'evaluations'
+    ) {
+      this.evaluationPage = 1;
+    }
+
+    if (tab === 'reports' && this.activeTab !== 'reports') {
+      this.reportPage = 1;
+    }
+
     this.activeTab = tab;
 
     if (tab === 'reports') {
@@ -418,7 +437,9 @@ export class PatientDetail implements OnInit, OnDestroy {
       .subscribe({
 
         next: (response) => {
-          this.patientReports = response;
+          this.patientReports = [...response].sort(
+            (a, b) => b.id_evaluacion - a.id_evaluacion
+          );
           this.reportPage = Math.min(
             this.reportPage,
             this.totalReportPages
@@ -646,7 +667,15 @@ export class PatientDetail implements OnInit, OnDestroy {
 
         next: (response) => {
 
-          this.evaluations = response;
+          this.evaluations = [...response].sort((a, b) => {
+            const dateA = Date.parse(a.fecha_creacion) || 0;
+            const dateB = Date.parse(b.fecha_creacion) || 0;
+
+            return (
+              dateB - dateA ||
+              b.id_evaluacion - a.id_evaluacion
+            );
+          });
           this.evaluationPage = Math.min(
             this.evaluationPage,
             this.totalEvaluationPages

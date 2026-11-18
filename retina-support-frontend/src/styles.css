@@ -9,3 +9,101 @@ body {
 * {
     box-sizing: border-box;
 }
+
+/* RETISCAN: EVALUACIONES CON ALTURA ESTABLE */
+
+.page-container .evaluations-section .evaluations-table-container {
+    min-height: 590px;
+    overflow-x: auto;
+}
+
+.page-container .evaluations-section .evaluations-table {
+    table-layout: fixed;
+    min-width: 960px;
+}
+
+.page-container .evaluations-section .evaluations-table thead tr {
+    height: 44px;
+}
+
+.page-container .evaluations-section .evaluations-table tbody tr {
+    height: 78px;
+}
+
+.page-container .evaluations-section .evaluations-table th,
+.page-container .evaluations-section .evaluations-table td {
+    box-sizing: border-box;
+    vertical-align: middle;
+    padding: 6px 18px;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(1) {
+    width: 14%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(2) {
+    width: 8%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(3) {
+    width: 40%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(4) {
+    width: 19%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(5) {
+    width: 19%;
+}
+
+
+/* RETISCAN: RESULTADOS EN FILAS UNIFORMES */
+
+.page-container .evaluations-section .result-badge {
+    padding: 6px 12px;
+    gap: 2px;
+    line-height: 1.35;
+}
+
+/* RETISCAN: REPORTES CON ALTURA ESTABLE */
+
+app-patient-detail .reports-section .reports-table-container {
+    min-height: 590px;
+}
+
+app-patient-detail .reports-section .reports-table {
+    table-layout: fixed;
+    min-width: 960px;
+}
+
+app-patient-detail .reports-section .reports-table thead tr {
+    height: 44px;
+}
+
+app-patient-detail .reports-section .reports-table tbody tr {
+    height: 78px;
+}
+
+app-patient-detail .reports-section .reports-table th,
+app-patient-detail .reports-section .reports-table td {
+    box-sizing: border-box;
+    padding: 6px 18px;
+    vertical-align: middle;
+}
+
+app-patient-detail .reports-section .reports-table th:nth-child(1) {
+    width: 22%;
+}
+
+app-patient-detail .reports-section .reports-table th:nth-child(2) {
+    width: 8%;
+}
+
+app-patient-detail .reports-section .reports-table th:nth-child(3) {
+    width: 25%;
+}
+
+app-patient-detail .reports-section .reports-table th:nth-child(4) {
+    width: 45%;
+}

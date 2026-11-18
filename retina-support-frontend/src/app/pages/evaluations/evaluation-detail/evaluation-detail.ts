@@ -310,10 +310,10 @@ export class EvaluationDetail implements OnInit, OnDestroy {
       return;
     }
 
-    this.router.navigate([
-      '/patients',
-      this.evaluation.id_paciente
-    ]);
+    this.router.navigate(
+      ['/patients', this.evaluation.id_paciente],
+      { queryParams: { tab: 'evaluations' } }
+    );
   }
 
   ngOnDestroy(): void {
