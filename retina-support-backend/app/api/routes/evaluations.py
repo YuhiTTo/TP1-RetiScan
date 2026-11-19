@@ -31,7 +31,7 @@ from app.services.medical_observation_service import (
     save_medical_observation
 )
 from app.schemas.evaluation import ( EvaluationCreate, EvaluationResponse, EvaluationListResponse, EvaluationDetailResponse )
-from app.services.evaluation_service import ( EvaluationDoctorNotFoundError, EvaluationPatientNotFoundError, EvaluationNotFoundError, get_patient_evaluations, get_evaluation_detail, create_evaluation )
+from app.services.evaluation_service import ( EvaluationDoctorAmbiguousError, EvaluationDoctorInactiveError, EvaluationDoctorNotFoundError, EvaluationPatientNotFoundError, EvaluationNotFoundError, get_patient_evaluations, get_evaluation_detail, create_evaluation )
 
 
 from app.schemas.evaluation import (
@@ -92,12 +92,20 @@ def register_evaluation(
             detail="El paciente no fue encontrado."
         )
 
-    except EvaluationDoctorNotFoundError:
+    except EvaluationDoctorAmbiguousError:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
+            status_code=status.HTTP_409_CONFLICT,
             detail=(
-                "El médico responsable no se encuentra "
-                "registrado en el establecimiento."
+                "Existen varios registros con el mismo "
+                "nombre de médico. Verifique su identidad."
+            )
+        )
+
+    except EvaluationDoctorInactiveError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "El médico está inactivo en el establecimiento."
             )
         )
 

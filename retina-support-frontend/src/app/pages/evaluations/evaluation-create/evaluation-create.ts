@@ -231,7 +231,22 @@ export class EvaluationCreate implements OnInit {
           } else if (error.status === 404) {
 
             this.errorMessage =
-              'El paciente o médico responsable no fue encontrado.';
+              'El paciente no fue encontrado.';
+
+          } else if (error.status === 409) {
+
+            const detail = error.error?.detail;
+
+            const knownMessages = [
+              'Existen varios registros con el mismo nombre de médico. Verifique su identidad.',
+              'El médico está inactivo en el establecimiento.'
+            ];
+
+            this.errorMessage =
+              typeof detail === 'string' &&
+              knownMessages.includes(detail)
+                ? detail
+                : 'No se pudo registrar la evaluación por un conflicto de datos.';
 
           } else if (error.status === 422) {
 

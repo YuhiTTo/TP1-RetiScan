@@ -28,6 +28,26 @@ class EvaluationCreate(BaseModel):
 
         return value
 
+    @field_validator(
+        "medico_responsable",
+        mode="before"
+    )
+    @classmethod
+    def validate_doctor_name(cls, value):
+        if not isinstance(value, str):
+            raise ValueError(
+                "Ingrese nombres y apellidos del medico."
+            )
+
+        value = " ".join(value.strip().split())
+
+        if len(value.split()) < 2:
+            raise ValueError(
+                "Ingrese nombres y apellidos del medico."
+            )
+
+        return value
+
 
 class EvaluationResponse(BaseModel):
     id_evaluacion: int
