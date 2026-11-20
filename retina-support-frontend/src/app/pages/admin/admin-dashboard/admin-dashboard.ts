@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AdminEstablishmentService, Establishment, EstablishmentDetail, CreateInstitutionalAccountRequest, UpdateEstablishmentRequest } from '../../../core/services/admin-establishment';
 
@@ -9,7 +9,9 @@ import { AdminEstablishmentService, Establishment, EstablishmentDetail, CreateIn
   selector: 'app-admin-dashboard',
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css'

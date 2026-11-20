@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from './core/guards/admin.guard';
 
 import { InstitutionalLogin } from './pages/auth/institutional-login/institutional-login';
 import { AdminLogin } from './pages/auth/admin-login/admin-login';
 import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
+import { AdminSectionPreview } from './pages/admin/admin-section-preview/admin-section-preview';
+import { AdminEvaluations } from './pages/admin/admin-evaluations/admin-evaluations';
 import { Home } from './pages/home/home/home';
 import { PatientCreate } from './pages/patients/patient-create/patient-create';
 import { PatientList } from './pages/patients/patient-list/patient-list';
@@ -29,7 +32,30 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
+        redirectTo: 'admin/establishments',
+        pathMatch: 'full'
+    },
+    {
+        path: 'admin/home',
+        canActivate: [adminGuard],
+        component: AdminSectionPreview,
+        data: { section: 'home' }
+    },
+    {
+        path: 'admin/establishments',
+        canActivate: [adminGuard],
         component: AdminDashboard
+    },
+    {
+        path: 'admin/evaluations',
+        canActivate: [adminGuard],
+        component: AdminEvaluations
+    },
+    {
+        path: 'admin/consistency',
+        canActivate: [adminGuard],
+        component: AdminSectionPreview,
+        data: { section: 'consistency' }
     },
     {
         path: 'home',

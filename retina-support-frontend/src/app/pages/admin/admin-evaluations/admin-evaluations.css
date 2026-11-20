@@ -1,0 +1,188 @@
+/* US-21: supervisión administrativa */
+
+.admin-evaluations-page .establishments-header {
+  margin-bottom: 18px;
+}
+
+.evaluation-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.metric-card {
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 20px;
+  box-sizing: border-box;
+  background: white;
+  border: 1px solid #cbd3dd;
+  border-radius: 8px;
+}
+
+.metric-card span {
+  color: #667085;
+  font-size: 13px;
+}
+
+.metric-card strong {
+  color: #172033;
+  font-size: 28px;
+}
+
+.evaluation-filters {
+  margin-bottom: 16px;
+  padding: 18px;
+  background: white;
+  border: 1px solid #cbd3dd;
+  border-radius: 8px;
+}
+
+.filters-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.filters-heading h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 17px;
+}
+
+.filters-heading span {
+  color: #667085;
+  font-size: 12px;
+}
+
+.filter-fields {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  gap: 12px;
+}
+
+.evaluation-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.evaluation-field span {
+  color: #344054;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.evaluation-field input,
+.evaluation-field select {
+  width: 100%;
+  height: 42px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid #cbd3dd;
+  border-radius: 6px;
+  background: white;
+  color: #344054;
+  font-size: 13px;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.filter-actions button {
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.clear-filter-button {
+  border: 1px solid #90b8e5;
+  background: white;
+  color: #246dcc;
+}
+
+.apply-filter-button {
+  border: 1px solid #246dcc;
+  background: #246dcc;
+  color: white;
+}
+
+.evaluation-error {
+  color: #b42318;
+  font-size: 13px;
+}
+
+.admin-evaluations-page .evaluation-table th:nth-child(1) {
+  width: 12%;
+}
+
+.admin-evaluations-page .evaluation-table th:nth-child(2) {
+  width: 34%;
+}
+
+.admin-evaluations-page .evaluation-table th:nth-child(3) {
+  width: 20%;
+}
+
+.admin-evaluations-page .evaluation-table th:nth-child(4) {
+  width: 16%;
+}
+
+.admin-evaluations-page .evaluation-table th:nth-child(5) {
+  width: 18%;
+}
+
+.evaluation-status {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 90px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.evaluation-status.finished {
+  color: #23864e;
+  background: #c9f4db;
+}
+
+.evaluation-status.pending {
+  color: #956600;
+  background: #fff0bf;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.global-note {
+  margin: 0 15px 20px;
+  color: #667085;
+  font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+  .evaluation-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-fields {
+    grid-template-columns: 1fr;
+  }
+}

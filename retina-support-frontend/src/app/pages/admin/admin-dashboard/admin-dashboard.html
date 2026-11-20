@@ -7,27 +7,39 @@
             <img src="/icons/retiscan2.png" alt="RetiScan">
         </div>
 
-        <nav class="sidebar-menu">
+        <nav class="sidebar-menu" aria-label="Navegacion administrativa">
 
-            <button class="menu-item">
-                <img src="/icons/home.png" class="menu-icon-image" alt="">
+            <a class="menu-item"
+                routerLink="/admin/home"
+                routerLinkActive="active">
+                <img src="/icons/home.png"
+                    class="menu-icon-image" alt="">
                 <span>Inicio</span>
-            </button>
+            </a>
 
-            <button class="menu-item active">
-                <img src="/icons/hospital.png" class="menu-icon-image" alt="">
+            <a class="menu-item"
+                routerLink="/admin/establishments"
+                routerLinkActive="active">
+                <img src="/icons/hospital.png"
+                    class="menu-icon-image" alt="">
                 <span>Establecimientos</span>
-            </button>
+            </a>
 
-            <button class="menu-item">
-                <img src="/icons/usersmall.png" class="menu-icon-image" alt="">
-                <span>Usuarios</span>
-            </button>
+            <a class="menu-item"
+                routerLink="/admin/evaluations"
+                routerLinkActive="active">
+                <img src="/icons/evaluation.png"
+                    class="menu-icon-image" alt="">
+                <span>Supervisión de evaluaciones</span>
+            </a>
 
-            <button class="menu-item">
-                <img src="/icons/reporte.png" class="menu-icon-image" alt="">
-                <span>Reportes</span>
-            </button>
+            <a class="menu-item"
+                routerLink="/admin/consistency"
+                routerLinkActive="active">
+                <img src="/icons/reporte.png"
+                    class="menu-icon-image" alt="">
+                <span>Consistencia de registros</span>
+            </a>
 
         </nav>
 
