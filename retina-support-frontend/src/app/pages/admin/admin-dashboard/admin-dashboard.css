@@ -715,3 +715,62 @@ td {
     flex: none;
     width: 110px;
 }
+
+/* RETISCAN: TABLA ESTABLE DE ESTABLECIMIENTOS */
+
+/* Reservar espacio para cinco registros */
+.page-container .table-container {
+    min-height: 550px;
+    overflow-x: auto;
+}
+
+/* Distribucion uniforme de columnas */
+.page-container .table-container table {
+    width: 100%;
+    min-width: 980px;
+    table-layout: fixed;
+}
+
+/* Altura uniforme de encabezado y filas */
+.page-container .table-container thead tr {
+    height: 48px;
+}
+
+.page-container .table-container tbody tr {
+    height: 62px;
+}
+
+/* Centrado de encabezados y contenido */
+.page-container .table-container thead th,
+.page-container .table-container tbody td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 6px 10px;
+}
+
+/* Anchos adaptados al contenido */
+.page-container .table-container th:nth-child(1) {
+    width: 24%;
+}
+
+.page-container .table-container th:nth-child(2) {
+    width: 16%;
+}
+
+.page-container .table-container th:nth-child(3) {
+    width: 16%;
+}
+
+.page-container .table-container th:nth-child(4) {
+    width: 14%;
+}
+
+.page-container .table-container th:nth-child(5) {
+    width: 30%;
+}
+
+/* Centrar ambos botones de Acciones */
+.page-container .table-container .action-buttons {
+    justify-content: center;
+    flex-wrap: nowrap;
+}

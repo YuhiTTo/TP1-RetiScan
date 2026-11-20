@@ -56,7 +56,7 @@ export class AdminDashboard implements OnInit {
   searchTerm = '';
   statusFilter = '';
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 8;
 
   savingEdit = false;
 
@@ -176,6 +176,19 @@ export class AdminDashboard implements OnInit {
 
         return matchesSearch && matchesStatus;
       }
+    );
+  }
+
+  get establishmentShownStart(): number {
+    return this.filteredEstablishments.length === 0
+      ? 0
+      : (this.currentPage - 1) * this.itemsPerPage + 1;
+  }
+
+  get establishmentShownEnd(): number {
+    return Math.min(
+      this.currentPage * this.itemsPerPage,
+      this.filteredEstablishments.length
     );
   }
 

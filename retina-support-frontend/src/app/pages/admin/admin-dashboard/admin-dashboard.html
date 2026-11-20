@@ -202,7 +202,7 @@
         <section class="table-footer">
 
             <span>
-                Mostrando {{ filteredEstablishments.length }} establecimientos
+                Mostrando {{ establishmentShownStart }}-{{ establishmentShownEnd }} de {{ filteredEstablishments.length }} {{ filteredEstablishments.length === 1 ? 'establecimiento' : 'establecimientos' }}
             </span>
 
             <div class="pagination">
