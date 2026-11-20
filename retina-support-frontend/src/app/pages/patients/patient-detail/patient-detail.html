@@ -9,7 +9,7 @@
 
         <nav class="sidebar-menu">
 
-            <button class="menu-item">
+            <button class="menu-item" type="button" (click)="goHome()">
                 <img class="menu-icon-image" src="/icons/home.png" alt="">
                 <span>Inicio</span>
             </button>
@@ -264,8 +264,8 @@
                                 <td>
 
                                     <div class="result-badge"
-                                         [ngClass]="'result-badge--' + getEvaluationResultState(evaluation)"
-                                         [ngSwitch]="getEvaluationResultState(evaluation)">
+                                        [ngClass]="'result-badge--' + getEvaluationResultState(evaluation)"
+                                        [ngSwitch]="getEvaluationResultState(evaluation)">
 
                                         <span *ngSwitchCase="'pending'">
                                             Pendiente de análisis
@@ -282,7 +282,8 @@
                                         <ng-container *ngSwitchDefault>
                                             <span>
                                                 RD: {{ evaluation.retinopatia_diabetica?.resultado }}
-                                                ({{ formatHistoryConfidence(evaluation.retinopatia_diabetica?.confianza) }})
+                                                ({{ formatHistoryConfidence(evaluation.retinopatia_diabetica?.confianza)
+                                                }})
                                             </span>
                                             <span>
                                                 Glaucoma: {{ evaluation.glaucoma?.resultado }}
@@ -304,24 +305,19 @@
                                 <!-- ACCIÓN -->
                                 <td>
 
-                                    <button
-                                        *ngIf="evaluation.estado === 'FINALIZADA'"
-                                        type="button"
+                                    <button *ngIf="evaluation.estado === 'FINALIZADA'" type="button"
                                         class="evaluation-view-button"
                                         (click)="viewEvaluation(evaluation.id_evaluacion)">
                                         Ver
                                     </button>
 
-                                    <button
-                                        *ngIf="evaluation.estado === 'PENDIENTE'"
-                                        type="button"
-                                        class="evaluation-view-button"
-                                        [disabled]="continuingEvaluationId !== null"
+                                    <button *ngIf="evaluation.estado === 'PENDIENTE'" type="button"
+                                        class="evaluation-view-button" [disabled]="continuingEvaluationId !== null"
                                         (click)="continueEvaluation(evaluation)">
                                         {{
-                                          continuingEvaluationId === evaluation.id_evaluacion
-                                            ? 'Cargando...'
-                                            : 'Continuar'
+                                        continuingEvaluationId === evaluation.id_evaluacion
+                                        ? 'Cargando...'
+                                        : 'Continuar'
                                         }}
                                     </button>
 
@@ -334,8 +330,7 @@
 
                 </div>
 
-                <div class="list-pagination-footer"
-                     *ngIf="!evaluationsLoading &&
+                <div class="list-pagination-footer" *ngIf="!evaluationsLoading &&
                             evaluations.length > 0">
 
                     <span>
@@ -343,28 +338,23 @@
                         de {{ evaluations.length }} evaluaciones
                     </span>
 
-                    <nav class="list-pagination"
-                         aria-label="Paginación de evaluaciones">
+                    <nav class="list-pagination" aria-label="Paginación de evaluaciones">
 
-                        <button type="button"
-                                aria-label="Página anterior de evaluaciones"
-                                [disabled]="evaluationPage === 1"
-                                (click)="changeEvaluationPage(evaluationPage - 1)">
+                        <button type="button" aria-label="Página anterior de evaluaciones"
+                            [disabled]="evaluationPage === 1" (click)="changeEvaluationPage(evaluationPage - 1)">
                             ‹
                         </button>
 
-                        <button type="button"
-                                *ngFor="let page of evaluationPageNumbers"
-                                [class.page-active]="page === evaluationPage"
-                                [attr.aria-current]="page === evaluationPage ? 'page' : null"
-                                (click)="changeEvaluationPage(page)">
+                        <button type="button" *ngFor="let page of evaluationPageNumbers"
+                            [class.page-active]="page === evaluationPage"
+                            [attr.aria-current]="page === evaluationPage ? 'page' : null"
+                            (click)="changeEvaluationPage(page)">
                             {{ page }}
                         </button>
 
-                        <button type="button"
-                                aria-label="Página siguiente de evaluaciones"
-                                [disabled]="evaluationPage === totalEvaluationPages"
-                                (click)="changeEvaluationPage(evaluationPage + 1)">
+                        <button type="button" aria-label="Página siguiente de evaluaciones"
+                            [disabled]="evaluationPage === totalEvaluationPages"
+                            (click)="changeEvaluationPage(evaluationPage + 1)">
                             ›
                         </button>
                     </nav>
@@ -374,37 +364,29 @@
 
 
             <!-- US-20: REPORTES DEL PACIENTE -->
-            <section class="reports-section"
-                     *ngIf="activeTab === 'reports'">
+            <section class="reports-section" *ngIf="activeTab === 'reports'">
 
                 <h2 class="reports-title">
-                    <img src="/icons/reporte.png"
-                         alt=""
-                         class="section-icon">
+                    <img src="/icons/reporte.png" alt="" class="section-icon">
                     Reportes médicos
                 </h2>
 
-                <div class="status-message"
-                     *ngIf="reportsLoading">
+                <div class="status-message" *ngIf="reportsLoading">
                     Cargando reportes...
                 </div>
 
-                <div class="status-message error"
-                     role="alert"
-                     *ngIf="reportsError">
+                <div class="status-message error" role="alert" *ngIf="reportsError">
                     {{ reportsError }}
                 </div>
 
-                <div class="empty-evaluations"
-                     *ngIf="!reportsLoading &&
+                <div class="empty-evaluations" *ngIf="!reportsLoading &&
                             !reportsError &&
                             patientReports.length === 0">
                     Este paciente todavía no tiene
                     evaluaciones finalizadas para generar reportes.
                 </div>
 
-                <div class="reports-table-container"
-                     *ngIf="!reportsLoading &&
+                <div class="reports-table-container" *ngIf="!reportsLoading &&
                             patientReports.length > 0">
 
                     <table class="reports-table">
@@ -423,7 +405,7 @@
 
                                 <td>
                                     {{ report.fecha_evaluacion |
-                                       date:'dd/MM/yyyy' }}
+                                    date:'dd/MM/yyyy' }}
                                 </td>
 
                                 <td>
@@ -432,45 +414,38 @@
 
                                 <td>
                                     {{ report.fecha_generacion
-                                       ? (report.fecha_generacion |
-                                          date:'dd/MM/yyyy HH:mm')
-                                       : '—' }}
+                                    ? (report.fecha_generacion |
+                                    date:'dd/MM/yyyy HH:mm')
+                                    : '—' }}
                                 </td>
 
                                 <td>
                                     <div class="report-actions">
 
-                                        <button
-                                            *ngIf="!report.tiene_reporte"
-                                            type="button"
+                                        <button *ngIf="!report.tiene_reporte" type="button"
                                             class="report-button report-generate"
                                             [disabled]="reportGeneratingId !== null"
                                             (click)="generateReport(report.id_evaluacion)">
                                             {{ reportGeneratingId === report.id_evaluacion
-                                               ? 'Generando...'
-                                               : 'Generar PDF' }}
+                                            ? 'Generando...'
+                                            : 'Generar PDF' }}
                                         </button>
 
-                                        <button
-                                            *ngIf="report.tiene_reporte"
-                                            type="button"
-                                            class="report-button report-view"
-                                            [disabled]="reportViewingId !== null"
+                                        <button *ngIf="report.tiene_reporte" type="button"
+                                            class="report-button report-view" [disabled]="reportViewingId !== null"
                                             (click)="viewReport(report.id_evaluacion)">
                                             {{ reportViewingId === report.id_evaluacion
-                                               ? 'Abriendo...'
-                                               : 'Ver PDF' }}
+                                            ? 'Abriendo...'
+                                            : 'Ver PDF' }}
                                         </button>
 
-                                        <button
-                                            *ngIf="report.tiene_reporte"
-                                            type="button"
+                                        <button *ngIf="report.tiene_reporte" type="button"
                                             class="report-button report-download"
                                             [disabled]="reportDownloadingId !== null"
                                             (click)="downloadReport(report.id_evaluacion)">
                                             {{ reportDownloadingId === report.id_evaluacion
-                                               ? 'Descargando...'
-                                               : 'Descargar PDF' }}
+                                            ? 'Descargando...'
+                                            : 'Descargar PDF' }}
                                         </button>
 
                                     </div>
@@ -482,8 +457,7 @@
                     </table>
                 </div>
 
-                <div class="list-pagination-footer"
-                     *ngIf="!reportsLoading &&
+                <div class="list-pagination-footer" *ngIf="!reportsLoading &&
                             patientReports.length > 0">
 
                     <span>
@@ -491,36 +465,27 @@
                         de {{ patientReports.length }} reportes
                     </span>
 
-                    <nav class="list-pagination"
-                         aria-label="Paginación de reportes">
+                    <nav class="list-pagination" aria-label="Paginación de reportes">
 
-                        <button type="button"
-                                aria-label="Página anterior de reportes"
-                                [disabled]="reportPage === 1"
-                                (click)="changeReportPage(reportPage - 1)">
+                        <button type="button" aria-label="Página anterior de reportes" [disabled]="reportPage === 1"
+                            (click)="changeReportPage(reportPage - 1)">
                             ‹
                         </button>
 
-                        <button type="button"
-                                *ngFor="let page of reportPageNumbers"
-                                [class.page-active]="page === reportPage"
-                                [attr.aria-current]="page === reportPage ? 'page' : null"
-                                (click)="changeReportPage(page)">
+                        <button type="button" *ngFor="let page of reportPageNumbers"
+                            [class.page-active]="page === reportPage"
+                            [attr.aria-current]="page === reportPage ? 'page' : null" (click)="changeReportPage(page)">
                             {{ page }}
                         </button>
 
-                        <button type="button"
-                                aria-label="Página siguiente de reportes"
-                                [disabled]="reportPage === totalReportPages"
-                                (click)="changeReportPage(reportPage + 1)">
+                        <button type="button" aria-label="Página siguiente de reportes"
+                            [disabled]="reportPage === totalReportPages" (click)="changeReportPage(reportPage + 1)">
                             ›
                         </button>
                     </nav>
                 </div>
 
-                <p class="report-success"
-                   role="status"
-                   *ngIf="reportActionMessage && !reportsError">
+                <p class="report-success" role="status" *ngIf="reportActionMessage && !reportsError">
                     {{ reportActionMessage }}
                 </p>
 
@@ -534,32 +499,22 @@
 
 
 <!-- US-20: VISTA PREVIA DEL PDF -->
-<div class="modal-backdrop report-preview-backdrop"
-     *ngIf="reportPreviewOpen">
+<div class="modal-backdrop report-preview-backdrop" *ngIf="reportPreviewOpen">
 
-    <div class="report-preview-modal"
-         role="dialog"
-         aria-modal="true"
-         aria-label="Vista previa del reporte médico">
+    <div class="report-preview-modal" role="dialog" aria-modal="true" aria-label="Vista previa del reporte médico">
 
         <div class="report-preview-header">
 
             <h2>Vista previa del reporte médico</h2>
 
-            <button
-                type="button"
-                class="report-preview-close"
-                aria-label="Cerrar vista previa"
+            <button type="button" class="report-preview-close" aria-label="Cerrar vista previa"
                 (click)="closeReportPreview()">
                 ×
             </button>
 
         </div>
 
-        <iframe
-            *ngIf="reportPreviewUrl"
-            class="report-preview-frame"
-            [src]="reportPreviewUrl"
+        <iframe *ngIf="reportPreviewUrl" class="report-preview-frame" [src]="reportPreviewUrl"
             title="Documento PDF del reporte médico">
         </iframe>
 

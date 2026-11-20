@@ -842,6 +842,10 @@ export class PatientDetail implements OnInit, OnDestroy {
     this.router.navigate(['/patients']);
   }
 
+  goHome(): void {
+    this.router.navigate(['/home']);
+  }
+
   logout(): void {
 
     localStorage.removeItem('access_token');

@@ -133,6 +133,9 @@ export class PatientCreate {
     this.router.navigate(['/patients']);
   }
 
+  goHome(): void {
+    this.router.navigate(['/home']);
+  }
 
   logout(): void {
 

@@ -276,6 +276,9 @@ export class RetinographyUpload implements OnInit, OnDestroy {
     ]);
   }
 
+  goHome(): void {
+    this.router.navigate(['/home']);
+  }
 
   onFileSelected(event: Event): void {
 

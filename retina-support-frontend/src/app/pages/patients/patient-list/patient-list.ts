@@ -135,6 +135,10 @@ export class PatientList implements OnInit {
       });
   }
 
+  goToHome(): void {
+    this.router.navigate(['/home']);
+  }
+
   registerPatient(): void {
     this.router.navigate(['/patients/new']);
   }

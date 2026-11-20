@@ -16,6 +16,9 @@ from app.core.database import test_database_connection
 from app.api.routes.ai_analysis import (
     router as ai_analysis_router
 )
+from app.api.routes.dashboard import (
+    router as dashboard_router
+)
 
 app = FastAPI(
     title="RetiScan API",
@@ -44,6 +47,7 @@ app.include_router(retinographies_router)
 app.include_router(reports_router)
 app.include_router(patient_reports_router)
 app.include_router(ai_analysis_router)
+app.include_router(dashboard_router)
 
 @app.get("/")
 def root():

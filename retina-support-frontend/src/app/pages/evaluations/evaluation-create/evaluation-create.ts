@@ -314,75 +314,74 @@ export class EvaluationCreate implements OnInit {
     const request: Observable<{ id_evaluacion: number }> =
       this.editEvaluationId !== null
         ? this.evaluationService.updateEvaluation(
-            this.editEvaluationId, data
-          )
+          this.editEvaluationId, data
+        )
         : this.evaluationService.createEvaluation(
-            this.patientId, data
-          );
+          this.patientId, data
+        );
 
     request.subscribe({
 
-        next: (response) => {
+      next: (response) => {
 
-          this.saving = false;
+        this.saving = false;
 
-          this.router.navigate([
-            '/evaluations',
-            response.id_evaluacion,
-            'retinography'
-          ]);
-        },
+        this.router.navigate([
+          '/evaluations',
+          response.id_evaluacion,
+          'retinography'
+        ]);
+      },
 
-        error: (error) => {
+      error: (error) => {
 
-          this.saving = false;
+        this.saving = false;
 
-          if (error.status === 401) {
+        if (error.status === 401) {
 
-            this.logout();
+          this.logout();
 
-          } else if (error.status === 404) {
+        } else if (error.status === 404) {
 
-            this.errorMessage = this.editEvaluationId !== null
-              ? 'La evaluación no fue encontrada.'
-              : 'El paciente no fue encontrado.';
+          this.errorMessage = this.editEvaluationId !== null
+            ? 'La evaluación no fue encontrada.'
+            : 'El paciente no fue encontrado.';
 
-          } else if (error.status === 409) {
+        } else if (error.status === 409) {
 
-            const detail = error.error?.detail;
+          const detail = error.error?.detail;
 
-            const knownMessages = [
-              'Existen varios registros con el mismo nombre de médico. Verifique su identidad.',
-              'El médico está inactivo en el establecimiento.',
-              'No se puede cambiar el ojo evaluado porque ya existe una retinografía cargada.',
-              'La evaluación ya inició el análisis de IA o no se encuentra pendiente.'
-            ];
+          const knownMessages = [
+            'Existen varios registros con el mismo nombre de médico. Verifique su identidad.',
+            'El médico está inactivo en el establecimiento.',
+            'No se puede cambiar el ojo evaluado porque ya existe una retinografía cargada.',
+            'La evaluación ya inició el análisis de IA o no se encuentra pendiente.'
+          ];
 
-            this.errorMessage =
-              typeof detail === 'string' &&
+          this.errorMessage =
+            typeof detail === 'string' &&
               knownMessages.includes(detail)
-                ? detail
-                : 'No se pudo registrar la evaluación por un conflicto de datos.';
+              ? detail
+              : 'No se pudo registrar la evaluación por un conflicto de datos.';
 
-          } else if (error.status === 422) {
+        } else if (error.status === 422) {
 
-            this.errorMessage =
-              'Verifique los datos de la evaluación.';
+          this.errorMessage =
+            'Verifique los datos de la evaluación.';
 
-          } else {
+        } else {
 
-            this.errorMessage =
-              'No se pudo registrar la evaluación.';
-          }
-
-          this.cdr.markForCheck();
+          this.errorMessage =
+            'No se pudo registrar la evaluación.';
         }
-      });
+
+        this.cdr.markForCheck();
+      }
+    });
   }
 
 
   cancel(): void {
-
     this.router.navigate(
       ['/patients', this.patientId],
       { state: { patientTab: 'evaluations' } }
@@ -391,13 +390,15 @@ export class EvaluationCreate implements OnInit {
 
 
   goBack(): void {
-
     this.router.navigate(
       ['/patients', this.patientId],
       { state: { patientTab: 'evaluations' } }
     );
   }
 
+  goHome(): void {
+    this.router.navigate(['/home']);
+  }
 
   logout(): void {
 

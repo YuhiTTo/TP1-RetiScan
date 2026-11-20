@@ -1,18 +1,9 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import {
-  AIEvaluationResultsResponse,
-  EvaluationDetail as EvaluationDetailData,
-  EvaluationService
-} from '../../../core/services/evaluation';
+import { AIEvaluationResultsResponse, EvaluationDetail as EvaluationDetailData, EvaluationService } from '../../../core/services/evaluation';
 
 @Component({
   selector: 'app-evaluation-detail',
@@ -84,7 +75,7 @@ export class EvaluationDetail implements OnInit, OnDestroy {
     private router: Router,
     private evaluationService: EvaluationService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.evaluationId = Number(
@@ -314,6 +305,10 @@ export class EvaluationDetail implements OnInit, OnDestroy {
       ['/patients', this.evaluation.id_paciente],
       { state: { patientTab: 'evaluations' } }
     );
+  }
+
+  goHome(): void {
+    this.router.navigate(['/home']);
   }
 
   ngOnDestroy(): void {

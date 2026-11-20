@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { InstitutionalLogin } from './pages/auth/institutional-login/institutional-login';
 import { AdminLogin } from './pages/auth/admin-login/admin-login';
 import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
+import { Home } from './pages/home/home/home';
 import { PatientCreate } from './pages/patients/patient-create/patient-create';
 import { PatientList } from './pages/patients/patient-list/patient-list';
 import { PatientDetail } from './pages/patients/patient-detail/patient-detail';
@@ -29,6 +30,10 @@ export const routes: Routes = [
     {
         path: 'admin',
         component: AdminDashboard
+    },
+    {
+        path: 'home',
+        component: Home
     },
     {
         path: 'patients',

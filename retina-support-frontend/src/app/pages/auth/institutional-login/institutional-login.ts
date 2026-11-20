@@ -77,7 +77,7 @@ export class InstitutionalLogin {
 
         console.log('Inicio de sesión correcto');
 
-        this.router.navigate(['/patients']);
+        this.router.navigate(['/home']);
       },
 
       error: (error) => {

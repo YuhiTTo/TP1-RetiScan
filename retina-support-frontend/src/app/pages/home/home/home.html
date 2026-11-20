@@ -1,0 +1,313 @@
+<div class="page-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="/icons/retiscan2.png" alt="RetiScan">
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <button class="menu-item active" (click)="goToHome()">
+                <img class="menu-icon-image" src="/icons/home.png" alt="">
+                <span>Inicio</span>
+            </button>
+
+            <button class="menu-item" (click)="goToPatients()">
+                <img class="menu-icon-image" src="/icons/patients.png" alt="">
+                <span>Pacientes</span>
+            </button>
+
+            <button class="menu-item" (click)="goToPatients()"
+                title="Selecciona un paciente para consultar sus evaluaciones">
+                <img class="menu-icon-image" src="/icons/evaluacion.png" alt="">
+                <span>Evaluaciones</span>
+            </button>
+
+            <button class="menu-item" (click)="goToPatients()"
+                title="Selecciona un paciente para consultar sus reportes">
+                <img class="menu-icon-image" src="/icons/reporte.png" alt="">
+                <span>Reportes</span>
+            </button>
+
+        </nav>
+
+        <button class="logout-button" (click)="logout()">
+            <img class="menu-icon-image" src="/icons/logout.png" alt="">
+            <span>Cerrar sesión</span>
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- ESTABLECIMIENTO -->
+        <header class="top-header">
+
+            <div class="establishment-card">
+                <img class="establishment-icon-image" src="/icons/hospital.png" alt="">
+
+                <span class="establishment-name">
+                    {{ displayName }}
+                </span>
+            </div>
+
+        </header>
+
+
+        <!-- BIENVENIDA -->
+        <section class="welcome-card">
+
+            <div class="welcome-icon">
+
+                <img src="/icons/oftalmologo.png" alt="">
+
+            </div>
+
+            <div class="welcome-content">
+
+                <h2>Bienvenid@ a RetiScan</h2>
+
+                <p>
+                    Gestione sus pacientes, realice evaluaciones
+                    de retinografía y consulte los resultados
+                    del análisis automatizado.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- INDICADORES -->
+        <section class="stats-grid">
+
+            <article class="stat-card patients-stat">
+
+                <div class="stat-icon">
+                    <img src="/icons/patients.png" alt="" class="section-icon">
+                </div>
+
+                <div class="stat-info">
+                    <span>Pacientes registrados</span>
+                    <strong>
+                        {{ dashboardLoading ? '...' : dashboardError ? '—' : (dashboard ? dashboard.total_pacientes : 0)
+                        }}
+                    </strong>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card completed-stat">
+
+                <div class="stat-icon">
+                    <img src="/icons/cheque.png" alt="" class="section-icon2">
+                </div>
+
+                <div class="stat-info">
+                    <span>Evaluaciones realizadas</span>
+                    <strong>
+                        {{ dashboardLoading ? '...' : dashboardError ? '—' : (dashboard ?
+                        dashboard.evaluaciones_realizadas : 0) }}
+                    </strong>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card pending-stat">
+
+                <div class="stat-icon">
+                    <img src="/icons/reloj.png" alt="" class="section-icon3">
+                </div>
+
+                <div class="stat-info">
+                    <span>Evaluaciones pendientes</span>
+                    <strong>
+                        {{ dashboardLoading ? '...' : dashboardError ? '—' : (dashboard ?
+                        dashboard.evaluaciones_pendientes : 0) }}
+                    </strong>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card reports-stat">
+
+                <div class="stat-icon">
+                    <img src="/icons/expediente.png" alt="" class="section-icon4">
+                </div>
+
+                <div class="stat-info">
+                    <span>Reportes generados</span>
+                    <strong>
+                        {{ dashboardLoading ? '...' : dashboardError ? '—' : (dashboard ? dashboard.reportes_generados :
+                        0) }}
+                    </strong>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- ACCESOS RÁPIDOS -->
+        <section class="quick-access-section">
+
+            <h3 class="section-title">
+                <img src="/icons/rayo.png" alt="" class="section-icon">
+                Accesos rápidos
+            </h3>
+
+            <div class="quick-access-grid">
+
+                <button class="quick-access-card" (click)="registerPatient()">
+
+                    <img src="/icons/usersmall.png" alt="">
+
+                    <div>
+                        <strong>Registrar paciente</strong>
+                        <span>Cree un nuevo registro en el sistema</span>
+                    </div>
+
+                    <span class="access-arrow">›</span>
+
+                </button>
+
+
+                <button class="quick-access-card" (click)="searchPatient()">
+
+                    <img src="/icons/search.png" alt="" class="section-icon">
+
+                    <div>
+                        <strong>Buscar paciente</strong>
+                        <span>Encuentre pacientes por nombre o DNI</span>
+                    </div>
+
+                    <span class="access-arrow">›</span>
+
+                </button>
+
+
+                <button class="quick-access-card" (click)="viewHistory()">
+
+                    <img src="/icons/historial.png" alt="" class="section-icon">
+
+                    <div>
+                        <strong>Ver historial de evaluaciones</strong>
+                        <span>Consulte evaluaciones y resultados previos</span>
+                    </div>
+
+                    <span class="access-arrow">›</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- EVALUACIONES RECIENTES -->
+        <section class="recent-section">
+
+            <h3 class="section-title">
+
+                <img src="/icons/estadistico.png" alt="" class="section-icon">
+
+                Evaluaciones recientes
+
+            </h3>
+
+            <div class="recent-table-container">
+
+                <table class="recent-table">
+
+                    <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Fecha de evaluación</th>
+                            <th>Ojo evaluado</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <!-- Cargando -->
+                        <tr *ngIf="dashboardLoading">
+                            <td colspan="4" class="empty-state">
+                                Cargando evaluaciones...
+                            </td>
+                        </tr>
+
+                        <!-- Error -->
+                        <tr *ngIf="dashboardError">
+                            <td colspan="4" class="empty-state">
+                                No se pudieron cargar las evaluaciones.
+                            </td>
+                        </tr>
+
+                        <!-- Sin evaluaciones -->
+                        <tr
+                            *ngIf="!dashboardLoading && !dashboardError && (!dashboard || dashboard.evaluaciones_recientes.length === 0)">
+                            <td colspan="4" class="empty-state">
+                                Aún no hay evaluaciones recientes.
+                            </td>
+                        </tr>
+
+                        <!-- Evaluaciones reales -->
+                        <tr *ngFor="let evaluation of dashboard?.evaluaciones_recientes">
+
+                            <td>
+                                {{ evaluation.nombres_paciente }}
+                                {{ evaluation.apellidos_paciente }}
+                            </td>
+
+                            <td>
+                                {{ evaluation.fecha_evaluacion | date:'dd/MM/yyyy' }}
+                            </td>
+
+                            <td>
+                                {{ evaluation.ojo_evaluado }}
+                            </td>
+
+                            <td>
+                                <span class="status-badge" [class.status-completed]="evaluation.estado === 'FINALIZADA'"
+                                    [class.status-pending]="evaluation.estado === 'PENDIENTE'">
+
+                                    {{ evaluation.estado === 'FINALIZADA' ? 'Finalizada' : evaluation.estado ===
+                                    'PENDIENTE' ? 'Pendiente' : evaluation.estado }}
+
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- AVISO -->
+        <footer class="clinical-notice">
+
+            <img src="/icons/informacion.png" alt="" class="section-icon">
+
+            <span>
+                RetiScan es una herramienta de apoyo clínico.
+                No reemplaza el criterio del médico oftalmólogo.
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
