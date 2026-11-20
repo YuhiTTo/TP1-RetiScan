@@ -2,6 +2,8 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.evaluation import RetinalEvaluation
+from app.models.patient import Patient
+from app.models.doctor import Doctor
 
 
 def get_evaluation_by_id(
@@ -39,3 +41,40 @@ def get_evaluations_by_patient(
     return list(
         db.execute(statement).scalars().all()
     )
+
+def get_evaluations_by_establishment(
+    db: Session,
+    establishment_id: int
+) -> list[tuple[RetinalEvaluation, Patient, Doctor]]:
+
+    statement = (
+        select(
+            RetinalEvaluation,
+            Patient,
+            Doctor
+        )
+        .join(
+            Patient,
+            Patient.id_paciente == RetinalEvaluation.id_paciente
+        )
+        .join(
+            Doctor,
+            Doctor.id_medico == RetinalEvaluation.id_medico
+        )
+        .where(
+            RetinalEvaluation.id_establecimiento == establishment_id,
+            Patient.id_establecimiento == establishment_id,
+            Doctor.id_establecimiento == establishment_id
+        )
+        .order_by(
+            RetinalEvaluation.fecha_evaluacion.desc(),
+            RetinalEvaluation.id_evaluacion.desc()
+        )
+    )
+
+    result = db.execute(statement).all()
+
+    return [
+        (row[0], row[1], row[2])
+        for row in result
+    ]

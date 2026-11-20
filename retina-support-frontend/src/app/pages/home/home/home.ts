@@ -83,6 +83,14 @@ export class Home implements OnInit {
     this.router.navigate(['/patients']);
   }
 
+  goToEvaluations(): void {
+    this.router.navigate(['/evaluations']);
+  }
+
+  goToReports(): void {
+    this.router.navigate(['/reports']);
+  }
+
   registerPatient(): void {
     this.router.navigate(['/patients/new']);
   }
@@ -92,7 +100,7 @@ export class Home implements OnInit {
   }
 
   viewHistory(): void {
-    this.router.navigate(['/patients']);
+    this.router.navigate(['/evaluations']);
   }
 
   logout(): void {

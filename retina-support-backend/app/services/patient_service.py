@@ -73,7 +73,7 @@ def find_patients(
     db: Session,
     establishment_id: int,
     search: str
-) -> list[Patient]:
+) -> list[dict]:
 
     return search_patients(
         db=db,

@@ -30,6 +30,20 @@ export interface EvaluationHistoryModelResult {
   confianza: number;
 }
 
+export interface EvaluationSummary {
+  id_evaluacion: number;
+  id_paciente: number;
+
+  nombres_paciente: string;
+  apellidos_paciente: string;
+
+  fecha_evaluacion: string;
+  ojo_evaluado: string;
+
+  medico_responsable: string;
+  estado: string;
+}
+
 export interface EvaluationDetail {
   id_evaluacion: number;
   fecha_evaluacion: string;
@@ -129,6 +143,9 @@ export class EvaluationService {
   private readonly apiUrl =
     'http://127.0.0.1:8000/api/v1/patients';
 
+  private readonly evaluationsApiUrl =
+    'http://127.0.0.1:8000/api/v1/evaluations';
+
   private analysisResult: AIAnalysisResponse | null = null;
 
   constructor(
@@ -136,6 +153,11 @@ export class EvaluationService {
   ) {
   }
 
+  getEstablishmentEvaluations(): Observable<EvaluationSummary[]> {
+    return this.http.get<EvaluationSummary[]>(
+      this.evaluationsApiUrl
+    );
+  }
 
   getPatientEvaluations(
     patientId: number

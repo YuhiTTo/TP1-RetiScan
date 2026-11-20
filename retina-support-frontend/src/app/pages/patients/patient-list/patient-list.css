@@ -286,15 +286,16 @@
 
 .table-container {
     background: white;
-
     border: 1px solid #82b9ec;
     border-radius: 7px;
-
     overflow: hidden;
+
+    min-height: 575px;
 }
 
 table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
 }
 
@@ -308,7 +309,7 @@ th {
     padding: 0 18px;
 
     font-size: 13px;
-    font-weight: 500;
+    font-weight: bold;
 
     text-align: left;
 
@@ -443,4 +444,15 @@ tbody tr:last-child td {
         flex-wrap: wrap;
         gap: 12px;
     }
+}
+
+
+/* =========================
+   ALINEACIÓN DE LA TABLA
+========================= */
+
+.table-container table th,
+.table-container table td {
+    text-align: center;
+    vertical-align: middle;
 }

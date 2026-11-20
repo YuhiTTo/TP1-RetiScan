@@ -285,6 +285,18 @@ export class EvaluationResults implements OnInit, OnDestroy {
     ]);
   }
 
+  goHome(): void {
+    this.router.navigate(['/home']);
+  }
+
+  goToEvaluations(): void {
+    this.router.navigate(['/evaluations']);
+  }
+
+  goToReports(): void {
+    this.router.navigate(['/reports']);
+  }
+
   goToPatient(): void {
 
     if (!this.evaluation) {

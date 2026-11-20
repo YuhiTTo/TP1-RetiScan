@@ -18,22 +18,48 @@ import {
   templateUrl: './patient-list.html',
   styleUrl: './patient-list.css'
 })
+
 export class PatientList implements OnInit {
 
   searchTerm = '';
 
   patients: Patient[] = [];
+  sexFilter: 'TODOS' | 'F' | 'M' = 'TODOS';
 
-  readonly pageSize = 5;
+  readonly pageSize = 8;
   currentPage = 1;
 
+
+  get filteredPatients(): Patient[] {
+    if (this.sexFilter === 'TODOS') {
+      return this.patients;
+    }
+
+    return this.patients.filter(
+      patient => patient.sexo?.toUpperCase() === this.sexFilter
+    );
+  }
+
+  onSexFilterChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+
+    if (value === 'TODOS' || value === 'F' || value === 'M') {
+      this.sexFilter = value;
+      this.currentPage = 1;
+    }
+  }
+
   get totalPages(): number {
-    return Math.max(1, Math.ceil(this.patients.length / this.pageSize));
+    return Math.max(
+      1,
+      Math.ceil(this.filteredPatients.length / this.pageSize)
+    );
   }
 
   get paginatedPatients(): Patient[] {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.patients.slice(start, start + this.pageSize);
+
+    return this.filteredPatients.slice(start, start + this.pageSize);
   }
 
   get pageNumbers(): number[] {
@@ -51,7 +77,7 @@ export class PatientList implements OnInit {
   }
 
   get shownStart(): number {
-    return this.patients.length === 0
+    return this.filteredPatients.length === 0
       ? 0
       : (this.currentPage - 1) * this.pageSize + 1;
   }
@@ -59,7 +85,7 @@ export class PatientList implements OnInit {
   get shownEnd(): number {
     return Math.min(
       this.currentPage * this.pageSize,
-      this.patients.length
+      this.filteredPatients.length
     );
   }
 
@@ -137,6 +163,14 @@ export class PatientList implements OnInit {
 
   goToHome(): void {
     this.router.navigate(['/home']);
+  }
+
+  goToEvaluations(): void {
+    this.router.navigate(['/evaluations']);
+  }
+
+  goToReports(): void {
+    this.router.navigate(['/reports']);
   }
 
   registerPatient(): void {

@@ -137,6 +137,14 @@ export class PatientCreate {
     this.router.navigate(['/home']);
   }
 
+  goToEvaluations(): void {
+    this.router.navigate(['/evaluations']);
+  }
+
+  goToReports(): void {
+    this.router.navigate(['/reports']);
+  }
+
   logout(): void {
 
     localStorage.removeItem('access_token');

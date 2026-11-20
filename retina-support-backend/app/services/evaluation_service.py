@@ -9,8 +9,8 @@ from app.models.retinography import Retinography
 from app.models.ai_analysis import AIAnalysis
 from app.repositories.doctor_repository import find_doctors_by_full_name
 from app.repositories.patient_repository import get_patient_by_id
-from app.repositories.evaluation_repository import ( get_evaluations_by_patient, get_evaluation_by_id )
-from app.schemas.evaluation import EvaluationCreate, EvaluationUpdate
+from app.repositories.evaluation_repository import ( get_evaluations_by_patient, get_evaluation_by_id, get_evaluations_by_establishment )
+from app.schemas.evaluation import ( EvaluationCreate, EvaluationUpdate, EvaluationSummaryResponse)
 
 
 class EvaluationPatientNotFoundError(Exception):
@@ -317,3 +317,29 @@ def update_evaluation(
     except Exception:
         db.rollback()
         raise
+
+def get_establishment_evaluations(
+    db: Session,
+    establishment_id: int
+) -> list[EvaluationSummaryResponse]:
+
+    records = get_evaluations_by_establishment(
+        db=db,
+        establishment_id=establishment_id
+    )
+
+    return [
+        EvaluationSummaryResponse(
+            id_evaluacion=evaluation.id_evaluacion,
+            id_paciente=patient.id_paciente,
+            nombres_paciente=patient.nombres,
+            apellidos_paciente=patient.apellidos,
+            fecha_evaluacion=evaluation.fecha_evaluacion,
+            ojo_evaluado=evaluation.ojo_evaluado,
+            medico_responsable=(
+                f"{doctor.nombres} {doctor.apellidos}"
+            ),
+            estado=evaluation.estado
+        )
+        for evaluation, patient, doctor in records
+    ]

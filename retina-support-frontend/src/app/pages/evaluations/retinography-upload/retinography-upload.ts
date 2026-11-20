@@ -255,7 +255,6 @@ export class RetinographyUpload implements OnInit, OnDestroy {
     );
   }
 
-
   goToEvaluationForm(): void {
     if (
       !this.evaluation ||
@@ -278,6 +277,14 @@ export class RetinographyUpload implements OnInit, OnDestroy {
 
   goHome(): void {
     this.router.navigate(['/home']);
+  }
+
+  goToEvaluations(): void {
+    this.router.navigate(['/evaluations']);
+  }
+
+  goToReports(): void {
+    this.router.navigate(['/reports']);
   }
 
   onFileSelected(event: Event): void {

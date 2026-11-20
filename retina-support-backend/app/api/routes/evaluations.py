@@ -4,36 +4,21 @@ from sqlalchemy.orm import Session
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.services.report_update_service import (
-    ReportUpdateCommitUncertainError,
-    ReportUpdateCleanupFailedError,
-)
-from app.services.report_data_service import (
-    ReportDataIncompleteError,
-)
-from app.services.storage_service import (
-    StorageConfigurationError,
-    StorageUploadError,
-    StorageDownloadError,
-)
+from app.services.report_update_service import ( ReportUpdateCommitUncertainError, ReportUpdateCleanupFailedError )
+from app.services.report_data_service import ( ReportDataIncompleteError )
+from app.services.storage_service import ( StorageConfigurationError, StorageUploadError, StorageDownloadError )
 
 from app.api.dependencies import ( get_db, require_institutional_account )
 from app.models.account import Account
 from app.models.doctor import Doctor
-from app.schemas.evaluation import (
-    MedicalObservationUpdate,
-    MedicalObservationResponse
-)
+from app.schemas.evaluation import ( MedicalObservationUpdate, MedicalObservationResponse )
 from app.services.medical_observation_service import (
     MedicalObservationNotFoundError,
     MedicalObservationResultsNotAvailableError,
     MedicalObservationNotFinalizedError,
     save_medical_observation
 )
-from app.schemas.evaluation import (
-    EvaluationCreate, EvaluationUpdate, EvaluationResponse,
-    EvaluationListResponse, EvaluationDetailResponse
-)
+from app.schemas.evaluation import ( EvaluationCreate, EvaluationUpdate, EvaluationResponse, EvaluationListResponse, EvaluationDetailResponse, EvaluationSummaryResponse )
 from app.services.evaluation_service import (
     EvaluationDoctorAmbiguousError,
     EvaluationDoctorInactiveError,
@@ -43,6 +28,7 @@ from app.services.evaluation_service import (
     EvaluationEyeChangeNotAllowedError,
     EvaluationNotFoundError,
     get_patient_evaluations,
+    get_establishment_evaluations,
     get_evaluation_detail,
     create_evaluation,
     update_evaluation
@@ -76,6 +62,21 @@ detail_router = APIRouter(
     tags=["Evaluations"]
 )
 
+@detail_router.get(
+    "",
+    response_model=list[EvaluationSummaryResponse],
+    status_code=status.HTTP_200_OK
+)
+def list_establishment_evaluations(
+    db: Session = Depends(get_db),
+    current_account: Account = Depends(
+        require_institutional_account
+    )
+):
+    return get_establishment_evaluations(
+        db=db,
+        establishment_id=current_account.id_establecimiento
+    )
 
 @router.post(
     "/{patient_id}/evaluations",

@@ -3,28 +3,21 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from app.api.dependencies import (
-    get_db,
-    require_institutional_account,
-)
+from app.api.dependencies import ( get_db, require_institutional_account )
 from app.models.account import Account
 from app.models.report import Report
 from app.models.patient import Patient
 from app.models.evaluation import RetinalEvaluation
-from app.repositories.evaluation_repository import (
-    get_evaluation_by_id,
-)
+from app.repositories.evaluation_repository import ( get_evaluation_by_id )
+from app.repositories.report_repository import ( get_reports_by_establishment )
+from app.schemas.report import ReportListResponse
 from app.services.report_service import (
     generate_initial_report,
     ReportAlreadyExistsError,
     ReportCleanupFailedError,
     ReportCommitUncertainError,
 )
-from app.services.report_data_service import (
-    ReportEvaluationNotFoundError,
-    ReportEvaluationNotReadyError,
-    ReportDataIncompleteError,
-)
+from app.services.report_data_service import ( ReportEvaluationNotFoundError, ReportEvaluationNotReadyError, ReportDataIncompleteError )
 from app.services.report_storage_service import download_report_pdf
 from app.services.storage_service import (
     StorageConfigurationError,
@@ -43,6 +36,10 @@ patient_reports_router = APIRouter(
     tags=["Reports"],
 )
 
+reports_list_router = APIRouter(
+    prefix="/api/v1/reports",
+    tags=["Reports"],
+)
 
 def _find_report(
     db: Session,
@@ -284,4 +281,43 @@ def list_patient_reports(
             ),
         }
         for evaluation, report in rows
+    ]
+
+@reports_list_router.get(
+    "/",
+    response_model=list[ReportListResponse]
+)
+def list_establishment_reports(
+    db: Session = Depends(get_db),
+    account: Account = Depends(require_institutional_account),
+):
+    rows = get_reports_by_establishment(
+        db=db,
+        establishment_id=account.id_establecimiento,
+    )
+
+    return [
+        ReportListResponse(
+            id_evaluacion=evaluation.id_evaluacion,
+            id_paciente=patient.id_paciente,
+            nombres_paciente=patient.nombres,
+            apellidos_paciente=patient.apellidos,
+            fecha_evaluacion=evaluation.fecha_evaluacion,
+            ojo_evaluado=evaluation.ojo_evaluado,
+            medico_responsable=(
+                f"{doctor.nombres} {doctor.apellidos}"
+            ),
+            tiene_reporte=report is not None,
+            id_reporte=(
+                report.id_reporte
+                if report is not None
+                else None
+            ),
+            fecha_generacion=(
+                report.fecha_generacion
+                if report is not None
+                else None
+            ),
+        )
+        for evaluation, patient, doctor, report in rows
     ]

@@ -12,8 +12,10 @@ import { PatientList } from './pages/patients/patient-list/patient-list';
 import { PatientDetail } from './pages/patients/patient-detail/patient-detail';
 import { EvaluationCreate } from './pages/evaluations/evaluation-create/evaluation-create';
 import { RetinographyUpload } from './pages/evaluations/retinography-upload/retinography-upload';
+import { EvaluationList } from './pages/evaluations/evaluation-list/evaluation-list';
 import { EvaluationResults } from './pages/evaluations/evaluation-results/evaluation-results';
 import { EvaluationDetail } from './pages/evaluations/evaluation-detail/evaluation-detail';
+import { ReportList } from './pages/reports/report-list/report-list';
 
 
 export const routes: Routes = [
@@ -82,6 +84,10 @@ export const routes: Routes = [
         component: EvaluationCreate
     },
     {
+        path: 'evaluations',
+        component: EvaluationList
+    },
+    {
         path: 'evaluations/:evaluationId/retinography',
         component: RetinographyUpload
     },
@@ -92,6 +98,10 @@ export const routes: Routes = [
     {
         path: 'evaluations/:evaluationId/results',
         component: EvaluationResults
+    },
+    {
+        path: 'reports',
+        component: ReportList
     },
     {
         path: '**',

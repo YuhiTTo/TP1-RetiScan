@@ -98,6 +98,20 @@ class EvaluationListResponse(EvaluationResponse):
     glaucoma: EvaluationHistoryModelResult | None = None
 
 
+class EvaluationSummaryResponse(BaseModel):
+    id_evaluacion: int
+    id_paciente: int
+
+    nombres_paciente: str
+    apellidos_paciente: str
+
+    fecha_evaluacion: datetime
+    ojo_evaluado: str
+
+    medico_responsable: str
+    estado: str
+
+
 class MedicalObservationUpdate(BaseModel):
     observacion_medica: str = Field(
         min_length=1,
