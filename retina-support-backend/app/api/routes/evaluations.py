@@ -30,8 +30,23 @@ from app.services.medical_observation_service import (
     MedicalObservationNotFinalizedError,
     save_medical_observation
 )
-from app.schemas.evaluation import ( EvaluationCreate, EvaluationResponse, EvaluationListResponse, EvaluationDetailResponse )
-from app.services.evaluation_service import ( EvaluationDoctorAmbiguousError, EvaluationDoctorInactiveError, EvaluationDoctorNotFoundError, EvaluationPatientNotFoundError, EvaluationNotFoundError, get_patient_evaluations, get_evaluation_detail, create_evaluation )
+from app.schemas.evaluation import (
+    EvaluationCreate, EvaluationUpdate, EvaluationResponse,
+    EvaluationListResponse, EvaluationDetailResponse
+)
+from app.services.evaluation_service import (
+    EvaluationDoctorAmbiguousError,
+    EvaluationDoctorInactiveError,
+    EvaluationDoctorNotFoundError,
+    EvaluationPatientNotFoundError,
+    EvaluationNotEditableError,
+    EvaluationEyeChangeNotAllowedError,
+    EvaluationNotFoundError,
+    get_patient_evaluations,
+    get_evaluation_detail,
+    create_evaluation,
+    update_evaluation
+)
 
 
 from app.schemas.evaluation import (
@@ -287,6 +302,83 @@ def get_evaluation(
             f"{doctor.nombres} {doctor.apellidos}"
         )
     )
+
+
+@detail_router.patch(
+    "/{evaluation_id}",
+    response_model=EvaluationResponse,
+    status_code=status.HTTP_200_OK
+)
+def edit_retinal_evaluation(
+    evaluation_id: int,
+    data: EvaluationUpdate,
+    db: Session = Depends(get_db),
+    institutional_account: Account = Depends(
+        require_institutional_account
+    )
+):
+    try:
+        return update_evaluation(
+            db=db,
+            establishment_id=(
+                institutional_account.id_establecimiento
+            ),
+            evaluation_id=evaluation_id,
+            data=data
+        )
+
+    except EvaluationNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail="Evaluación no encontrada."
+        )
+
+    except EvaluationNotEditableError:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "La evaluación ya inició el análisis de IA "
+                "o no se encuentra pendiente."
+            )
+        )
+
+    except EvaluationEyeChangeNotAllowedError:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "No se puede cambiar el ojo evaluado "
+                "porque ya existe una retinografía cargada."
+            )
+        )
+
+    except EvaluationDoctorAmbiguousError:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "Existen varios registros con el mismo "
+                "nombre de médico. Verifique su identidad."
+            )
+        )
+
+    except EvaluationDoctorInactiveError:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "El médico está inactivo en el establecimiento."
+            )
+        )
+
+    except IntegrityError:
+        raise HTTPException(
+            status_code=409,
+            detail="No se pudo actualizar la evaluación."
+        )
+
+    except SQLAlchemyError:
+        raise HTTPException(
+            status_code=503,
+            detail="No se pudo acceder a PostgreSQL."
+        )
 
 
 @detail_router.patch(

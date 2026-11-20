@@ -161,6 +161,20 @@ export class EvaluationService {
     );
   }
 
+  updateEvaluation(
+    evaluationId: number,
+    data: {
+      fecha_evaluacion: string;
+      ojo_evaluado: string;
+      medico_responsable: string;
+    }
+  ): Observable<{ id_evaluacion: number }> {
+    return this.http.patch<{ id_evaluacion: number }>(
+      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}`,
+      data
+    );
+  }
+
   getEvaluationDetail(
     evaluationId: number
   ): Observable<EvaluationDetail> {

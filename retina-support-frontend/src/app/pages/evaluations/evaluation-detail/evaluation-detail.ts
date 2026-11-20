@@ -312,7 +312,7 @@ export class EvaluationDetail implements OnInit, OnDestroy {
 
     this.router.navigate(
       ['/patients', this.evaluation.id_paciente],
-      { queryParams: { tab: 'evaluations' } }
+      { state: { patientTab: 'evaluations' } }
     );
   }
 

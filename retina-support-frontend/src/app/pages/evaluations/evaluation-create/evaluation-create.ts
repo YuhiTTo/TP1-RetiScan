@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Patient, PatientService } from '../../../core/services/patient';
@@ -21,6 +22,9 @@ export class EvaluationCreate implements OnInit {
   patient: Patient | null = null;
 
   patientId = 0;
+  editEvaluationId: number | null = null;
+  editReady = false;
+  eyeLocked = false;
 
   loading = true;
   saving = false;
@@ -53,6 +57,23 @@ export class EvaluationCreate implements OnInit {
       this.route.snapshot.paramMap.get('id')
     );
 
+    const editParam = this.route.snapshot.paramMap.get(
+      'evaluationId'
+    );
+
+    if (editParam !== null) {
+      this.editEvaluationId = Number(editParam);
+
+      if (
+        !Number.isInteger(this.editEvaluationId) ||
+        this.editEvaluationId <= 0
+      ) {
+        this.errorMessage = 'Identificador de evaluación no válido.';
+        this.loading = false;
+        return;
+      }
+    }
+
     if (!this.patientId) {
 
       this.errorMessage =
@@ -64,6 +85,88 @@ export class EvaluationCreate implements OnInit {
     }
 
     this.loadPatient();
+  }
+
+
+  private loadExistingEvaluation(): void {
+    const id = this.editEvaluationId;
+
+    if (id === null) {
+      return;
+    }
+
+    this.evaluationService.getEvaluationDetail(id).subscribe({
+      next: (evaluation) => {
+        if (evaluation.id_paciente !== this.patientId) {
+          this.errorMessage =
+            'La evaluación no corresponde a este paciente.';
+          this.loading = false;
+          this.cdr.markForCheck();
+          return;
+        }
+
+        if (evaluation.estado !== 'PENDIENTE') {
+          this.errorMessage =
+            'Solo se pueden editar evaluaciones pendientes.';
+          this.loading = false;
+          this.cdr.markForCheck();
+          return;
+        }
+
+        this.fechaEvaluacion =
+          evaluation.fecha_evaluacion.slice(0, 10);
+        this.ojoEvaluado = evaluation.ojo_evaluado;
+        this.medicoResponsable = evaluation.medico_responsable;
+
+        this.evaluationService.getRetinographyResume(id)
+          .subscribe({
+            next: (metadata) => {
+              if (metadata.estado !== 'CARGADA') {
+                this.editReady = false;
+                this.errorMessage =
+                  'La retinografía ya no permite editar estos datos.';
+              } else {
+                this.eyeLocked = true;
+                this.editReady = true;
+              }
+
+              this.loading = false;
+              this.cdr.markForCheck();
+            },
+            error: (error) => {
+              if (error.status === 401) {
+                this.logout();
+                return;
+              }
+
+              if (error.status === 404) {
+                this.eyeLocked = false;
+                this.editReady = true;
+              } else {
+                this.editReady = false;
+                this.errorMessage =
+                  'No se pudo verificar la retinografía existente.';
+              }
+
+              this.loading = false;
+              this.cdr.markForCheck();
+            }
+          });
+      },
+      error: (error) => {
+        if (error.status === 401) {
+          this.logout();
+          return;
+        }
+
+        this.errorMessage = error.status === 404
+          ? 'La evaluación no fue encontrada.'
+          : 'No se pudieron recuperar los datos de la evaluación.';
+
+        this.loading = false;
+        this.cdr.markForCheck();
+      }
+    });
   }
 
 
@@ -98,7 +201,12 @@ export class EvaluationCreate implements OnInit {
         next: (response) => {
 
           this.patient = response;
-          this.loading = false;
+
+          if (this.editEvaluationId !== null) {
+            this.loadExistingEvaluation();
+          } else {
+            this.loading = false;
+          }
 
           this.cdr.markForCheck();
         },
@@ -159,7 +267,11 @@ export class EvaluationCreate implements OnInit {
 
   continueWithRetinography(): void {
 
-    if (!this.patient) {
+    if (
+      !this.patient ||
+      this.saving ||
+      (this.editEvaluationId !== null && !this.editReady)
+    ) {
       return;
     }
 
@@ -193,21 +305,22 @@ export class EvaluationCreate implements OnInit {
     this.saving = true;
     this.errorMessage = '';
 
-    this.evaluationService
-      .createEvaluation(
-        this.patientId,
-        {
-          fecha_evaluacion:
-            this.fechaEvaluacion,
+    const data = {
+      fecha_evaluacion: this.fechaEvaluacion,
+      ojo_evaluado: this.ojoEvaluado,
+      medico_responsable: this.medicoResponsable.trim()
+    };
 
-          ojo_evaluado:
-            this.ojoEvaluado,
+    const request: Observable<{ id_evaluacion: number }> =
+      this.editEvaluationId !== null
+        ? this.evaluationService.updateEvaluation(
+            this.editEvaluationId, data
+          )
+        : this.evaluationService.createEvaluation(
+            this.patientId, data
+          );
 
-          medico_responsable:
-            this.medicoResponsable.trim()
-        }
-      )
-      .subscribe({
+    request.subscribe({
 
         next: (response) => {
 
@@ -230,8 +343,9 @@ export class EvaluationCreate implements OnInit {
 
           } else if (error.status === 404) {
 
-            this.errorMessage =
-              'El paciente no fue encontrado.';
+            this.errorMessage = this.editEvaluationId !== null
+              ? 'La evaluación no fue encontrada.'
+              : 'El paciente no fue encontrado.';
 
           } else if (error.status === 409) {
 
@@ -239,7 +353,9 @@ export class EvaluationCreate implements OnInit {
 
             const knownMessages = [
               'Existen varios registros con el mismo nombre de médico. Verifique su identidad.',
-              'El médico está inactivo en el establecimiento.'
+              'El médico está inactivo en el establecimiento.',
+              'No se puede cambiar el ojo evaluado porque ya existe una retinografía cargada.',
+              'La evaluación ya inició el análisis de IA o no se encuentra pendiente.'
             ];
 
             this.errorMessage =
@@ -267,19 +383,19 @@ export class EvaluationCreate implements OnInit {
 
   cancel(): void {
 
-    this.router.navigate([
-      '/patients',
-      this.patientId
-    ]);
+    this.router.navigate(
+      ['/patients', this.patientId],
+      { state: { patientTab: 'evaluations' } }
+    );
   }
 
 
   goBack(): void {
 
-    this.router.navigate([
-      '/patients',
-      this.patientId
-    ]);
+    this.router.navigate(
+      ['/patients', this.patientId],
+      { state: { patientTab: 'evaluations' } }
+    );
   }
 
 

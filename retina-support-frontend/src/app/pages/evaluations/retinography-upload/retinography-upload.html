@@ -343,7 +343,9 @@
             <!-- BOTONES -->
             <div class="page-actions">
 
-                <button type="button" class="cancel-button" (click)="goBack()">
+                <button type="button" class="cancel-button"
+                    [disabled]="loadingStoredRetinography || isUploading || isAnalyzing"
+                    (click)="goToEvaluationForm()">
 
                     Volver
 

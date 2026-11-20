@@ -82,11 +82,15 @@
             <section class="title-section">
 
                 <h1>
-                    Nueva evaluación retiniana
+                    {{ editEvaluationId !== null
+                        ? 'Editar evaluación retiniana'
+                        : 'Nueva evaluación retiniana' }}
                 </h1>
 
                 <p>
-                    Completa los datos para iniciar una nueva evaluación
+                    {{ editEvaluationId !== null
+                        ? 'Revisa o modifica los datos de la evaluación'
+                        : 'Completa los datos para iniciar una nueva evaluación' }}
                 </p>
 
             </section>
@@ -172,7 +176,7 @@
 
                             <label class="radio-option">
 
-                                <input type="radio" name="eye" value="OD" [(ngModel)]="ojoEvaluado">
+                                <input type="radio" name="eye" value="OD" [(ngModel)]="ojoEvaluado" [disabled]="eyeLocked || saving">
 
                                 <span>
                                     OD - Derecho
@@ -183,7 +187,7 @@
 
                             <label class="radio-option">
 
-                                <input type="radio" name="eye" value="OI" [(ngModel)]="ojoEvaluado">
+                                <input type="radio" name="eye" value="OI" [(ngModel)]="ojoEvaluado" [disabled]="eyeLocked || saving">
 
                                 <span>
                                     OI - Izquierdo
@@ -193,6 +197,10 @@
 
                         </div>
 
+                        <small *ngIf="eyeLocked">
+                            El ojo no puede modificarse porque ya existe
+                            una retinografía cargada.
+                        </small>
                     </div>
 
 
@@ -224,11 +232,12 @@
                     </button>
 
 
-                    <button type="button" class="continue-button" [disabled]="saving"
+                    <button type="button" class="continue-button"
+                        [disabled]="saving || (editEvaluationId !== null && !editReady)"
                         (click)="continueWithRetinography()">
                         {{
                         saving
-                        ? 'Registrando...'
+                        ? (editEvaluationId !== null ? 'Guardando...' : 'Registrando...')
                         : 'Continuar con retinografía'
                         }}
 

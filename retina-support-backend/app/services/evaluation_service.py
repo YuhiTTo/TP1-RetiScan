@@ -1,14 +1,16 @@
 from datetime import datetime, time
 
-from sqlalchemy import text
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
 from app.models.evaluation import RetinalEvaluation
 from app.models.doctor import Doctor
+from app.models.retinography import Retinography
+from app.models.ai_analysis import AIAnalysis
 from app.repositories.doctor_repository import find_doctors_by_full_name
 from app.repositories.patient_repository import get_patient_by_id
 from app.repositories.evaluation_repository import ( get_evaluations_by_patient, get_evaluation_by_id )
-from app.schemas.evaluation import EvaluationCreate
+from app.schemas.evaluation import EvaluationCreate, EvaluationUpdate
 
 
 class EvaluationPatientNotFoundError(Exception):
@@ -28,6 +30,14 @@ class EvaluationDoctorInactiveError(Exception):
 
 
 class EvaluationNotFoundError(Exception):
+    pass
+
+
+class EvaluationNotEditableError(Exception):
+    pass
+
+
+class EvaluationEyeChangeNotAllowedError(Exception):
     pass
 
 def create_evaluation(
@@ -183,3 +193,127 @@ def get_evaluation_detail(
         raise EvaluationDoctorNotFoundError()
 
     return evaluation, patient, doctor
+
+def update_evaluation(
+    db: Session,
+    establishment_id: int,
+    evaluation_id: int,
+    data: EvaluationUpdate
+) -> RetinalEvaluation:
+
+    try:
+        # Bloquear la evaluacion mientras se actualiza.
+        evaluation = db.execute(
+            select(RetinalEvaluation)
+            .where(
+                RetinalEvaluation.id_evaluacion == evaluation_id,
+                RetinalEvaluation.id_establecimiento == establishment_id
+            )
+            .with_for_update()
+        ).scalar_one_or_none()
+
+        if evaluation is None:
+            raise EvaluationNotFoundError()
+
+        if evaluation.estado != "PENDIENTE":
+            raise EvaluationNotEditableError()
+
+        # No modificar evaluaciones que hayan iniciado IA.
+        image_state = db.execute(
+            select(
+                Retinography.id_retinografia,
+                Retinography.estado,
+                AIAnalysis.id_analisis
+            )
+            .outerjoin(
+                AIAnalysis,
+                AIAnalysis.id_retinografia
+                == Retinography.id_retinografia
+            )
+            .where(
+                Retinography.id_evaluacion == evaluation_id
+            )
+            .limit(1)
+        ).first()
+
+        if image_state is not None:
+            _, retinography_status, analysis_id = image_state
+
+            if (
+                analysis_id is not None
+                or retinography_status != "CARGADA"
+            ):
+                raise EvaluationNotEditableError()
+
+            if data.ojo_evaluado != evaluation.ojo_evaluado:
+                raise EvaluationEyeChangeNotAllowedError()
+
+        full_name = " ".join(
+            data.medico_responsable.split()
+        )
+
+        # Mantener la misma estrategia de bloqueo
+        # que utiliza el registro automatico.
+        db.execute(
+            text(
+                "SELECT pg_advisory_xact_lock("
+                "hashtext(:lock_key))"
+            ),
+            {
+                "lock_key": (
+                    f"retiscan:medico:{establishment_id}:"
+                    f"{full_name.lower()}"
+                )
+            }
+        )
+
+        doctors = find_doctors_by_full_name(
+            db=db,
+            establishment_id=establishment_id,
+            full_name=full_name
+        )
+
+        if len(doctors) > 1:
+            raise EvaluationDoctorAmbiguousError()
+
+        if doctors:
+            doctor = doctors[0]
+
+            if not doctor.estado:
+                raise EvaluationDoctorInactiveError()
+        else:
+            parts = full_name.split()
+
+            if len(parts) == 2:
+                nombres = parts[0]
+                apellidos = parts[1]
+            else:
+                nombres = " ".join(parts[:-2])
+                apellidos = " ".join(parts[-2:])
+
+            doctor = Doctor(
+                id_establecimiento=establishment_id,
+                nombres=nombres,
+                apellidos=apellidos,
+                estado=True
+            )
+
+            db.add(doctor)
+            db.flush()
+
+        # Actualizar el mismo registro.
+        evaluation.fecha_evaluacion = datetime.combine(
+            data.fecha_evaluacion,
+            time.min
+        )
+        evaluation.ojo_evaluado = data.ojo_evaluado
+        evaluation.id_medico = doctor.id_medico
+
+        db.commit()
+        db.refresh(evaluation)
+
+        return evaluation
+
+    except Exception:
+        db.rollback()
+        raise

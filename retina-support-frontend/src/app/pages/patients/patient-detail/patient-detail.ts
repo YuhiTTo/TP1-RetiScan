@@ -231,10 +231,7 @@ export class PatientDetail implements OnInit, OnDestroy {
           this.patient = response;
           this.loading = false;
 
-          if (
-            this.route.snapshot.queryParamMap.get('tab')
-            === 'evaluations'
-          ) {
+          if (history.state?.patientTab === 'evaluations') {
             this.selectTab('evaluations');
           }
 

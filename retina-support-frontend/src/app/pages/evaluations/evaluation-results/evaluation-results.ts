@@ -291,10 +291,10 @@ export class EvaluationResults implements OnInit, OnDestroy {
       return;
     }
 
-    this.router.navigate([
-      '/patients',
-      this.evaluation.id_paciente
-    ]);
+    this.router.navigate(
+      ['/patients', this.evaluation.id_paciente],
+      { state: { patientTab: 'evaluations' } }
+    );
   }
 
   loadRetinographyImage(): void {

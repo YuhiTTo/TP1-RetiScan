@@ -249,9 +249,30 @@ export class RetinographyUpload implements OnInit, OnDestroy {
       return;
     }
 
+    this.router.navigate(
+      ['/patients', this.evaluation.id_paciente],
+      { state: { patientTab: 'evaluations' } }
+    );
+  }
+
+
+  goToEvaluationForm(): void {
+    if (
+      !this.evaluation ||
+      this.evaluation.estado !== 'PENDIENTE' ||
+      this.isUploading ||
+      this.isAnalyzing ||
+      this.loadingStoredRetinography
+    ) {
+      return;
+    }
+
     this.router.navigate([
       '/patients',
-      this.evaluation.id_paciente
+      this.evaluation.id_paciente,
+      'evaluations',
+      this.evaluationId,
+      'edit'
     ]);
   }
 

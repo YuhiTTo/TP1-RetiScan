@@ -49,6 +49,10 @@ class EvaluationCreate(BaseModel):
         return value
 
 
+class EvaluationUpdate(EvaluationCreate):
+    pass
+
+
 class EvaluationResponse(BaseModel):
     id_evaluacion: int
     id_paciente: int

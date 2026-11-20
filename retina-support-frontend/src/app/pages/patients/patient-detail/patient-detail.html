@@ -384,10 +384,6 @@
                     Reportes médicos
                 </h2>
 
-                <p class="reports-description">
-                    Reportes de evaluaciones retinianas finalizadas.
-                </p>
-
                 <div class="status-message"
                      *ngIf="reportsLoading">
                     Cargando reportes...
@@ -398,12 +394,6 @@
                      *ngIf="reportsError">
                     {{ reportsError }}
                 </div>
-
-                <p class="report-success"
-                   role="status"
-                   *ngIf="reportActionMessage && !reportsError">
-                    {{ reportActionMessage }}
-                </p>
 
                 <div class="empty-evaluations"
                      *ngIf="!reportsLoading &&
@@ -527,6 +517,12 @@
                         </button>
                     </nav>
                 </div>
+
+                <p class="report-success"
+                   role="status"
+                   *ngIf="reportActionMessage && !reportsError">
+                    {{ reportActionMessage }}
+                </p>
 
             </section>
 

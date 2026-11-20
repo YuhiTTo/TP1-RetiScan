@@ -47,6 +47,10 @@ export const routes: Routes = [
         component: EvaluationCreate
     },
     {
+        path: 'patients/:id/evaluations/:evaluationId/edit',
+        component: EvaluationCreate
+    },
+    {
         path: 'evaluations/:evaluationId/retinography',
         component: RetinographyUpload
     },
