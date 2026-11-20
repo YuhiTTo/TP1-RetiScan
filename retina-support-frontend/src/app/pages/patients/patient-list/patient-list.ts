@@ -24,7 +24,7 @@ export class PatientList implements OnInit {
 
   patients: Patient[] = [];
 
-  readonly pageSize = 5;
+  readonly pageSize = 8;
   currentPage = 1;
 
   get totalPages(): number {
@@ -137,6 +137,10 @@ export class PatientList implements OnInit {
 
   goToHome(): void {
     this.router.navigate(['/home']);
+  }
+
+  goToEvaluations(): void {
+    this.router.navigate(['/evaluations']);
   }
 
   registerPatient(): void {

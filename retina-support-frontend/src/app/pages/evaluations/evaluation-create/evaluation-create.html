@@ -19,7 +19,7 @@
                 <span>Pacientes</span>
             </button>
 
-            <button class="menu-item">
+            <button class="menu-item" type="button" (click)="goToEvaluations()">
                 <img src="/icons/evaluacion.png" class="menu-icon-image" alt="">
                 <span>Evaluaciones</span>
             </button>
@@ -83,14 +83,14 @@
 
                 <h1>
                     {{ editEvaluationId !== null
-                        ? 'Editar evaluación retiniana'
-                        : 'Nueva evaluación retiniana' }}
+                    ? 'Editar evaluación retiniana'
+                    : 'Nueva evaluación retiniana' }}
                 </h1>
 
                 <p>
                     {{ editEvaluationId !== null
-                        ? 'Revisa o modifica los datos de la evaluación'
-                        : 'Completa los datos para iniciar una nueva evaluación' }}
+                    ? 'Revisa o modifica los datos de la evaluación'
+                    : 'Completa los datos para iniciar una nueva evaluación' }}
                 </p>
 
             </section>
@@ -176,7 +176,8 @@
 
                             <label class="radio-option">
 
-                                <input type="radio" name="eye" value="OD" [(ngModel)]="ojoEvaluado" [disabled]="eyeLocked || saving">
+                                <input type="radio" name="eye" value="OD" [(ngModel)]="ojoEvaluado"
+                                    [disabled]="eyeLocked || saving">
 
                                 <span>
                                     OD - Derecho
@@ -187,7 +188,8 @@
 
                             <label class="radio-option">
 
-                                <input type="radio" name="eye" value="OI" [(ngModel)]="ojoEvaluado" [disabled]="eyeLocked || saving">
+                                <input type="radio" name="eye" value="OI" [(ngModel)]="ojoEvaluado"
+                                    [disabled]="eyeLocked || saving">
 
                                 <span>
                                     OI - Izquierdo

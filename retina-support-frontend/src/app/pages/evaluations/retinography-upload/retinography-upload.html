@@ -19,8 +19,8 @@
                 <span>Pacientes</span>
             </button>
 
-            <button class="menu-item">
-                <img class="menu-icon-image" src="/icons/evaluacion.png" alt="">
+            <button class="menu-item" type="button" (click)="goToEvaluations()">
+                <img src="/icons/evaluacion.png" class="menu-icon-image" alt="">
                 <span>Evaluaciones</span>
             </button>
 
@@ -343,8 +343,7 @@
             <div class="page-actions">
 
                 <button type="button" class="cancel-button"
-                    [disabled]="loadingStoredRetinography || isUploading || isAnalyzing"
-                    (click)="goToEvaluationForm()">
+                    [disabled]="loadingStoredRetinography || isUploading || isAnalyzing" (click)="goToEvaluationForm()">
 
                     Volver
 

@@ -83,6 +83,10 @@ export class Home implements OnInit {
     this.router.navigate(['/patients']);
   }
 
+  goToEvaluations(): void {
+    this.router.navigate(['/evaluations']);
+  }
+
   registerPatient(): void {
     this.router.navigate(['/patients/new']);
   }

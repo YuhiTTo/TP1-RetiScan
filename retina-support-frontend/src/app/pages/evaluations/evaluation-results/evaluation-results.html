@@ -9,20 +9,20 @@
 
         <nav class="sidebar-menu">
 
-            <div class="menu-item">
-                <img src="/icons/home.png" class="menu-icon-image" alt="">
+            <button class="menu-item" type="button" (click)="goHome()">
+                <img class="menu-icon-image" src="/icons/home.png" alt="">
                 <span>Inicio</span>
-            </div>
+            </button>
 
             <button type="button" class="menu-item active" (click)="goToPatient()">
                 <img src="/icons/patients.png" class="menu-icon-image" alt="">
                 <span>Pacientes</span>
             </button>
 
-            <div class="menu-item">
+            <button class="menu-item" type="button" (click)="goToEvaluations()">
                 <img src="/icons/evaluacion.png" class="menu-icon-image" alt="">
                 <span>Evaluaciones</span>
-            </div>
+            </button>
 
             <div class="menu-item">
                 <img src="/icons/reporte.png" class="menu-icon-image" alt="">
@@ -273,10 +273,7 @@
                             Sugerencia de soporte clínico
                         </h2>
 
-                        <div
-                            class="priority-level"
-                            [ngClass]="priorityStyleClass"
-                            *ngIf="prioritySuggested">
+                        <div class="priority-level" [ngClass]="priorityStyleClass" *ngIf="prioritySuggested">
 
                             <div class="priority-level__headline">
                                 <span>Prioridad sugerida:</span>
@@ -317,14 +314,10 @@
 
                 <div class="observation-placeholder observation-form">
 
-                    <textarea
-                        id="medical-observation-input"
-                        class="observation-textarea"
-                        aria-label="Observación médica"
-                        [(ngModel)]="observationText"
+                    <textarea id="medical-observation-input" class="observation-textarea"
+                        aria-label="Observación médica" [(ngModel)]="observationText"
                         [readonly]="finalizingEvaluation || loadingEvaluation || evaluation?.estado === 'FINALIZADA'"
-                        maxlength="1000"
-                        rows="3"
+                        maxlength="1000" rows="3"
                         placeholder="Escribe aquí la observación médica de la evaluación..."></textarea>
 
                     <div class="observation-footer">
@@ -338,19 +331,13 @@
             </section>
 
             <!-- ACCIONES -->
-            <p
-                *ngIf="finalizationError"
-                class="observation-error"
-                role="alert">
+            <p *ngIf="finalizationError" class="observation-error" role="alert">
                 {{ finalizationError }}
             </p>
 
             <div class="page-actions">
 
-                <button
-                    type="button"
-                    class="back-action"
-                    (click)="finalizeRetinalEvaluation()"
+                <button type="button" class="back-action" (click)="finalizeRetinalEvaluation()"
                     [disabled]="finalizingEvaluation || loadingEvaluation || loadingResults || !evaluation || !analysis || evaluation.estado === 'FINALIZADA'">
                     {{ finalizingEvaluation ? 'Finalizando...' : 'Finalizar evaluación' }}
                 </button>
