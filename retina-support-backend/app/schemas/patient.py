@@ -87,3 +87,4 @@ class PatientResponse(BaseModel):
     direccion: str | None
     estado: bool
     fecha_registro: datetime
+    ultima_evaluacion: datetime | None = None

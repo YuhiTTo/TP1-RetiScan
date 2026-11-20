@@ -315,6 +315,10 @@ export class EvaluationDetail implements OnInit, OnDestroy {
     this.router.navigate(['/evaluations']);
   }
 
+  goToReports(): void {
+    this.router.navigate(['/reports']);
+  }
+
   ngOnDestroy(): void {
     if (this.retinographyUrl) {
       URL.revokeObjectURL(this.retinographyUrl);

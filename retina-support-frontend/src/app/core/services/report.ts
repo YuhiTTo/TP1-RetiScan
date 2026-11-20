@@ -12,6 +12,24 @@ export interface PatientReport {
 }
 
 
+export interface ReportListItem {
+  id_evaluacion: number;
+  id_paciente: number;
+
+  nombres_paciente: string;
+  apellidos_paciente: string;
+
+  fecha_evaluacion: string;
+  ojo_evaluado: string;
+
+  medico_responsable: string;
+
+  tiene_reporte: boolean;
+  id_reporte: number | null;
+  fecha_generacion: string | null;
+}
+
+
 export interface ReportGenerationResponse {
   id_reporte: number;
   id_evaluacion: number;
@@ -40,6 +58,14 @@ export class ReportService {
 
     return this.http.get<PatientReport[]>(
       `${this.apiUrl}/patients/${patientId}/reports`
+    );
+  }
+
+
+  getEstablishmentReports(): Observable<ReportListItem[]> {
+
+    return this.http.get<ReportListItem[]>(
+      `${this.apiUrl}/reports/`
     );
   }
 

@@ -253,11 +253,13 @@ export class EvaluationList implements OnInit {
         this.router.navigate(['/home']);
     }
 
-
     goToPatients(): void {
         this.router.navigate(['/patients']);
     }
 
+    goToReports(): void {
+        this.router.navigate(['/reports']);
+    }
 
     logout(): void {
 

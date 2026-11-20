@@ -16,6 +16,7 @@ export interface Patient {
   direccion: string | null;
   estado: boolean;
   fecha_registro: string;
+  ultima_evaluacion: string | null;
 }
 
 

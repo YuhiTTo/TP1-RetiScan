@@ -283,6 +283,10 @@ export class RetinographyUpload implements OnInit, OnDestroy {
     this.router.navigate(['/evaluations']);
   }
 
+  goToReports(): void {
+    this.router.navigate(['/reports']);
+  }
+
   onFileSelected(event: Event): void {
 
     if (

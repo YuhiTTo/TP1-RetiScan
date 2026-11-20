@@ -10,7 +10,7 @@ from app.api.routes.institutional_accounts import (router as institutional_accou
 from app.api.routes.patients import router as patients_router
 from app.api.routes.evaluations import  ( router as evaluations_router, detail_router as evaluation_detail_router )
 from app.api.routes.retinographies import router as retinographies_router
-from app.api.routes.reports import (router as reports_router, patient_reports_router)
+from app.api.routes.reports import (router as reports_router, patient_reports_router, reports_list_router)
 from app.core.database import test_database_connection
 
 from app.api.routes.ai_analysis import (
@@ -46,6 +46,7 @@ app.include_router(evaluation_detail_router)
 app.include_router(retinographies_router)
 app.include_router(reports_router)
 app.include_router(patient_reports_router)
+app.include_router(reports_list_router)
 app.include_router(ai_analysis_router)
 app.include_router(dashboard_router)
 
