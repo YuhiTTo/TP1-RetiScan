@@ -6,6 +6,7 @@ import { AdminLogin } from './pages/auth/admin-login/admin-login';
 import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
 import { AdminSectionPreview } from './pages/admin/admin-section-preview/admin-section-preview';
 import { AdminEvaluations } from './pages/admin/admin-evaluations/admin-evaluations';
+import { AdminConsistency } from './pages/admin/admin-consistency/admin-consistency';
 import { Home } from './pages/home/home/home';
 import { PatientCreate } from './pages/patients/patient-create/patient-create';
 import { PatientList } from './pages/patients/patient-list/patient-list';
@@ -56,8 +57,7 @@ export const routes: Routes = [
     {
         path: 'admin/consistency',
         canActivate: [adminGuard],
-        component: AdminSectionPreview,
-        data: { section: 'consistency' }
+        component: AdminConsistency
     },
     {
         path: 'home',

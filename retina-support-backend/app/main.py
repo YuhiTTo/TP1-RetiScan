@@ -20,6 +20,7 @@ from app.api.routes.dashboard import (
     router as dashboard_router
 )
 from app.api.routes.admin_evaluations import router as admin_evaluations_router
+from app.api.routes.admin_consistency import router as admin_consistency_router
 
 app = FastAPI(
     title="RetiScan API",
@@ -51,6 +52,7 @@ app.include_router(reports_list_router)
 app.include_router(ai_analysis_router)
 app.include_router(dashboard_router)
 app.include_router(admin_evaluations_router)
+app.include_router(admin_consistency_router)
 
 @app.get("/")
 def root():

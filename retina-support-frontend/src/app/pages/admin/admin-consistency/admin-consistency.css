@@ -1,0 +1,360 @@
+/* US-22: Consistencia administrativa */
+
+.consistency-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.consistency-metric {
+  min-height: 94px;
+  padding: 18px 20px;
+  background: white;
+  border: 1px solid #cbd3dd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.consistency-metric span {
+  color: #667085;
+  font-size: 13px;
+}
+
+.consistency-metric strong {
+  color: #172033;
+  font-size: 28px;
+}
+
+.consistency-panel-heading {
+  margin-bottom: 18px;
+}
+
+.consistency-panel-heading h2 {
+  margin: 0 0 6px;
+  color: #172033;
+  font-size: 17px;
+}
+
+.consistency-panel-heading p {
+  margin: 0;
+  color: #667085;
+  font-size: 13px;
+}
+
+.consistency-table-wrapper {
+  min-height: 390px;
+  overflow-x: auto;
+  border: 1px solid #b7cde9;
+  border-radius: 8px;
+  background: white;
+  box-sizing: border-box;
+}
+
+.consistency-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.consistency-table th {
+  background: #d1e8ff;
+  height: 36px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  color: #172033;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.consistency-table th:nth-child(1) {
+  width: 17%;
+}
+
+.consistency-table th:nth-child(2) {
+  width: 33%;
+}
+
+.consistency-table th:nth-child(3) {
+  width: 30%;
+}
+
+.consistency-table th:nth-child(4) {
+  width: 20%;
+}
+
+.consistency-table td {
+  height: 44px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid #e4eaf2;
+  color: #344054;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.consistency-table .consistency-empty {
+  height: 352px;
+  padding: 30px;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+.consistency-empty strong,
+.consistency-empty span {
+  display: block;
+}
+
+.consistency-empty strong {
+  color: #344054;
+  margin-bottom: 8px;
+}
+
+.consistency-empty span {
+  color: #667085;
+  line-height: 1.5;
+}
+
+.consistency-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 42px;
+  margin-top: 12px;
+  color: #667085;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .consistency-summary {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* US-22: TABLA CON ALTURA ESTABLE */
+
+.consistency-table thead tr {
+  height: 36px;
+}
+
+.consistency-table tbody tr {
+  height: 44px;
+}
+
+
+/* US-22: ESTADOS DE CONSISTENCIA */
+
+.admin-consistency-page .consistency-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 26px;
+  min-width: 125px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-consistency-page .consistency-status.consistent {
+  color: #23864e;
+  background: #c9f4db;
+}
+
+.admin-consistency-page .consistency-status.in-progress {
+  color: #956600;
+  background: #fff0bf;
+}
+
+.admin-consistency-page .consistency-status.needs-attention {
+  color: #b42318;
+  background: #fee4e2;
+}
+
+
+/* US-22: PAGINACION REAL */
+
+.admin-consistency-page .consistency-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.admin-consistency-page .consistency-pagination button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  border: 1px solid #cbd3dd;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #344054;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.admin-consistency-page
+.consistency-pagination button.active-page {
+  background: #d1e8ff;
+  border-color: #7fb4e8;
+  color: #172033;
+  font-weight: 700;
+}
+
+.admin-consistency-page
+.consistency-pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.admin-consistency-page
+.consistency-pagination button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.admin-consistency-page .consistency-error {
+  margin: 0 0 14px;
+  color: #b42318;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .admin-consistency-page .consistency-footer {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .admin-consistency-page .consistency-pagination {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* US-22: DETALLE DE INCIDENCIAS */
+
+.admin-consistency-page .consistency-no-issues {
+  color: #667085;
+  font-size: 12px;
+}
+
+.admin-consistency-page .consistency-detail-button {
+  padding: 4px 8px;
+  border: 0;
+  background: transparent;
+  color: #175cd3;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.admin-consistency-page
+.consistency-detail-button:hover {
+  color: #0046a8;
+}
+
+.admin-consistency-page
+.consistency-detail-button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.admin-consistency-page .consistency-dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: 75vh;
+  padding: 24px;
+  border: 1px solid #cbd3dd;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background: #ffffff;
+  color: #172033;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+}
+
+.admin-consistency-page
+.consistency-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.admin-consistency-page .consistency-dialog h2 {
+  margin: 0 0 12px;
+  font-size: 19px;
+}
+
+.admin-consistency-page
+.consistency-dialog-description {
+  margin: 0 0 18px;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.admin-consistency-page .consistency-issue-list {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.admin-consistency-page
+.consistency-issue-list li {
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.admin-consistency-page
+.consistency-issue-list strong {
+  display: block;
+  color: #b42318;
+  font-size: 13px;
+}
+
+.admin-consistency-page
+.consistency-issue-list span {
+  display: block;
+  color: #344054;
+  font-size: 13px;
+}
+
+.admin-consistency-page
+.consistency-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 22px;
+}
+
+.admin-consistency-page
+.consistency-dialog-actions button {
+  min-width: 90px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 6px;
+  background: #2165bd;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.admin-consistency-page
+.consistency-dialog-actions button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+}

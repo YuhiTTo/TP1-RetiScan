@@ -1,0 +1,274 @@
+<div class="page-container admin-consistency-page">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="/icons/retiscan2.png" alt="RetiScan">
+    </div>
+
+    <nav class="sidebar-menu"
+         aria-label="Navegacion administrativa">
+
+      <a class="menu-item"
+         routerLink="/admin/home"
+         routerLinkActive="active">
+        <img src="/icons/home.png"
+             class="menu-icon-image" alt="">
+        <span>Inicio</span>
+      </a>
+
+      <a class="menu-item"
+         routerLink="/admin/establishments"
+         routerLinkActive="active">
+        <img src="/icons/hospital.png"
+             class="menu-icon-image" alt="">
+        <span>Establecimientos</span>
+      </a>
+
+      <a class="menu-item"
+         routerLink="/admin/evaluations"
+         routerLinkActive="active">
+        <img src="/icons/evaluation.png"
+             class="menu-icon-image" alt="">
+        <span>Supervisión de evaluaciones</span>
+      </a>
+
+      <a class="menu-item"
+         routerLink="/admin/consistency"
+         routerLinkActive="active">
+        <img src="/icons/reporte.png"
+             class="menu-icon-image" alt="">
+        <span>Consistencia de registros</span>
+      </a>
+    </nav>
+
+    <button type="button"
+            class="logout-button"
+            (click)="logout()">
+      <img src="/icons/logout.png"
+           class="menu-icon-image" alt="">
+      <span>Cerrar sesión</span>
+    </button>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-header">
+      <div class="admin-card">
+        <div class="admin-avatar">
+          <img src="/icons/admin.png" alt="">
+        </div>
+        <div>
+          <strong>{{ displayName }}</strong>
+          <span>Administrador</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="establishments-header">
+      <div>
+        <h1>Consistencia de registros</h1>
+        <p>
+          Verificación de integridad de las evaluaciones
+          almacenadas en RetiScan.
+        </p>
+      </div>
+    </section>
+
+    <section class="consistency-summary"
+             aria-label="Resumen de consistencia">
+
+      <div class="consistency-metric">
+        <span>Registros revisados</span>
+        <strong>{{ reviewedRecords ?? '—' }}</strong>
+      </div>
+
+      <div class="consistency-metric">
+        <span>Con incidencias</span>
+        <strong>{{ incidentRecords ?? '—' }}</strong>
+      </div>
+    </section>
+
+    <p *ngIf="summaryError"
+       class="consistency-error"
+       role="alert">
+      {{ summaryError }}
+    </p>
+
+    <div class="consistency-panel-heading">
+      <h2>Resultados de verificación</h2>
+      <p>
+        Las incidencias detectadas se mostrarán primero.
+      </p>
+    </div>
+
+    <div class="consistency-table-wrapper">
+      <table class="consistency-table">
+        <thead>
+          <tr>
+            <th>Evaluación</th>
+            <th>Establecimiento</th>
+            <th>Consistencia</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngIf="loading">
+            <td colspan="4" class="consistency-empty">
+              <strong>Cargando verificaciones...</strong>
+              <span>Consultando los registros de RetiScan.</span>
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading && errorMessage">
+            <td colspan="4"
+                class="consistency-empty"
+                role="alert">
+              <strong>No se pudieron cargar los resultados.</strong>
+              <span>{{ errorMessage }}</span>
+            </td>
+          </tr>
+
+          <ng-container *ngIf="!loading && !errorMessage">
+            <tr *ngFor="let record of records">
+              <td>#{{ record.id_evaluacion }}</td>
+
+              <td [title]="record.establecimiento">
+                {{ record.establecimiento }}
+              </td>
+
+              <td>
+                <span
+                  class="consistency-status"
+                  [ngClass]="getStatusClass(record.consistencia)">
+                  {{ getStatusLabel(record.consistencia) }}
+                </span>
+              </td>
+
+              <td>
+                <span *ngIf="record.incidencias.length === 0"
+                      class="consistency-no-issues">
+                  Sin incidencias
+                </span>
+
+                <button
+                  *ngIf="record.incidencias.length > 0"
+                  type="button"
+                  class="consistency-detail-button"
+                  [attr.aria-label]="
+                    'Ver incidencias de evaluación ' +
+                    record.id_evaluacion
+                  "
+                  (click)="showIssues(record, issuesDialog)">
+                  Ver incidencias
+                </button>
+              </td>
+            </tr>
+
+            <tr *ngIf="records.length === 0">
+              <td colspan="4" class="consistency-empty">
+                <strong>No hay registros para verificar.</strong>
+                <span>
+                  No se encontraron evaluaciones disponibles.
+                </span>
+              </td>
+            </tr>
+          </ng-container>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="consistency-footer">
+
+      <span *ngIf="loading">
+        Cargando resultados...
+      </span>
+
+      <span *ngIf="!loading && errorMessage">
+        No se pudo consultar el total de registros.
+      </span>
+
+      <span *ngIf="!loading && !errorMessage && total === 0">
+        Sin registros verificados
+      </span>
+
+      <span *ngIf="!loading && !errorMessage && total > 0">
+        Mostrando {{ firstShown }}-{{ lastShown }}
+        de {{ total }} registros
+      </span>
+
+      <nav
+        class="consistency-pagination"
+        *ngIf="totalPages > 1"
+        aria-label="Paginación de consistencia">
+
+        <button
+          type="button"
+          aria-label="Página anterior"
+          (click)="goToPage(page - 1)"
+          [disabled]="loading || page <= 1">
+          ‹
+        </button>
+
+        <button
+          type="button"
+          *ngFor="let number of visiblePages"
+          (click)="goToPage(number)"
+          [disabled]="loading"
+          [class.active-page]="number === page"
+          [attr.aria-label]="'Página ' + number"
+          [attr.aria-current]="number === page ? 'page' : null">
+          {{ number }}
+        </button>
+
+        <button
+          type="button"
+          aria-label="Página siguiente"
+          (click)="goToPage(page + 1)"
+          [disabled]="loading || page >= totalPages">
+          ›
+        </button>
+
+      </nav>
+
+    </div>
+
+    <dialog
+      #issuesDialog
+      class="consistency-dialog"
+      aria-labelledby="consistency-dialog-title"
+      (close)="onIssuesDialogClosed()">
+
+      <ng-container *ngIf="selectedRecord as selected">
+        <h2 id="consistency-dialog-title">
+          Incidencias de evaluación
+          #{{ selected.id_evaluacion }}
+        </h2>
+
+        <p class="consistency-dialog-description">
+          Se detectaron las siguientes inconsistencias
+          en los registros de esta evaluación.
+        </p>
+
+        <ul class="consistency-issue-list">
+          <li *ngFor="let issue of selected.incidencias">
+            <strong>{{ issue.codigo }}</strong>
+            <span>{{ issue.descripcion }}</span>
+          </li>
+        </ul>
+
+        <div class="consistency-dialog-actions">
+          <button
+            type="button"
+            (click)="closeIssues(issuesDialog)">
+            Cerrar
+          </button>
+        </div>
+      </ng-container>
+
+    </dialog>
+
+  </main>
+</div>
