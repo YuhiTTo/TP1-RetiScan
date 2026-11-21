@@ -4,7 +4,7 @@ import { adminGuard } from './core/guards/admin.guard';
 import { InstitutionalLogin } from './pages/auth/institutional-login/institutional-login';
 import { AdminLogin } from './pages/auth/admin-login/admin-login';
 import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
-import { AdminSectionPreview } from './pages/admin/admin-section-preview/admin-section-preview';
+import { AdminHome } from './pages/admin/admin-home/admin-home';
 import { AdminEvaluations } from './pages/admin/admin-evaluations/admin-evaluations';
 import { AdminConsistency } from './pages/admin/admin-consistency/admin-consistency';
 import { Home } from './pages/home/home/home';
@@ -35,14 +35,13 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
-        redirectTo: 'admin/establishments',
+        redirectTo: 'admin/home',
         pathMatch: 'full'
     },
     {
         path: 'admin/home',
         canActivate: [adminGuard],
-        component: AdminSectionPreview,
-        data: { section: 'home' }
+        component: AdminHome
     },
     {
         path: 'admin/establishments',

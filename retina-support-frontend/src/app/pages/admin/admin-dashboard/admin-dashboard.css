@@ -792,3 +792,60 @@ td {
     min-width: 0;
     white-space: normal;
 }
+
+/* RETISCAN - PAGINACION ADMINISTRATIVA UNIFICADA */
+/* Referencia: ficha del paciente - Evaluaciones */
+
+.page-container .pagination,
+.page-container.admin-consistency-page .consistency-pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-container .pagination button,
+.page-container.admin-consistency-page .consistency-pagination button {
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: #303846;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.page-container .pagination button:hover:not(:disabled),
+.page-container.admin-consistency-page .consistency-pagination button:hover:not(:disabled) {
+    background: #e4e9f0;
+}
+
+.page-container .pagination button.active-page,
+.page-container.admin-consistency-page .consistency-pagination button.active-page {
+    background: #246dcc;
+    color: #ffffff;
+    border: none;
+    font-weight: 400;
+}
+
+.page-container .pagination button.active-page:hover:not(:disabled),
+.page-container.admin-consistency-page .consistency-pagination button.active-page:hover:not(:disabled) {
+    background: #195bb1;
+}
+
+.page-container .pagination button:disabled,
+.page-container.admin-consistency-page .consistency-pagination button:disabled,
+.page-container.admin-home-page .home-table-footer .pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+}
+
+.page-container .pagination button:focus-visible,
+.page-container.admin-consistency-page .consistency-pagination button:focus-visible {
+    outline: 2px solid #246dcc;
+    outline-offset: 2px;
+}
