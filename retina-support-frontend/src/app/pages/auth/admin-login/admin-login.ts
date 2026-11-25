@@ -59,17 +59,17 @@ export class AdminLogin {
           return;
         }
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           'access_token',
           response.access_token
         );
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           'account_type',
           response.account_type
         );
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           'display_name',
           response.display_name
         );

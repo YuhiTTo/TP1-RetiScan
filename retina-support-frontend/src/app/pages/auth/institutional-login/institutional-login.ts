@@ -53,24 +53,24 @@ export class InstitutionalLogin {
           return;
         }
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           'access_token',
           response.access_token
         );
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           'account_type',
           response.account_type
         );
 
         if (response.establishment_id !== null) {
-          localStorage.setItem(
+          sessionStorage.setItem(
             'establishment_id',
             response.establishment_id.toString()
           );
         }
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           'display_name',
           response.display_name
         );

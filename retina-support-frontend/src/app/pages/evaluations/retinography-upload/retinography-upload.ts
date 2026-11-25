@@ -20,7 +20,7 @@ export class RetinographyUpload implements OnInit, OnDestroy {
 
   loading = true;
   errorMessage = '';
-  displayName = localStorage.getItem('display_name') ?? 'Establecimiento';
+  displayName = sessionStorage.getItem('display_name') ?? 'Establecimiento';
   selectedFile: File | null = null;
   previewUrl: string | null = null;
 
@@ -550,10 +550,10 @@ export class RetinographyUpload implements OnInit, OnDestroy {
 
   logout(): void {
 
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('account_type');
-    localStorage.removeItem('establishment_id');
-    localStorage.removeItem('display_name');
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('account_type');
+    sessionStorage.removeItem('establishment_id');
+    sessionStorage.removeItem('display_name');
 
     this.router.navigate(['/login']);
   }

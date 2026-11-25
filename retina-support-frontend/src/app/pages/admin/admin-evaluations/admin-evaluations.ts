@@ -42,7 +42,7 @@ import {
 export class AdminEvaluations implements OnInit {
 
   displayName =
-    localStorage.getItem('display_name') ?? 'Administrador';
+    sessionStorage.getItem('display_name') ?? 'Administrador';
 
   evaluations: AdminEvaluation[] = [];
   establishments: Establishment[] = [];
@@ -75,7 +75,7 @@ export class AdminEvaluations implements OnInit {
     private establishmentService: AdminEstablishmentService,
     private cdr: ChangeDetectorRef,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadSummary();
@@ -207,7 +207,7 @@ export class AdminEvaluations implements OnInit {
 
     this.appliedStatus =
       this.selectedStatus === 'PENDIENTE' ||
-      this.selectedStatus === 'FINALIZADA'
+        this.selectedStatus === 'FINALIZADA'
         ? this.selectedStatus
         : undefined;
 
@@ -273,7 +273,7 @@ export class AdminEvaluations implements OnInit {
       'establishment_id',
       'display_name'
     ]) {
-      localStorage.removeItem(key);
+      sessionStorage.removeItem(key);
     }
 
     this.router.navigate(['/admin/login']);

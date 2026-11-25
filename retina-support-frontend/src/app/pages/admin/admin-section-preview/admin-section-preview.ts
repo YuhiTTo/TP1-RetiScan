@@ -127,7 +127,7 @@ type AdminSection = 'home' | 'evaluations' | 'consistency';
 export class AdminSectionPreview {
 
   readonly displayName =
-    localStorage.getItem('display_name') ?? 'Administrador';
+    sessionStorage.getItem('display_name') ?? 'Administrador';
 
   readonly section: AdminSection;
   readonly title: string;
@@ -175,7 +175,7 @@ export class AdminSectionPreview {
       'establishment_id',
       'display_name'
     ]) {
-      localStorage.removeItem(key);
+      sessionStorage.removeItem(key);
     }
 
     this.router.navigate(['/admin/login']);
