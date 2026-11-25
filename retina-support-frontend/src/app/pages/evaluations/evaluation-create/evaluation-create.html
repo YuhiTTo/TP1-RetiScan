@@ -1,0 +1,259 @@
+<div class="page-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="/icons/retiscan2.png" alt="RetiScan">
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <button class="menu-item" type="button" (click)="goHome()">
+                <img class="menu-icon-image" src="/icons/home.png" alt="">
+                <span>Inicio</span>
+            </button>
+
+            <button class="menu-item active" (click)="goBack()">
+                <img src="/icons/patients.png" class="menu-icon-image" alt="">
+                <span>Pacientes</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToEvaluations()">
+                <img src="/icons/evaluacion.png" class="menu-icon-image" alt="">
+                <span>Evaluaciones</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToReports()">
+                <img class="menu-icon-image" src="/icons/reporte.png" alt="">
+                <span>Reportes</span>
+            </button>
+
+        </nav>
+
+        <button class="logout-button" (click)="logout()">
+            <img src="/icons/logout.png" class="menu-icon-image" alt="">
+
+            <span>Cerrar sesión</span>
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- CABECERA -->
+        <header class="top-header">
+
+            <button class="back-button" (click)="goBack()">
+                <img src="/icons/back.png" alt="" class="back-icon">
+                Volver a la ficha del paciente
+            </button>
+
+            <div class="establishment-card">
+
+                <img src="/icons/hospital.png" class="establishment-icon" alt="">
+
+                <span>
+                    {{ displayName }}
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- LOADING -->
+        <div class="status-message" *ngIf="loading">
+            Cargando información...
+        </div>
+
+
+        <!-- ERROR -->
+        <div class="status-message error" *ngIf="!loading && errorMessage && !patient">
+            {{ errorMessage }}
+        </div>
+
+
+        <!-- FORMULARIO -->
+        <div *ngIf="!loading && patient">
+
+            <section class="title-section">
+
+                <h1>
+                    {{ editEvaluationId !== null
+                    ? 'Editar evaluación retiniana'
+                    : 'Nueva evaluación retiniana' }}
+                </h1>
+
+                <p>
+                    {{ editEvaluationId !== null
+                    ? 'Revisa o modifica los datos de la evaluación'
+                    : 'Completa los datos para iniciar una nueva evaluación' }}
+                </p>
+
+            </section>
+
+
+            <!-- PACIENTE -->
+            <section class="patient-card">
+
+                <div class="patient-avatar">
+                    <img src="/icons/user.png" alt="">
+                </div>
+
+                <div class="patient-data">
+
+                    <h2>
+                        {{ patient.nombres }}
+                        {{ patient.apellidos }}
+                    </h2>
+
+                    <p>
+                        DNI: {{ patient.numero_documento }}
+                    </p>
+
+                    <p>
+                        {{ calculateAge(patient.fecha_nacimiento) }}
+                        años -
+                        {{ patient.sexo }}
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- DATOS DE EVALUACIÓN -->
+            <section class="evaluation-section">
+
+                <h2 class="section-title">
+
+                    <img src="/icons/datos.png" alt="">
+
+                    Datos de la evaluación
+
+                </h2>
+
+
+                <div class="evaluation-grid">
+
+                    <!-- FECHA -->
+                    <div class="field">
+
+                        <label>
+                            Fecha de evaluación
+                            <span>*</span>
+                        </label>
+
+                        <input type="date" [(ngModel)]="fechaEvaluacion">
+
+                    </div>
+
+
+                    <!-- ESTABLECIMIENTO -->
+                    <div class="field">
+
+                        <label>
+                            Establecimiento
+                        </label>
+
+                        <input type="text" [value]="displayName" readonly>
+
+                    </div>
+
+
+                    <!-- OJO -->
+                    <div class="field">
+
+                        <label>
+                            Ojo evaluado
+                            <span>*</span>
+                        </label>
+
+                        <div class="eye-options">
+
+                            <label class="radio-option">
+
+                                <input type="radio" name="eye" value="OD" [(ngModel)]="ojoEvaluado"
+                                    [disabled]="eyeLocked || saving">
+
+                                <span>
+                                    OD - Derecho
+                                </span>
+
+                            </label>
+
+
+                            <label class="radio-option">
+
+                                <input type="radio" name="eye" value="OI" [(ngModel)]="ojoEvaluado"
+                                    [disabled]="eyeLocked || saving">
+
+                                <span>
+                                    OI - Izquierdo
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                        <small *ngIf="eyeLocked">
+                            El ojo no puede modificarse porque ya existe
+                            una retinografía cargada.
+                        </small>
+                    </div>
+
+
+                    <!-- MÉDICO -->
+                    <div class="field">
+
+                        <label>
+                            Médico responsable
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" [(ngModel)]="medicoResponsable" placeholder="Ej. José Mayhua">
+
+                    </div>
+
+                </div>
+
+
+                <p class="form-error" *ngIf="errorMessage">
+                    {{ errorMessage }}
+                </p>
+
+
+                <!-- BOTONES -->
+                <div class="form-actions">
+
+                    <button type="button" class="cancel-button" (click)="cancel()">
+                        Cancelar
+                    </button>
+
+
+                    <button type="button" class="continue-button"
+                        [disabled]="saving || (editEvaluationId !== null && !editReady)"
+                        (click)="continueWithRetinography()">
+                        {{
+                        saving
+                        ? (editEvaluationId !== null ? 'Guardando...' : 'Registrando...')
+                        : 'Continuar con retinografía'
+                        }}
+
+                        <span *ngIf="!saving">
+                            ›
+                        </span>
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>

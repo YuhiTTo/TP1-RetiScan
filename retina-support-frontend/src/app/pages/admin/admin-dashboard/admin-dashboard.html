@@ -1,0 +1,684 @@
+<div class="page-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="/icons/retiscan2.png" alt="RetiScan">
+        </div>
+
+        <nav class="sidebar-menu" aria-label="Navegacion administrativa">
+
+            <a class="menu-item"
+                routerLink="/admin/home"
+                routerLinkActive="active">
+                <img src="/icons/home.png"
+                    class="menu-icon-image" alt="">
+                <span>Inicio</span>
+            </a>
+
+            <a class="menu-item"
+                routerLink="/admin/establishments"
+                routerLinkActive="active">
+                <img src="/icons/hospital.png"
+                    class="menu-icon-image" alt="">
+                <span>Establecimientos</span>
+            </a>
+
+            <a class="menu-item"
+                routerLink="/admin/evaluations"
+                routerLinkActive="active">
+                <img src="/icons/evaluation.png"
+                    class="menu-icon-image" alt="">
+                <span>Supervisión de evaluaciones</span>
+            </a>
+
+            <a class="menu-item"
+                routerLink="/admin/consistency"
+                routerLinkActive="active">
+                <img src="/icons/reporte.png"
+                    class="menu-icon-image" alt="">
+                <span>Consistencia de registros</span>
+            </a>
+
+        </nav>
+
+
+        <button class="logout-button" (click)="logout()">
+            <img src="/icons/logout.png" class="menu-icon-image" alt="">
+
+            <span>Cerrar sesión</span>
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+        <!-- ADMIN -->
+        <header class="top-header">
+
+            <div class="admin-card">
+
+                <div class="admin-avatar">
+                    <img src="/icons/admin.png" alt="">
+                </div>
+
+                <div>
+                    <strong>
+                        {{ displayName }}
+                    </strong>
+
+                    <span>
+                        Administrador
+                    </span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CABECERA -->
+        <section class="establishments-header">
+
+            <div>
+                <h1>Establecimientos</h1>
+
+                <p>
+                    Gestiona los establecimientos de salud registrados
+                </p>
+            </div>
+
+
+            <button class="register-button" (click)="openCreateModal()">
+                <span>+</span>
+                Registrar establecimiento
+            </button>
+
+        </section>
+
+
+        <!-- BÚSQUEDA -->
+        <section class="search-section">
+
+            <div class="search-box">
+
+                <img src="/icons/search.png" alt="">
+
+                <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="currentPage = 1"
+                    placeholder="Buscar por nombre, RUC o ciudad">
+
+            </div>
+
+
+            <select class="filter-select" [(ngModel)]="statusFilter" (ngModelChange)="currentPage = 1">
+                <option value="">
+                    Todos los estados
+                </option>
+
+                <option value="active">
+                    Activos
+                </option>
+
+                <option value="inactive">
+                    Inactivos
+                </option>
+            </select>
+
+        </section>
+
+
+        <!-- TABLA -->
+        <section class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Nombre del establecimiento</th>
+                        <th>RUC</th>
+                        <th>Distrito</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr *ngIf="loading">
+                        <td colspan="5" class="empty-state">
+                            Cargando establecimientos...
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="errorMessage">
+                        <td colspan="5" class="empty-state">
+                            {{ errorMessage }}
+                        </td>
+                    </tr>
+
+                    <tr *ngFor="let establishment of paginatedEstablishments">
+                        <td>
+                            {{ establishment.nombre }}
+                        </td>
+
+                        <td>
+                            {{ establishment.ruc || '-' }}
+                        </td>
+
+                        <td>
+                            {{ establishment.distrito }}
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge" [class.active]="establishment.estado"
+                                [class.inactive]="!establishment.estado">
+                                {{
+                                establishment.estado
+                                ? 'Activo'
+                                : 'Inactivo'
+                                }}
+                            </span>
+
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button class="credentials-button" type="button"
+                                    (click)="openCredentialsModal(establishment)">
+                                    Ver credenciales
+                                </button>
+                                <button class="edit-button" type="button" (click)="openEditModal(establishment)">
+                                    Editar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="!loading && !errorMessage && filteredEstablishments.length === 0">
+                        <td colspan="5" class="empty-state">
+                            No hay establecimientos registrados.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <section class="table-footer">
+
+            <span>
+                Mostrando {{ establishmentShownStart }}-{{ establishmentShownEnd }} de {{ filteredEstablishments.length }} {{ filteredEstablishments.length === 1 ? 'establecimiento' : 'establecimientos' }}
+            </span>
+
+            <div class="pagination">
+
+                <button type="button" (click)="previousPage()" [disabled]="currentPage === 1">
+                    ‹
+                </button>
+
+                <button type="button" *ngFor="let page of [].constructor(totalPages); let i = index"
+                    (click)="goToPage(i + 1)" [class.active-page]="currentPage === i + 1">
+                    {{ i + 1 }}
+                </button>
+
+                <button type="button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+                    ›
+                </button>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL REGISTRAR ESTABLECIMIENTO -->
+    <div class="modal-backdrop" *ngIf="showCreateModal">
+
+        <div class="create-modal">
+
+            <div class="modal-header">
+
+                <h2>
+                    Registrar establecimiento
+                </h2>
+
+                <button type="button" class="modal-close" (click)="closeCreateModal()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="modal-form">
+
+                <div class="modal-field full-width">
+
+                    <label>
+                        Nombre del establecimiento
+                        <span>*</span>
+                    </label>
+
+                    <input type="text" [(ngModel)]="establishmentName" placeholder="Clínica Nueva Visión">
+
+                </div>
+
+
+                <div class="modal-field full-width">
+
+                    <label>
+                        RUC (opcional)
+                    </label>
+
+                    <input type="text" [(ngModel)]="establishmentRuc" maxlength="11" placeholder="20123456789">
+
+                </div>
+
+
+                <div class="modal-field full-width">
+
+                    <label>
+                        Dirección
+                        <span>*</span>
+                    </label>
+
+                    <input type="text" [(ngModel)]="establishmentAddress" placeholder="Av. Arequipa 1234">
+
+                </div>
+
+
+                <div class="modal-grid">
+
+                    <div class="modal-field">
+
+                        <label>
+                            Teléfono
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" [(ngModel)]="establishmentPhone" placeholder="984345567">
+
+                    </div>
+
+
+                    <div class="modal-field">
+
+                        <label>
+                            Correo institucional
+                            <span>*</span>
+                        </label>
+
+                        <input type="email" [(ngModel)]="institutionalEmail" placeholder="contacto@clinica.com">
+
+                    </div>
+
+                    <div class="modal-field">
+
+                        <label>
+                            Distrito
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" [(ngModel)]="establishmentDistrict" placeholder="Distrito">
+
+                    </div>
+
+                    <div class="modal-field">
+
+                        <label>
+                            Contraseña inicial
+                            <span>*</span>
+                        </label>
+
+                        <input type="password" [(ngModel)]="initialPassword" placeholder="Contraseña inicial">
+
+                    </div>
+
+                    <div class="modal-field">
+
+                        <label>
+                            Estado
+                            <span>*</span>
+                        </label>
+
+                        <select class="status-select" [(ngModel)]="establishmentStatus"
+                            [ngClass]="establishmentStatus ? 'active' : 'inactive'">
+                            <option [ngValue]="true">
+                                Activo
+                            </option>
+
+                            <option [ngValue]="false">
+                                Inactivo
+                            </option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <p class="modal-error" *ngIf="createErrorMessage">
+                    {{ createErrorMessage }}
+                </p>
+
+
+                <div class="modal-actions">
+
+                    <button type="button" class="modal-cancel" (click)="closeCreateModal()" [disabled]="creating">
+                        Cancelar
+                    </button>
+
+                    <button type="button" class="modal-create" (click)="createEstablishment()" [disabled]="creating">
+                        {{
+                        creating
+                        ? 'Creando...'
+                        : 'Crear establecimiento y cuenta'
+                        }}
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL EDITAR ESTABLECIMIENTO -->
+    <div class="modal-backdrop" *ngIf="showEditModal">
+
+        <div class="create-modal">
+
+            <div class="modal-header">
+
+                <h2>
+                    Editar establecimiento
+                </h2>
+
+                <button type="button" class="modal-close" (click)="closeEditModal()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="empty-state" *ngIf="editLoading">
+                Cargando información...
+            </div>
+
+
+            <div class="modal-form" *ngIf="!editLoading">
+
+                <!-- NOMBRE -->
+                <div class="modal-field full-width">
+
+                    <label>
+                        Nombre del establecimiento
+                        <span>*</span>
+                    </label>
+
+                    <input type="text" [(ngModel)]="editEstablishmentName">
+
+                </div>
+
+
+                <!-- RUC -->
+                <div class="modal-field full-width">
+
+                    <label>
+                        RUC (opcional)
+                    </label>
+
+                    <input type="text" [(ngModel)]="editEstablishmentRuc" maxlength="11">
+
+                </div>
+
+
+                <!-- DIRECCIÓN -->
+                <div class="modal-field full-width">
+
+                    <label>
+                        Dirección
+                        <span>*</span>
+                    </label>
+
+                    <input type="text" [(ngModel)]="editEstablishmentAddress">
+
+                </div>
+
+
+                <div class="modal-grid">
+
+                    <!-- TELÉFONO -->
+                    <div class="modal-field">
+
+                        <label>
+                            Teléfono
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" [(ngModel)]="editEstablishmentPhone">
+
+                    </div>
+
+
+                    <!-- CORREO -->
+                    <div class="modal-field">
+
+                        <label>
+                            Correo institucional
+                            <span>*</span>
+                        </label>
+
+                        <input type="email" [(ngModel)]="editInstitutionalEmail">
+
+                    </div>
+
+
+                    <!-- DISTRITO -->
+                    <div class="modal-field">
+
+                        <label>
+                            Distrito
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" [(ngModel)]="editEstablishmentDistrict">
+
+                    </div>
+
+
+                    <!-- ESTADO -->
+                    <div class="modal-field">
+
+                        <label>
+                            Estado
+                            <span>*</span>
+                        </label>
+
+                        <select class="status-select" [(ngModel)]="editEstablishmentStatus" [ngClass]="
+                            editEstablishmentStatus
+                            ? 'active'
+                            : 'inactive'
+                        ">
+
+                            <option [ngValue]="true">
+                                Activo
+                            </option>
+
+                            <option [ngValue]="false">
+                                Inactivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NUEVA CONTRASEÑA -->
+                <div class="modal-field full-width">
+
+                    <label>
+                        Nueva contraseña
+                    </label>
+
+                    <input type="password" [(ngModel)]="editNewPassword"
+                        placeholder="Déjalo vacío para conservar la actual">
+
+                </div>
+
+
+                <p class="modal-error" *ngIf="editErrorMessage">
+                    {{ editErrorMessage }}
+                </p>
+
+
+                <div class="modal-actions">
+
+                    <button type="button" class="modal-cancel" (click)="closeEditModal()">
+                        Cancelar
+                    </button>
+
+                    <button type="button" class="modal-create" (click)="saveEditEstablishment()"
+                        [disabled]="savingEdit">
+                        {{
+                        savingEdit
+                        ? 'Guardando...'
+                        : 'Guardar cambios'
+                        }}
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL VER CREDENCIALES -->
+    <div class="modal-backdrop" *ngIf="showCredentialsModal">
+
+        <div class="credentials-modal">
+
+            <div class="modal-header">
+
+                <h2>
+                    Credenciales institucionales
+                </h2>
+
+                <button type="button" class="modal-close" (click)="closeCredentialsModal()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="empty-state" *ngIf="credentialsLoading">
+                Cargando credenciales...
+            </div>
+
+
+            <div *ngIf="!credentialsLoading">
+
+                <p class="modal-error" *ngIf="credentialsErrorMessage">
+                    {{ credentialsErrorMessage }}
+                </p>
+
+
+                <div class="credentials-content" *ngIf="!credentialsErrorMessage">
+
+                    <div class="credential-row">
+
+                        <span class="credential-label">
+                            Establecimiento
+                        </span>
+
+                        <strong>
+                            {{ credentialsName }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential-row">
+
+                        <span class="credential-label">
+                            Código institucional
+                        </span>
+
+                        <strong>
+                            {{ credentialsCode }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential-row">
+
+                        <span class="credential-label">
+                            Correo institucional
+                        </span>
+
+                        <strong>
+                            {{ credentialsEmail }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential-row">
+
+                        <span class="credential-label">
+                            Tipo de cuenta
+                        </span>
+
+                        <strong>
+                            INSTITUTIONAL
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential-row">
+
+                        <span class="credential-label">
+                            Estado
+                        </span>
+
+                        <span class="status-badge" [class.active]="credentialsStatus"
+                            [class.inactive]="!credentialsStatus">
+                            {{
+                            credentialsStatus
+                            ? 'Activo'
+                            : 'Inactivo'
+                            }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="credentials-actions">
+
+                    <button type="button" class="modal-create" (click)="closeCredentialsModal()">
+                        Cerrar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

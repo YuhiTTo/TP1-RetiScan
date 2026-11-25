@@ -1,0 +1,118 @@
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
+from uuid import uuid4
+
+from app.core.security import hash_password
+from app.models.account import Account
+from app.models.establishment import Establishment
+from app.repositories.account_repository import get_account_by_email
+from app.repositories.establishment_repository import (
+    get_establishment_by_code
+)
+from app.schemas.institutional_account import InstitutionalAccountCreate
+
+
+class InstitutionalCodeAlreadyExistsError(Exception):
+    pass
+
+
+class AccountEmailAlreadyExistsError(Exception):
+    pass
+
+
+def create_institutional_account(
+    db: Session,
+    data: InstitutionalAccountCreate
+) -> tuple[Establishment, Account]:
+
+    provided_code = (
+    data.establecimiento.codigo_institucional
+)
+
+    if provided_code:
+        codigo = (
+        provided_code
+            .strip()
+            .upper()
+        )
+
+        existing_establishment = get_establishment_by_code(
+            db,
+            codigo
+        )
+
+        if existing_establishment is not None:
+            raise InstitutionalCodeAlreadyExistsError()
+    else:
+
+        # Código temporal para poder insertar el establecimiento
+        codigo = f"TEMP-{uuid4().hex.upper()}"
+
+
+    email = (
+        data.cuenta.correo_electronico
+        .strip()
+        .lower()
+    )
+    existing_account = get_account_by_email(
+        db=db,
+        email=email
+    )
+
+    if existing_account is not None:
+        raise AccountEmailAlreadyExistsError()
+
+    establishment = Establishment(
+        codigo_institucional=codigo,
+        nombre=data.establecimiento.nombre.strip(),
+        ruc=(
+            data.establecimiento.ruc.strip()
+            if data.establecimiento.ruc
+            else None
+        ),
+        direccion=data.establecimiento.direccion.strip(),
+        distrito=data.establecimiento.distrito.strip(),
+        telefono=data.establecimiento.telefono.strip(),
+        estado=data.establecimiento.estado
+    )
+
+    try:
+        db.add(establishment)
+
+        # Ejecuta el INSERT sin hacer todavía COMMIT.
+        # Así obtenemos id_establecimiento.
+        db.flush()
+
+        if provided_code is None:
+            establishment.codigo_institucional = (
+                f"EST-{establishment.id_establecimiento:06d}"
+            )
+
+        account = Account(
+            id_establecimiento=establishment.id_establecimiento,
+            correo_electronico=email,
+            password_hash=hash_password(
+                data.cuenta.password
+            ),
+            tipo_cuenta="INSTITUTIONAL",
+            nombre_mostrado=(
+                data.cuenta.nombre_mostrado.strip()
+                if data.cuenta.nombre_mostrado
+                else establishment.nombre
+            ),
+            estado=data.establecimiento.estado
+        )
+
+        db.add(account)
+
+        # Las dos operaciones se confirman juntas.
+        db.commit()
+
+        db.refresh(establishment)
+        db.refresh(account)
+
+        return establishment, account
+
+    except IntegrityError:
+        db.rollback()
+        raise

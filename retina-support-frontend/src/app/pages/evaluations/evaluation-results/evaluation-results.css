@@ -1,0 +1,865 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.page-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f1f3f6;
+}
+
+/* MENÚ LATERAL */
+.sidebar {
+    width: 230px;
+    min-height: 100vh;
+    background: #2f507f;
+
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-logo {
+    height: 135px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-logo img {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 10px;
+}
+
+.menu-item {
+    width: 100%;
+    height: 50px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+    color: #dbe5f1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 16px;
+
+    font-size: 17px;
+
+    cursor: pointer;
+    text-align: left;
+}
+
+button.menu-item {
+    cursor: pointer;
+}
+
+.menu-item.active {
+    background: #1e67c6;
+    color: white;
+}
+
+button.menu-item:hover {
+    background: #1e67c6;
+}
+
+.menu-icon-image {
+    width: 23px;
+    height: 23px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 18px 30px 30px;
+    background: #f1f3f6;
+}
+
+/* CABECERA */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    border: none;
+    background: transparent;
+
+    color: #1767c6;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0;
+
+    line-height: 1;
+}
+
+.back-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+
+    filter: brightness(0) invert(36%) sepia(97%) saturate(1326%) hue-rotate(187deg) brightness(70%) contrast(91%);
+}
+
+.establishment-card {
+    min-width: 190px;
+    height: 60px;
+
+    background: white;
+
+    border: 1px solid #cbd3dd;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    padding: 0 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.establishment-icon-image {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+/* TÍTULO */
+.page-header {
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 31px;
+    color: #172033;
+    font-weight: 700;
+}
+
+.page-header p {
+    margin: 3px 0 0;
+    color: #596474;
+    font-size: 14px;
+}
+
+/* RESUMEN DE LA EVALUACIÓN */
+.evaluation-summary {
+    display: grid;
+    grid-template-columns:
+        minmax(250px, 1.4fr) minmax(135px, 1fr) minmax(120px, 0.9fr) minmax(135px, 1fr);
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.patient-card {
+    min-height: 80px;
+    padding: 10px 14px;
+
+    background: #dce8f5;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-width: 0;
+}
+
+.patient-avatar {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+
+.patient-card h2 {
+    margin: 0 0 4px;
+    color: #172033;
+    font-size: 16px;
+}
+
+.patient-card p {
+    margin: 3px 0;
+    color: #303846;
+    font-size: 12px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.summary-item img {
+    width: 21px;
+    height: 21px;
+    object-fit: contain;
+}
+
+.summary-item span {
+    display: block;
+    color: #68778a;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.summary-item strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 3px;
+}
+
+/* DISTRIBUCIÓN PRINCIPAL */
+.analysis-content {
+    display: grid;
+    grid-template-columns:
+        minmax(280px, 0.85fr) minmax(0, 1.35fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.retinography-section,
+.analysis-section {
+    min-width: 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 0 0 12px;
+
+    font-size: 16px;
+    color: #1767c6;
+    font-weight: 700;
+}
+
+.section-heading-icon {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    object-fit: contain;
+
+    filter: brightness(0) saturate(100%) invert(34%) sepia(94%) saturate(1268%) hue-rotate(185deg) brightness(70%) contrast(92%);
+}
+
+/* RETINOGRAFÍA */
+.retinography-card {
+    width: 100%;
+}
+
+.retinography-placeholder {
+    width: 100%;
+    max-width: 440px;
+    height: 325px;
+    background: #111111;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+.retinography-placeholder p {
+    color: #d1d5db;
+    text-align: center;
+    font-size: 13px;
+}
+
+.retinography-card>p {
+    font-size: 12px;
+    color: #596474;
+    margin-top: 10px;
+}
+
+/* TARJETAS DE RESULTADOS */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.result-card {
+    padding: 16px;
+    border-radius: 8px;
+    min-height: 205px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rd-card {
+    background: #f7ebbf;
+}
+
+.glaucoma-card {
+    background: #f4d1d5;
+}
+
+.result-card h3 {
+    font-size: 15px;
+    color: #172033;
+    margin: 0;
+}
+
+.result-label {
+    padding: 13px 10px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.rd-card .result-label {
+    background: #f6d98b;
+    color: #79551c;
+}
+
+.glaucoma-card .result-label {
+    background: #f5adb5;
+    color: #9d2633;
+}
+
+.confidence-section {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.confidence-section span {
+    font-size: 12px;
+    color: #394150;
+}
+
+.confidence-section strong {
+    font-size: 19px;
+    color: #172033;
+}
+
+.review-warning {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #9b3d20;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    padding: 9px;
+}
+
+/* SOPORTE CLÍNICO */
+.clinical-support {
+    background: #ffffff;
+    border: 1px solid #cbd3dd;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.clinical-support .section-title {
+    margin-bottom: 10px;
+}
+
+.clinical-support p {
+    margin: 8px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #687386;
+}
+
+.clinical-support .priority-pending {
+    color: #82591d;
+    background: #fff2d7;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+/* OBSERVACIÓN MÉDICA */
+.medical-observation {
+    margin-top: 25px;
+}
+
+.observation-placeholder {
+    min-height: 85px;
+    background: #ffffff;
+    border: 1px solid #cbd3dd;
+    border-radius: 7px;
+    padding: 15px;
+    color: #687386;
+    font-size: 13px;
+}
+
+/* FORMULARIO DE OBSERVACION MEDICA - US-17 */
+.observation-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #172033;
+}
+
+.observation-textarea {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd3dd;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #172033;
+    font: inherit;
+    resize: vertical;
+}
+
+.observation-textarea:focus-visible {
+    outline: 2px solid #246dcc;
+    outline-offset: 1px;
+}
+
+.observation-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.observation-count {
+    color: #687386;
+    font-size: 12px;
+}
+
+.observation-save-button {
+    border: none;
+    border-radius: 5px;
+    background: #246dcc;
+    color: #ffffff;
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.observation-save-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.observation-success {
+    color: #166534;
+}
+
+.observation-error {
+    color: #b42318;
+}
+
+.observation-info {
+    color: #687386;
+}
+
+/* ACCIONES */
+.page-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.back-action {
+    background: #246dcc;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.back-action:hover {
+    background: #195bb1;
+}
+
+/* MENSAJES */
+.status-message {
+    padding: 20px;
+    color: #687386;
+    font-size: 14px;
+}
+
+.status-message.error {
+    color: #b42318;
+}
+
+.status-message button {
+    display: block;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1150px) {
+    .analysis-content {
+        grid-template-columns: 1fr;
+    }
+
+    .retinography-placeholder {
+        max-width: 500px;
+    }
+
+    .evaluation-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-logo img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .menu-item {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .menu-item span {
+        display: none;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .top-header {
+        flex-wrap: wrap;
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .evaluation-summary,
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .retinography-placeholder {
+        height: 260px;
+    }
+}
+
+
+/* RETINOGRAFÍA REAL */
+.retinography-image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 7px;
+}
+
+
+/* CERRAR SESIÓN */
+
+.logout-button {
+    margin-top: auto;
+
+    width: 100%;
+    height: 65px;
+
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+
+    background: transparent;
+    color: #dbe5f1;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 0 25px;
+
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+
+    cursor: pointer;
+    text-align: left;
+}
+
+.logout-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 700px) {
+    .logout-button {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .logout-button span {
+        display: none;
+    }
+}
+
+
+/* OPTIMIZAR ALTURA DE LA PANTALLA */
+
+.top-header {
+    margin-bottom: 12px;
+}
+
+.page-header {
+    margin-bottom: 12px;
+}
+
+.evaluation-summary {
+    margin-bottom: 15px;
+}
+
+.analysis-content {
+    gap: 18px;
+}
+
+.medical-observation {
+    margin-top: 15px;
+}
+
+.page-actions {
+    margin-top: 12px;
+}
+
+
+/* ==========================================
+   IGUALAR PARTE SUPERIOR A CARGAR RETINOGRAFÍA
+========================================== */
+
+/* Separación entre cabecera y título */
+.main-content>.top-header {
+    margin-bottom: 20px;
+}
+
+/* Título y subtítulo */
+.main-content>.page-header {
+    margin-bottom: 18px;
+}
+
+.main-content>.page-header h1 {
+    margin: 0;
+    font-size: 31px;
+    font-weight: 700;
+    color: #172033;
+}
+
+.main-content>.page-header p {
+    margin: 3px 0 0;
+    font-size: 14px;
+    color: #596474;
+}
+
+/* Distribución del resumen del paciente */
+.evaluation-summary {
+    grid-template-columns:
+        minmax(300px, 1.35fr) minmax(145px, 1fr) minmax(125px, 0.9fr) minmax(145px, 1fr);
+
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+/* Tarjeta del paciente */
+.patient-card {
+    min-height: 80px;
+    padding: 10px 14px;
+    gap: 14px;
+}
+
+.patient-card h2 {
+    margin: 0 0 4px;
+    font-size: 16px;
+}
+
+.patient-card p {
+    margin: 3px 0;
+    font-size: 12px;
+}
+
+/* Fecha, ojo evaluado y médico */
+.summary-item {
+    gap: 8px;
+}
+
+
+/* ICONOS DE LOS RESULTADOS */
+
+.result-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.result-display .result-label {
+    flex: 1;
+    min-width: 0;
+}
+
+.result-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.result-icon img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+/* Retinopatía diabética */
+.rd-card .result-icon {
+    background: #fff7e3;
+    border: 1px solid #d5a94e;
+}
+
+/* Glaucoma */
+.glaucoma-card .result-icon {
+    background: #fff0f1;
+    border: 1px solid #dd6979;
+}
+
+.glaucoma-card .result-icon img {
+    filter: invert(35%) sepia(45%) saturate(1100%) hue-rotate(310deg);
+}
+
+/* Correccion visual: prioridad clinica dinamica */
+
+.clinical-support .priority-level {
+    --priority-bg: #f1f5f9;
+    --priority-text: #475569;
+    --priority-border: #cbd5e1;
+    --priority-badge: #e2e8f0;
+
+    margin-top: 8px;
+    padding: 12px 14px;
+    border: 1px solid var(--priority-border);
+    border-left: 4px solid var(--priority-text);
+    border-radius: 7px;
+    background: var(--priority-bg);
+}
+
+.clinical-support .priority-level--baja {
+    --priority-bg: #e8f7ed;
+    --priority-text: #176239;
+    --priority-border: #96d5ad;
+    --priority-badge: #c5ebd2;
+}
+
+.clinical-support .priority-level--media {
+    --priority-bg: #fff3d7;
+    --priority-text: #865109;
+    --priority-border: #efc67a;
+    --priority-badge: #ffe0a0;
+}
+
+.clinical-support .priority-level--alta {
+    --priority-bg: #fde8ea;
+    --priority-text: #962631;
+    --priority-border: #e9a0a6;
+    --priority-badge: #f9c7cc;
+}
+
+.clinical-support .priority-level__headline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    color: var(--priority-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.clinical-support .priority-level__headline strong {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background: var(--priority-badge);
+    color: var(--priority-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.clinical-support .priority-level__recommendation {
+    margin: 9px 0 0;
+    color: var(--priority-text);
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+.clinical-support .priority-disclaimer {
+    margin-top: 12px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.clinical-support .priority-pending {
+    color: #475569;
+    background: #f1f5f9;
+}

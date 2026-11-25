@@ -1,0 +1,368 @@
+<div class="page-container">
+
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="/icons/retiscan2.png" alt="RetiScan">
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <button class="menu-item" type="button" (click)="goHome()">
+                <img class="menu-icon-image" src="/icons/home.png" alt="">
+                <span>Inicio</span>
+            </button>
+
+            <button type="button" class="menu-item active" (click)="goToPatient()">
+                <img src="/icons/patients.png" class="menu-icon-image" alt="">
+                <span>Pacientes</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToEvaluations()">
+                <img src="/icons/evaluacion.png" class="menu-icon-image" alt="">
+                <span>Evaluaciones</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToReports()">
+                <img class="menu-icon-image" src="/icons/reporte.png" alt="">
+                <span>Reportes</span>
+            </button>
+
+        </nav>
+
+        <button type="button" class="logout-button" (click)="logout()">
+            <img src="/icons/logout.png" class="menu-icon-image" alt="">
+            <span>Cerrar sesión</span>
+        </button>
+
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- CABECERA -->
+        <header class="top-header">
+
+            <button class="back-button" (click)="goToPatient()">
+                <img src="/icons/back.png" alt="" class="back-icon">
+                Volver a la ficha del paciente
+            </button>
+
+            <div class="establishment-card">
+                <img src="/icons/hospital.png" class="establishment-icon-image" alt="">
+                <span>{{ displayName }}</span>
+            </div>
+
+        </header>
+
+        <!-- TÍTULO -->
+        <section class="page-header">
+            <h1>Detalle de evaluación retiniana</h1>
+            <p>
+                Consulta los resultados almacenados del análisis automatizado
+                de la retinografía
+            </p>
+        </section>
+
+        <!-- CARGANDO INFORMACIÓN -->
+        <div class="status-message" *ngIf="loadingEvaluation">
+            Cargando información de la evaluación...
+        </div>
+
+        <!-- RESULTADOS TODAVÍA NO DISPONIBLES -->
+        <div class="pending-analysis-notice" *ngIf="resultsPending" role="status">
+            <strong>Análisis pendiente</strong>
+            <p>
+                Esta evaluación todavía no cuenta con
+                resultados completos del análisis automatizado.
+                Los resultados estarán disponibles cuando
+                se complete el análisis de la retinografía.
+            </p>
+        </div>
+
+        <!-- MENSAJE DE ERROR -->
+        <div class="status-message error" *ngIf="errorMessage">
+            {{ errorMessage }}
+
+            <button type="button" (click)="goToPatient()">
+                Volver a la ficha del paciente
+            </button>
+        </div>
+
+        <!-- INFORMACIÓN DEL PACIENTE -->
+        <section class="evaluation-summary" *ngIf="evaluation as ev">
+
+            <div class="patient-card">
+                <img src="/icons/user.png" alt="Paciente" class="patient-avatar">
+
+                <div>
+                    <h2>
+                        {{ ev.nombres_paciente }}
+                        {{ ev.apellidos_paciente }}
+                    </h2>
+                    <p>DNI: {{ ev.numero_documento }}</p>
+                    <p>
+                        {{ calculateAge(ev.fecha_nacimiento) }} años - {{ ev.sexo }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="summary-item">
+                <img src="/icons/calendario.png" alt="">
+                <div>
+                    <span>Fecha de evaluación</span>
+                    <strong>
+                        {{ ev.fecha_evaluacion | date:'dd/MM/yyyy' }}
+                    </strong>
+                </div>
+            </div>
+
+            <div class="summary-item">
+                <img src="/icons/ojo-abierto.png" alt="">
+                <div>
+                    <span>Ojo evaluado</span>
+                    <strong>
+                        {{ ev.ojo_evaluado === 'OD'
+                        ? 'OD - Derecho'
+                        : 'OI - Izquierdo' }}
+                    </strong>
+                </div>
+            </div>
+
+            <div class="summary-item">
+                <img src="/icons/usersmall.png" alt="">
+                <div>
+                    <span>Médico</span>
+                    <strong>Dr. {{ ev.medico_responsable }}</strong>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- RESULTADOS DEL ANÁLISIS -->
+
+
+        <section class="analysis-content">
+
+            <!-- RETINOGRAFÍA -->
+            <div class="retinography-section">
+
+                <h2 class="section-title">
+                    <img src="/icons/imagen.png" class="section-heading-icon" alt="">
+                    Retinografía evaluada
+                </h2>
+
+                <div class="retinography-card">
+
+
+                    <div class="retinography-placeholder">
+
+                        <!-- Cargando la imagen -->
+                        <p *ngIf="loadingRetinography">
+                            Cargando retinografía...
+                        </p>
+
+                        <!-- Imagen real recuperada desde S3 -->
+                        <img *ngIf="!loadingRetinography && retinographyUrl" [src]="retinographyUrl"
+                            class="retinography-image" alt="Retinografía evaluada del paciente">
+
+                        <!-- Error al recuperar la imagen -->
+                        <p *ngIf="!loadingRetinography && retinographyError">
+                            {{ retinographyError }}
+                        </p>
+
+                        <!-- Sin imagen disponible -->
+                        <p *ngIf="!loadingRetinography && !retinographyUrl && !retinographyError">
+                            No hay una retinografía disponible.
+                        </p>
+
+                    </div>
+
+                    <p *ngIf="evaluation">
+                        Ojo:
+                        {{ evaluation.ojo_evaluado === 'OD'
+                        ? 'OD - Derecho'
+                        : 'OI - Izquierdo' }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- COLUMNA DE RESULTADOS -->
+            <div class="analysis-section" *ngIf="analysis as result">
+
+                <h2 class="section-title">
+                    <img src="/icons/estadistico.png" class="section-heading-icon" alt="">
+                    Resultado del análisis automatizado
+                </h2>
+
+                <div class="results-grid">
+
+                    <!-- RETINOPATÍA DIABÉTICA -->
+                    <article class="result-card rd-card">
+
+                        <h3>Retinopatía Diabética</h3>
+
+                        <div class="result-display">
+                            <span class="result-icon">
+                                <img src="/icons/ojo-abierto.png" alt="">
+                            </span>
+
+                            <div class="result-label">
+                                {{ result.retinopatia_diabetica.resultado
+                                || 'Resultado no disponible' }}
+                            </div>
+                        </div>
+
+                        <div class="confidence-section" *ngIf="result.retinopatia_diabetica.confianza !== null">
+
+                            <span>Nivel de confianza</span>
+
+                            <strong>
+                                {{ result.retinopatia_diabetica.confianza
+                                | percent:'1.1-2' }}
+                            </strong>
+
+                        </div>
+
+                        <p class="review-warning" *ngIf="result.retinopatia_diabetica.requiere_revision">
+                            Requiere revisión cuidadosa del especialista.
+                        </p>
+
+                        <p class="review-warning" *ngIf="result.retinopatia_diabetica.estado === 'ERROR'">
+                            No se pudo completar este análisis.
+                        </p>
+
+                    </article>
+
+                    <!-- GLAUCOMA -->
+                    <article class="result-card glaucoma-card">
+
+                        <h3>Riesgo de Glaucoma</h3>
+
+                        <div class="result-display">
+                            <span class="result-icon">
+                                <img src="/icons/ojo-abierto.png" alt="">
+                            </span>
+
+                            <div class="result-label">
+                                {{ result.glaucoma.resultado
+                                || 'Resultado no disponible' }}
+                            </div>
+                        </div>
+
+                        <div class="confidence-section" *ngIf="result.glaucoma.confianza !== null">
+
+                            <span>Indicador de confianza</span>
+
+                            <strong>
+                                {{ result.glaucoma.confianza
+                                | percent:'1.1-2' }}
+                            </strong>
+
+                        </div>
+
+                        <p class="review-warning" *ngIf="result.glaucoma.requiere_revision">
+                            Requiere revisión cuidadosa del especialista.
+                        </p>
+
+                        <p class="review-warning" *ngIf="result.glaucoma.estado === 'ERROR'">
+                            No se pudo completar este análisis.
+                        </p>
+
+                    </article>
+
+                </div>
+
+                <!-- SOPORTE CLÍNICO -->
+                <section class="clinical-support">
+
+                    <h2 class="section-title">
+                        <img src="/icons/tratamiento.png" class="section-heading-icon" alt="">
+                        Sugerencia de soporte clínico
+                    </h2>
+
+                    <div class="priority-level" [ngClass]="priorityStyleClass" *ngIf="prioritySuggested">
+
+                        <div class="priority-level__headline">
+                            <span>Prioridad sugerida:</span>
+                            <strong>{{ prioritySuggested }}</strong>
+                        </div>
+
+                        <p class="priority-level__recommendation">
+                            {{ priorityRecommendation }}
+                        </p>
+
+                    </div>
+
+                    <p class="priority-pending" *ngIf="!prioritySuggested">
+                        Prioridad sugerida no disponible para esta evaluación.
+                    </p>
+
+                    <p class="priority-disclaimer">
+                        Los resultados generados por inteligencia
+                        artificial constituyen información de apoyo
+                        y no reemplazan el criterio del médico
+                        oftalmólogo. La prioridad sugerida es
+                        experimental y requiere validación clínica.
+                    </p>
+
+                </section>
+
+            </div>
+
+        </section>
+
+        <!-- OBSERVACIÓN MÉDICA -->
+        <section class="medical-observation" *ngIf="evaluation">
+
+            <h2 class="section-title">
+                <img src="/icons/expediente.png" class="section-heading-icon" alt="">
+                Observación médica
+            </h2>
+
+            <div class="observation-placeholder observation-form">
+
+                <textarea aria-label="Observación médica" [(ngModel)]="observationText"
+                    [readonly]="!canEditObservation || savingObservation" maxlength="1000" rows="3"
+                    placeholder="Ingrese la observación médica">
+                    </textarea>
+
+                <div class="observation-counter">
+                    {{ observationText.length }} / 1000 caracteres
+                </div>
+
+            </div>
+
+            <p class="observation-success" role="status" *ngIf="observationSuccess">
+                {{ observationSuccess }}
+            </p>
+
+            <p class="observation-error" role="alert" *ngIf="observationError">
+                {{ observationError }}
+            </p>
+
+            <p class="observation-notice" *ngIf="evaluation && evaluation.estado !== 'FINALIZADA'">
+                La observación solo puede modificarse
+                cuando la evaluación esté finalizada.
+            </p>
+
+        </section>
+
+        <!-- ACCIONES -->
+        <div class="page-actions">
+
+            <button type="button" class="back-action" (click)="saveObservation()"
+                [disabled]="!canEditObservation || savingObservation">
+                {{ savingObservation ? 'Guardando...' : 'Guardar' }}
+            </button>
+
+        </div>
+
+
+
+    </main>
+
+</div>

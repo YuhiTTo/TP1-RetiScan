@@ -1,0 +1,90 @@
+from app.api.routes.auth import router as auth_router
+from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+
+from app.api.dependencies import get_db
+from app.api.routes.admin_establishments import (router as admin_establishments_router)
+from app.api.routes.institutional_accounts import (router as institutional_accounts_router)
+from app.api.routes.patients import router as patients_router
+from app.api.routes.evaluations import  ( router as evaluations_router, detail_router as evaluation_detail_router )
+from app.api.routes.retinographies import router as retinographies_router
+from app.api.routes.reports import (router as reports_router, patient_reports_router, reports_list_router)
+from app.core.database import test_database_connection
+
+from app.api.routes.ai_analysis import (
+    router as ai_analysis_router
+)
+from app.api.routes.dashboard import (
+    router as dashboard_router
+)
+from app.api.routes.admin_evaluations import router as admin_evaluations_router
+from app.api.routes.admin_consistency import router as admin_consistency_router
+from app.api.routes.admin_home import router as admin_home_router
+
+app = FastAPI(
+    title="RetiScan API",
+    description="Backend API para el sistema de soporte clínico RetiScan",
+    version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:4200",
+        "http://127.0.0.1:4200"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(auth_router)
+app.include_router(admin_establishments_router)
+app.include_router(institutional_accounts_router)
+app.include_router(patients_router)
+app.include_router(evaluations_router)
+app.include_router(evaluation_detail_router)
+app.include_router(retinographies_router)
+app.include_router(reports_router)
+app.include_router(patient_reports_router)
+app.include_router(reports_list_router)
+app.include_router(ai_analysis_router)
+app.include_router(dashboard_router)
+app.include_router(admin_evaluations_router)
+app.include_router(admin_consistency_router)
+app.include_router(admin_home_router)
+
+@app.get("/")
+def root():
+    return {
+        "message": "Backend RetiScan funcionando correctamente"
+    }
+
+
+@app.get("/health/db")
+def database_health():
+    result = test_database_connection()
+
+    return {
+        "status": "ok",
+        "message": "Conexión con PostgreSQL exitosa",
+        "database": result["database"],
+        "user": result["user"]
+    }
+
+@app.get("/health/db-session")
+def database_session_health(
+    db: Session = Depends(get_db)
+):
+    result = db.execute(
+        text("SELECT current_database(), current_user")
+    ).one()
+
+    return {
+        "status": "ok",
+        "database": result[0],
+        "user": result[1],
+        "session": "active"
+    }

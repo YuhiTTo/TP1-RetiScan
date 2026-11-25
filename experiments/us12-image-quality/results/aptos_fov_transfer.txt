@@ -1,0 +1,156 @@
+train_images: 500/3662
+train_images: 1000/3662
+train_images: 1500/3662
+train_images: 2000/3662
+train_images: 2500/3662
+train_images: 3000/3662
+train_images: 3500/3662
+train_images: 3662/3662
+test_images: 500/1928
+test_images: 1000/1928
+test_images: 1500/1928
+test_images: 1928/1928
+
+=== APTOS 2019 — TRANSFERENCIA DEL CONTROL FOV ===
+
+Thresholds DeepDRiD congelados:
+area   >= 0.65079775
+width  >= 0.91093100
+height >= 0.90625000
+offset <= 0.00175000
+
+Errores: 0
+
+========================================================================
+TODAS LAS IMÁGENES
+Imágenes: 5590
+FOV insuficiente: 3968/5590 (70.98%)
+
+fov_area_ratio
+  min: 0.46442286
+  P1: 0.47571439
+  P5: 0.47696880
+  mediana: 0.83565938
+  P95: 0.99231120
+  P99: 0.99996215
+  max: 1.00000000
+
+fov_width_ratio
+  min: 0.67089844
+  P1: 0.67155067
+  P5: 0.67236328
+  mediana: 1.00000000
+  P95: 1.00000000
+  P99: 1.00000000
+  max: 1.00000000
+
+fov_height_ratio
+  min: 0.84548611
+  P1: 0.89706380
+  P5: 0.89778646
+  mediana: 1.00000000
+  P95: 1.00000000
+  P99: 1.00000000
+  max: 1.00000000
+
+fov_center_offset
+  min: 0.00002831
+  P1: 0.00030779
+  P5: 0.00043229
+  mediana: 0.00358340
+  P95: 0.03274693
+  P99: 0.03561162
+  max: 0.04653359
+
+
+######## POR SPLIT ########
+
+========================================================================
+test_images
+Imágenes: 1928
+FOV insuficiente: 501/1928 (25.99%)
+
+fov_area_ratio
+  min: 0.46442286
+  P1: 0.47615938
+  P5: 0.79906698
+  mediana: 0.99204264
+  P95: 0.99235352
+  P99: 0.99994583
+  max: 1.00000000
+
+fov_width_ratio
+  min: 0.67089844
+  P1: 0.67155067
+  P5: 0.93377483
+  mediana: 1.00000000
+  P95: 1.00000000
+  P99: 1.00000000
+  max: 1.00000000
+
+fov_height_ratio
+  min: 0.84548611
+  P1: 0.89739414
+  P5: 1.00000000
+  mediana: 1.00000000
+  P95: 1.00000000
+  P99: 1.00000000
+  max: 1.00000000
+
+fov_center_offset
+  min: 0.00009790
+  P1: 0.00031079
+  P5: 0.00040864
+  mediana: 0.00051988
+  P95: 0.01621313
+  P99: 0.01919846
+  max: 0.01998589
+
+========================================================================
+train_images
+Imágenes: 3662
+FOV insuficiente: 3467/3662 (94.68%)
+
+fov_area_ratio
+  min: 0.47376251
+  P1: 0.47545875
+  P5: 0.47678315
+  mediana: 0.80209751
+  P95: 0.98226414
+  P99: 0.99996628
+  max: 1.00000000
+
+fov_width_ratio
+  min: 0.67089844
+  P1: 0.67138672
+  P5: 0.67187500
+  mediana: 0.93418874
+  P95: 1.00000000
+  P99: 1.00000000
+  max: 1.00000000
+
+fov_height_ratio
+  min: 0.89453125
+  P1: 0.89648438
+  P5: 0.89778646
+  mediana: 1.00000000
+  P95: 1.00000000
+  P99: 1.00000000
+  max: 1.00000000
+
+fov_center_offset
+  min: 0.00002831
+  P1: 0.00030524
+  P5: 0.00168123
+  mediana: 0.00465066
+  P95: 0.03355730
+  P99: 0.04454097
+  max: 0.04653359
+
+=== FALLO POR COMPONENTE ===
+area: 618/5590 (11.06%)
+width: 1408/5590 (25.19%)
+height: 614/5590 (10.98%)
+offset: 3966/5590 (70.95%)
+
+Resultado: experiments/us12-image-quality/results/aptos_fov_transfer.csv

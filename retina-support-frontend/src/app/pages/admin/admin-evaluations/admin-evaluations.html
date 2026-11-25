@@ -1,0 +1,260 @@
+<div class="page-container admin-evaluations-page">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="/icons/retiscan2.png" alt="RetiScan">
+    </div>
+
+    <nav class="sidebar-menu" aria-label="Navegacion administrativa">
+
+            <a class="menu-item"
+                routerLink="/admin/home"
+                routerLinkActive="active">
+                <img src="/icons/home.png"
+                    class="menu-icon-image" alt="">
+                <span>Inicio</span>
+            </a>
+
+            <a class="menu-item"
+                routerLink="/admin/establishments"
+                routerLinkActive="active">
+                <img src="/icons/hospital.png"
+                    class="menu-icon-image" alt="">
+                <span>Establecimientos</span>
+            </a>
+
+            <a class="menu-item"
+                routerLink="/admin/evaluations"
+                routerLinkActive="active">
+                <img src="/icons/evaluation.png"
+                    class="menu-icon-image" alt="">
+                <span>Supervisión de evaluaciones</span>
+            </a>
+
+            <a class="menu-item"
+                routerLink="/admin/consistency"
+                routerLinkActive="active">
+                <img src="/icons/reporte.png"
+                    class="menu-icon-image" alt="">
+                <span>Consistencia de registros</span>
+            </a>
+
+        </nav>
+
+    <button type="button" class="logout-button"
+      (click)="logout()">
+      <img src="/icons/logout.png"
+        class="menu-icon-image" alt="">
+      <span>Cerrar sesión</span>
+    </button>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-header">
+      <div class="admin-card">
+        <div class="admin-avatar">
+          <img src="/icons/admin.png" alt="">
+        </div>
+        <div>
+          <strong>{{ displayName }}</strong>
+          <span>Administrador</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="establishments-header">
+      <div>
+        <h1>Supervisión de evaluaciones</h1>
+        <p>
+          Consulta y supervisa las evaluaciones registradas
+          en los establecimientos de RetiScan.
+        </p>
+      </div>
+    </section>
+
+    <section class="evaluation-summary" aria-label="Indicadores globales">
+
+      <div class="metric-card">
+        <span>Total de evaluaciones</span>
+        <strong>
+          {{ summaryLoading ? '—' : (summary?.total_evaluaciones ?? '—') }}
+        </strong>
+      </div>
+
+      <div class="metric-card">
+        <span>Evaluaciones pendientes</span>
+        <strong>
+          {{ summaryLoading ? '—' : (summary?.evaluaciones_pendientes ?? '—') }}
+        </strong>
+      </div>
+
+      <div class="metric-card">
+        <span>Evaluaciones finalizadas</span>
+        <strong>
+          {{ summaryLoading ? '—' : (summary?.evaluaciones_finalizadas ?? '—') }}
+        </strong>
+      </div>
+
+    </section>
+
+    <p *ngIf="summaryError" class="evaluation-error">
+      {{ summaryError }}
+    </p>
+
+    <form class="evaluation-filters"
+      (ngSubmit)="applyFilters()">
+
+      <div class="filters-heading">
+        <h2>Filtros de supervisión</h2>
+        <span>Consulta global de establecimientos</span>
+      </div>
+
+      <div class="filter-fields">
+
+        <label class="evaluation-field">
+          <span>ID de evaluación</span>
+          <input type="text"
+            name="searchId"
+            inputmode="numeric"
+            [(ngModel)]="searchId"
+            placeholder="Buscar por ID">
+        </label>
+
+        <label class="evaluation-field">
+          <span>Establecimiento</span>
+          <select name="establishment"
+            [(ngModel)]="selectedEstablishment">
+            <option value="">Todos los establecimientos</option>
+            <option *ngFor="let e of establishments"
+              [value]="e.id_establecimiento">
+              {{ e.nombre }}
+            </option>
+          </select>
+        </label>
+
+        <label class="evaluation-field">
+          <span>Estado</span>
+          <select name="status"
+            [(ngModel)]="selectedStatus">
+            <option value="">Todos los estados</option>
+            <option value="PENDIENTE">Pendiente</option>
+            <option value="FINALIZADA">Finalizada</option>
+          </select>
+        </label>
+
+      </div>
+
+      <div class="filter-actions">
+        <button type="button" class="clear-filter-button"
+          (click)="clearFilters()">
+          Limpiar filtros
+        </button>
+
+        <button type="submit" class="apply-filter-button">
+          Aplicar filtros
+        </button>
+      </div>
+
+      <p *ngIf="filterError" class="evaluation-error">
+        {{ filterError }}
+      </p>
+
+    </form>
+
+    <section class="table-container evaluation-table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Establecimiento</th>
+            <th>Fecha</th>
+            <th>Ojo evaluado</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="5" class="empty-state">
+              Cargando evaluaciones...
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading && errorMessage">
+            <td colspan="5" class="empty-state">
+              {{ errorMessage }}
+            </td>
+          </tr>
+
+          <ng-container *ngIf="!loading && !errorMessage">
+
+            <tr *ngFor="let evaluation of evaluations">
+              <td>#{{ evaluation.id_evaluacion }}</td>
+              <td>{{ evaluation.establecimiento }}</td>
+              <td>
+                {{ evaluation.fecha_evaluacion | date:'dd/MM/yyyy' }}
+              </td>
+              <td>{{ evaluation.ojo_evaluado }}</td>
+              <td>
+                <span class="evaluation-status"
+                  [class.finished]="evaluation.estado === 'FINALIZADA'"
+                  [class.pending]="evaluation.estado === 'PENDIENTE'">
+                  {{ evaluation.estado === 'FINALIZADA'
+                     ? 'Finalizada'
+                     : evaluation.estado === 'PENDIENTE'
+                       ? 'Pendiente'
+                       : evaluation.estado }}
+                </span>
+              </td>
+            </tr>
+
+            <tr *ngIf="evaluations.length === 0">
+              <td colspan="5" class="empty-state">
+                No se encontraron evaluaciones.
+              </td>
+            </tr>
+
+          </ng-container>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="table-footer">
+      <span>
+        Mostrando {{ firstShown }}-{{ lastShown }}
+        de {{ total }} evaluaciones
+      </span>
+
+      <div class="pagination">
+        <button type="button"
+          (click)="goToPage(page - 1)"
+          [disabled]="loading || page <= 1">
+          ‹
+        </button>
+
+        <button type="button"
+          *ngFor="let number of visiblePages"
+          (click)="goToPage(number)"
+          [disabled]="loading"
+          [class.active-page]="number === page">
+          {{ number }}
+        </button>
+
+        <button type="button"
+          (click)="goToPage(page + 1)"
+          [disabled]="loading || page >= totalPages">
+          ›
+        </button>
+      </div>
+    </section>
+
+    <p class="global-note" *ngIf="summary">
+      Los indicadores muestran totales globales y no
+      cambian al aplicar filtros.
+      Establecimientos con evaluaciones:
+      {{ summary.establecimientos_con_evaluaciones }}.
+    </p>
+
+  </main>
+</div>

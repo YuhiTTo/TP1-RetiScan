@@ -1,0 +1,635 @@
+<div class="page-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="/icons/retiscan2.png" alt="RetiScan">
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <button class="menu-item" type="button" (click)="goHome()">
+                <img class="menu-icon-image" src="/icons/home.png" alt="">
+                <span>Inicio</span>
+            </button>
+
+            <button class="menu-item active" (click)="goBack()">
+                <img class="menu-icon-image" src="/icons/patients.png" alt="">
+                <span>Pacientes</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToEvaluations()">
+                <img src="/icons/evaluacion.png" class="menu-icon-image" alt="">
+                <span>Evaluaciones</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToReports()">
+                <img class="menu-icon-image" src="/icons/reporte.png" alt="">
+                <span>Reportes</span>
+            </button>
+
+        </nav>
+
+        <button class="logout-button" (click)="logout()">
+            <img class="menu-icon-image" src="/icons/logout.png" alt="">
+            <span>Cerrar sesión</span>
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+        <header class="top-header">
+
+            <button class="back-button" (click)="goBack()">
+                <img src="/icons/back.png" alt="" class="back-icon">
+                Volver al listado
+            </button>
+
+            <div class="establishment-card">
+                <img class="establishment-icon-image" src="/icons/hospital.png" alt="">
+
+                <span class="establishment-name">
+                    {{ displayName }}
+                </span>
+            </div>
+
+        </header>
+
+
+        <!-- CARGANDO -->
+        <div class="status-message" *ngIf="loading">
+            Cargando información del paciente...
+        </div>
+
+
+        <!-- ERROR -->
+        <div class="status-message error" *ngIf="!loading && errorMessage">
+            {{ errorMessage }}
+        </div>
+
+
+        <!-- FICHA -->
+        <div *ngIf="!loading && patient">
+
+            <!-- RESUMEN -->
+            <section class="patient-summary">
+
+                <div class="patient-profile">
+
+                    <div class="avatar">
+                        <img src="/icons/user.png" alt="" class="avatar-icon">
+                    </div>
+
+                    <div>
+                        <h1>
+                            {{ patient.nombres }}
+                            {{ patient.apellidos }}
+                        </h1>
+
+                        <p>
+                            DNI: {{ patient.numero_documento }}
+                        </p>
+
+                        <p>
+                            {{ calculateAge(patient.fecha_nacimiento) }} años -
+                            {{ patient.sexo }}
+                        </p>
+                    </div>
+
+                </div>
+
+                <button class="evaluation-button" (click)="newEvaluation()">
+                    <span class="plus">+</span>
+                    Nueva evaluación
+                </button>
+
+            </section>
+
+
+            <!-- TABS -->
+            <section class="tabs">
+
+                <button class="tab" [class.active]="activeTab === 'information'" (click)="selectTab('information')">
+                    Información
+                </button>
+
+                <button class="tab" [class.active]="activeTab === 'evaluations'" (click)="selectTab('evaluations')">
+                    Evaluaciones
+                </button>
+
+                <button class="tab" [class.active]="activeTab === 'reports'" (click)="selectTab('reports')">
+                    Reportes
+                </button>
+
+            </section>
+
+
+            <div *ngIf="activeTab === 'information'"> <!-- INFORMACIÓN PERSONAL -->
+                <section class="information-section">
+
+                    <div class="section-header">
+
+                        <h2>
+                            <img src="/icons/usersmall.png" alt="" class="section-icon">
+                            Información Personal
+                        </h2>
+
+                        <button class="edit-button" (click)="openEditModal()">
+                            <img src="/icons/lapiz.png" alt="" class="edit-icon">
+                            Editar datos
+                        </button>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="field">
+                            <label>Nombres</label>
+
+                            <input type="text" [value]="patient.nombres" readonly>
+                        </div>
+
+
+                        <div class="field">
+                            <label>Apellidos</label>
+
+                            <input type="text" [value]="patient.apellidos" readonly>
+                        </div>
+
+
+                        <div class="field">
+                            <label>
+                                Documento de identidad (DNI)
+                            </label>
+
+                            <input type="text" [value]="patient.numero_documento" readonly>
+                        </div>
+
+
+                        <div class="field">
+                            <label>
+                                Fecha de nacimiento
+                            </label>
+
+                            <input type="text" [value]="patient.fecha_nacimiento | date:'dd/MM/yyyy'" readonly>
+                        </div>
+
+
+                        <div class="field">
+                            <label>Sexo</label>
+
+                            <input type="text" [value]="patient.sexo" readonly>
+                        </div>
+
+
+                        <div class="field">
+                            <label>Teléfono</label>
+
+                            <input type="text" [value]="patient.telefono || 'No registrado'" readonly>
+                        </div>
+
+
+                        <div class="field">
+                            <label>Correo (opcional)</label>
+
+                            <input type="text" [value]="patient.correo || 'No registrado'" readonly>
+                        </div>
+
+
+                        <div class="field">
+                            <label>Dirección (opcional)</label>
+
+                            <input type="text" [value]="patient.direccion || 'No registrada'" readonly>
+                        </div>
+
+                    </div>
+
+                </section>
+            </div>
+
+            <div class="evaluations-section" *ngIf="activeTab === 'evaluations'">
+
+                <h2 class="evaluations-title">
+                    <img src="/icons/evaluation.png" alt="" class="section-icon">
+                    Evaluaciones realizadas
+                </h2>
+
+                <div class="status-message" *ngIf="evaluationsLoading">
+                    Cargando evaluaciones...
+                </div>
+
+                <div class="status-message error" *ngIf="evaluationsError">
+                    {{ evaluationsError }}
+                </div>
+
+                <div class="empty-evaluations"
+                    *ngIf="!evaluationsLoading && !evaluationsError && evaluations.length === 0">
+                    Este paciente aún no tiene evaluaciones registradas.
+                </div>
+
+
+                <div class="evaluations-table-container" *ngIf="evaluations.length > 0">
+
+                    <table class="evaluations-table">
+
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Ojo</th>
+                                <th>Resultado IA</th>
+                                <th>Médico</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="let evaluation of paginatedEvaluations">
+
+                                <td>
+                                    {{ evaluation.fecha_evaluacion | date:'dd/MM/yyyy' }}
+                                </td>
+
+                                <td>
+                                    {{ evaluation.ojo_evaluado }}
+                                </td>
+
+
+                                <!-- RESULTADO IA -->
+                                <td>
+
+                                    <div class="result-badge"
+                                        [ngClass]="'result-badge--' + getEvaluationResultState(evaluation)"
+                                        [ngSwitch]="getEvaluationResultState(evaluation)">
+
+                                        <span *ngSwitchCase="'pending'">
+                                            Pendiente de análisis
+                                        </span>
+
+                                        <span *ngSwitchCase="'incomplete'">
+                                            Resultados incompletos
+                                        </span>
+
+                                        <span *ngSwitchCase="'clear'">
+                                            Sin indicios de las patologías evaluadas
+                                        </span>
+
+                                        <ng-container *ngSwitchDefault>
+                                            <span>
+                                                RD: {{ evaluation.retinopatia_diabetica?.resultado }}
+                                                ({{ formatHistoryConfidence(evaluation.retinopatia_diabetica?.confianza)
+                                                }})
+                                            </span>
+                                            <span>
+                                                Glaucoma: {{ evaluation.glaucoma?.resultado }}
+                                                ({{ formatHistoryConfidence(evaluation.glaucoma?.confianza) }})
+                                            </span>
+                                        </ng-container>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- MÉDICO -->
+                                <td>
+                                    Dr. {{ evaluation.medico_responsable }}
+                                </td>
+
+
+                                <!-- ACCIÓN -->
+                                <td>
+
+                                    <button *ngIf="evaluation.estado === 'FINALIZADA'" type="button"
+                                        class="evaluation-view-button"
+                                        (click)="viewEvaluation(evaluation.id_evaluacion)">
+                                        Ver
+                                    </button>
+
+                                    <button *ngIf="evaluation.estado === 'PENDIENTE'" type="button"
+                                        class="evaluation-view-button" [disabled]="continuingEvaluationId !== null"
+                                        (click)="continueEvaluation(evaluation)">
+                                        {{
+                                        continuingEvaluationId === evaluation.id_evaluacion
+                                        ? 'Cargando...'
+                                        : 'Continuar'
+                                        }}
+                                    </button>
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="list-pagination-footer" *ngIf="!evaluationsLoading &&
+                            evaluations.length > 0">
+
+                    <span>
+                        Mostrando {{ evaluationShownStart }}-{{ evaluationShownEnd }}
+                        de {{ evaluations.length }} evaluaciones
+                    </span>
+
+                    <nav class="list-pagination" aria-label="Paginación de evaluaciones">
+
+                        <button type="button" aria-label="Página anterior de evaluaciones"
+                            [disabled]="evaluationPage === 1" (click)="changeEvaluationPage(evaluationPage - 1)">
+                            ‹
+                        </button>
+
+                        <button type="button" *ngFor="let page of evaluationPageNumbers"
+                            [class.page-active]="page === evaluationPage"
+                            [attr.aria-current]="page === evaluationPage ? 'page' : null"
+                            (click)="changeEvaluationPage(page)">
+                            {{ page }}
+                        </button>
+
+                        <button type="button" aria-label="Página siguiente de evaluaciones"
+                            [disabled]="evaluationPage === totalEvaluationPages"
+                            (click)="changeEvaluationPage(evaluationPage + 1)">
+                            ›
+                        </button>
+                    </nav>
+                </div>
+
+            </div>
+
+
+            <!-- US-20: REPORTES DEL PACIENTE -->
+            <section class="reports-section" *ngIf="activeTab === 'reports'">
+
+                <h2 class="reports-title">
+                    <img src="/icons/reporte.png" alt="" class="section-icon">
+                    Reportes médicos
+                </h2>
+
+                <div class="status-message" *ngIf="reportsLoading">
+                    Cargando reportes...
+                </div>
+
+                <div class="status-message error" role="alert" *ngIf="reportsError">
+                    {{ reportsError }}
+                </div>
+
+                <div class="empty-evaluations" *ngIf="!reportsLoading &&
+                            !reportsError &&
+                            patientReports.length === 0">
+                    Este paciente todavía no tiene
+                    evaluaciones finalizadas para generar reportes.
+                </div>
+
+                <div class="reports-table-container" *ngIf="!reportsLoading &&
+                            patientReports.length > 0">
+
+                    <table class="reports-table">
+
+                        <thead>
+                            <tr>
+                                <th>Fecha de evaluación</th>
+                                <th>Ojo</th>
+                                <th>Fecha de generación</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let report of paginatedReports">
+
+                                <td>
+                                    {{ report.fecha_evaluacion |
+                                    date:'dd/MM/yyyy' }}
+                                </td>
+
+                                <td>
+                                    {{ report.ojo_evaluado }}
+                                </td>
+
+                                <td>
+                                    {{ report.fecha_generacion
+                                    ? (report.fecha_generacion |
+                                    date:'dd/MM/yyyy HH:mm')
+                                    : '—' }}
+                                </td>
+
+                                <td>
+                                    <div class="report-actions">
+
+                                        <button *ngIf="!report.tiene_reporte" type="button"
+                                            class="report-button report-generate"
+                                            [disabled]="reportGeneratingId !== null"
+                                            (click)="generateReport(report.id_evaluacion)">
+                                            {{ reportGeneratingId === report.id_evaluacion
+                                            ? 'Generando...'
+                                            : 'Generar PDF' }}
+                                        </button>
+
+                                        <button *ngIf="report.tiene_reporte" type="button"
+                                            class="report-button report-view" [disabled]="reportViewingId !== null"
+                                            (click)="viewReport(report.id_evaluacion)">
+                                            {{ reportViewingId === report.id_evaluacion
+                                            ? 'Abriendo...'
+                                            : 'Ver PDF' }}
+                                        </button>
+
+                                        <button *ngIf="report.tiene_reporte" type="button"
+                                            class="report-button report-download"
+                                            [disabled]="reportDownloadingId !== null"
+                                            (click)="downloadReport(report.id_evaluacion)">
+                                            {{ reportDownloadingId === report.id_evaluacion
+                                            ? 'Descargando...'
+                                            : 'Descargar PDF' }}
+                                        </button>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div class="list-pagination-footer" *ngIf="!reportsLoading &&
+                            patientReports.length > 0">
+
+                    <span>
+                        Mostrando {{ reportShownStart }}-{{ reportShownEnd }}
+                        de {{ patientReports.length }} reportes
+                    </span>
+
+                    <nav class="list-pagination" aria-label="Paginación de reportes">
+
+                        <button type="button" aria-label="Página anterior de reportes" [disabled]="reportPage === 1"
+                            (click)="changeReportPage(reportPage - 1)">
+                            ‹
+                        </button>
+
+                        <button type="button" *ngFor="let page of reportPageNumbers"
+                            [class.page-active]="page === reportPage"
+                            [attr.aria-current]="page === reportPage ? 'page' : null" (click)="changeReportPage(page)">
+                            {{ page }}
+                        </button>
+
+                        <button type="button" aria-label="Página siguiente de reportes"
+                            [disabled]="reportPage === totalReportPages" (click)="changeReportPage(reportPage + 1)">
+                            ›
+                        </button>
+                    </nav>
+                </div>
+
+                <p class="report-success" role="status" *ngIf="reportActionMessage && !reportsError">
+                    {{ reportActionMessage }}
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- US-20: VISTA PREVIA DEL PDF -->
+<div class="modal-backdrop report-preview-backdrop" *ngIf="reportPreviewOpen">
+
+    <div class="report-preview-modal" role="dialog" aria-modal="true" aria-label="Vista previa del reporte médico">
+
+        <div class="report-preview-header">
+
+            <h2>Vista previa del reporte médico</h2>
+
+            <button type="button" class="report-preview-close" aria-label="Cerrar vista previa"
+                (click)="closeReportPreview()">
+                ×
+            </button>
+
+        </div>
+
+        <iframe *ngIf="reportPreviewUrl" class="report-preview-frame" [src]="reportPreviewUrl"
+            title="Documento PDF del reporte médico">
+        </iframe>
+
+    </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showEditModal">
+
+    <div class="edit-modal">
+
+        <div class="modal-header">
+            <h2>Editar paciente</h2>
+
+            <button type="button" class="close-button" (click)="closeEditModal()">
+                ×
+            </button>
+        </div>
+
+
+        <div class="modal-grid">
+
+            <div class="modal-field">
+                <label>
+                    Nombres del paciente<span>*</span>
+                </label>
+
+                <input type="text" [(ngModel)]="editData.nombres">
+            </div>
+
+
+            <div class="modal-field">
+                <label>
+                    Apellidos del paciente<span>*</span>
+                </label>
+
+                <input type="text" [(ngModel)]="editData.apellidos">
+            </div>
+
+
+            <div class="modal-field">
+                <label>
+                    Documento de identidad (DNI)<span>*</span>
+                </label>
+
+                <input type="text" [(ngModel)]="editData.numero_documento">
+            </div>
+
+
+            <div class="modal-field">
+                <label>
+                    Fecha de nacimiento<span>*</span>
+                </label>
+
+                <input type="date" [(ngModel)]="editData.fecha_nacimiento">
+            </div>
+
+
+            <div class="modal-field">
+                <label>
+                    Sexo<span>*</span>
+                </label>
+
+                <select [(ngModel)]="editData.sexo">
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+            </div>
+
+
+            <div class="modal-field">
+                <label>
+                    Teléfono
+                </label>
+
+                <input type="text" [(ngModel)]="editData.telefono">
+            </div>
+
+
+            <div class="modal-field">
+                <label>
+                    Correo (opcional)
+                </label>
+
+                <input type="email" [(ngModel)]="editData.correo">
+            </div>
+
+
+            <div class="modal-field">
+                <label>
+                    Dirección (opcional)
+                </label>
+
+                <input type="text" [(ngModel)]="editData.direccion">
+            </div>
+
+        </div>
+
+
+        <p class="modal-error" *ngIf="updateError">
+            {{ updateError }}
+        </p>
+
+
+        <div class="modal-actions">
+
+            <button type="button" class="cancel-button" (click)="closeEditModal()">
+                Cancelar
+            </button>
+
+            <button type="button" class="update-button" [disabled]="updating" (click)="updatePatient()">
+                {{ updating ? 'Actualizando...' : 'Actualizar' }}
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

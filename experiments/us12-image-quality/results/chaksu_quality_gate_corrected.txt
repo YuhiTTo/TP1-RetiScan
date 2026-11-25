@@ -1,0 +1,68 @@
+Procesadas: 100
+Procesadas: 200
+Procesadas: 300
+Procesadas: 400
+Procesadas: 500
+Procesadas: 600
+Procesadas: 700
+Procesadas: 800
+Procesadas: 900
+Procesadas: 1000
+Procesadas: 1100
+Procesadas: 1200
+Procesadas: 1300
+
+=== CHAKSU — QUALITY GATE CORREGIDO ===
+Total: 1345
+Errores: 0
+
+SUFICIENTE: 1066/1345 (79.26%)
+INSUFICIENTE: 279/1345 (20.74%)
+
+=== FALLOS POR CRITERIO ===
+clarity: 83/1345 (6.17%)
+illumination: 187/1345 (13.90%)
+contrast: 76/1345 (5.65%)
+fov: 0/1345 (0.00%)
+
+=== POR CÁMARA ===
+
+Bosch
+  SUFICIENTE: 145/145 (100.00%)
+  INSUFICIENTE: 0/145 (0.00%)
+
+Forus
+  SUFICIENTE: 85/126 (67.46%)
+  INSUFICIENTE: 41/126 (32.54%)
+
+Remidio
+  SUFICIENTE: 836/1074 (77.84%)
+  INSUFICIENTE: 238/1074 (22.16%)
+
+=== POR SPLIT + CÁMARA ===
+
+Test / Bosch
+  SUFICIENTE: 41/41 (100.00%)
+  INSUFICIENTE: 0/41 (0.00%)
+
+Test / Forus
+  SUFICIENTE: 18/31 (58.06%)
+  INSUFICIENTE: 13/31 (41.94%)
+
+Test / Remidio
+  SUFICIENTE: 215/264 (81.44%)
+  INSUFICIENTE: 49/264 (18.56%)
+
+Train / Bosch
+  SUFICIENTE: 104/104 (100.00%)
+  INSUFICIENTE: 0/104 (0.00%)
+
+Train / Forus
+  SUFICIENTE: 67/95 (70.53%)
+  INSUFICIENTE: 28/95 (29.47%)
+
+Train / Remidio
+  SUFICIENTE: 621/810 (76.67%)
+  INSUFICIENTE: 189/810 (23.33%)
+
+Resultado: experiments/us12-image-quality/results/chaksu_quality_gate_corrected.csv

@@ -1,0 +1,241 @@
+<div class="page-container admin-home-page">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-logo">
+      <img src="/icons/retiscan2.png" alt="RetiScan">
+    </div>
+
+    <nav class="sidebar-menu"
+         aria-label="Navegacion administrativa">
+
+      <a class="menu-item"
+         routerLink="/admin/home"
+         routerLinkActive="active">
+        <img src="/icons/home.png"
+             class="menu-icon-image" alt="">
+        <span>Inicio</span>
+      </a>
+
+      <a class="menu-item"
+         routerLink="/admin/establishments"
+         routerLinkActive="active">
+        <img src="/icons/hospital.png"
+             class="menu-icon-image" alt="">
+        <span>Establecimientos</span>
+      </a>
+
+      <a class="menu-item"
+         routerLink="/admin/evaluations"
+         routerLinkActive="active">
+        <img src="/icons/evaluation.png"
+             class="menu-icon-image" alt="">
+        <span>Supervisión de evaluaciones</span>
+      </a>
+
+      <a class="menu-item"
+         routerLink="/admin/consistency"
+         routerLinkActive="active">
+        <img src="/icons/reporte.png"
+             class="menu-icon-image" alt="">
+        <span>Consistencia de registros</span>
+      </a>
+
+    </nav>
+
+    <button type="button"
+            class="logout-button"
+            (click)="logout()">
+      <img src="/icons/logout.png"
+           class="menu-icon-image" alt="">
+      <span>Cerrar sesión</span>
+    </button>
+
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-header">
+      <div class="admin-card">
+        <div class="admin-avatar">
+          <img src="/icons/admin.png" alt="">
+        </div>
+        <div>
+          <strong>{{ displayName }}</strong>
+          <span>Administrador</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="establishments-header home-header">
+      <div>
+        <h1>Inicio administrativo</h1>
+        <p>
+          Resumen de actividad de los establecimientos
+          registrados en RetiScan.
+        </p>
+      </div>
+    </section>
+
+    <section class="home-summary"
+             aria-label="Indicadores administrativos">
+
+      <article class="home-metric-card">
+        <span class="home-metric-label">
+          Establecimientos registrados
+        </span>
+
+        <strong class="home-metric-value">
+          {{ loading ? '—' : (summary?.total_establecimientos ?? '—') }}
+        </strong>
+
+        <span class="home-metric-description">
+          Total de establecimientos en RetiScan
+        </span>
+      </article>
+
+      <article class="home-metric-card">
+        <span class="home-metric-label">
+          Establecimientos con evaluaciones recientes
+        </span>
+
+        <strong class="home-metric-value">
+          {{ loading ? '—' : (summary?.establecimientos_con_actividad_reciente ?? '—') }}
+        </strong>
+
+        <span class="home-metric-description">
+          Últimos 7 días
+        </span>
+      </article>
+
+    </section>
+
+    <section class="home-activity"
+             aria-labelledby="home-activity-heading">
+
+      <div class="home-activity-heading">
+        <div>
+          <h2 id="home-activity-heading">
+            Actividad por establecimiento
+          </h2>
+          <p>
+            Consulta las evaluaciones registradas por establecimiento
+            durante los últimos 7 días y la fecha de su evaluación
+            más reciente.
+          </p>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage"
+           class="home-error"
+           role="alert">
+
+        <p>{{ errorMessage }}</p>
+
+        <button type="button"
+                class="home-retry-button"
+                (click)="loadSummary()">
+          Reintentar
+        </button>
+
+      </div>
+
+      <div class="table-container home-table"
+           *ngIf="!errorMessage">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th scope="col">Establecimiento</th>
+              <th scope="col">Evaluaciones (7 días)</th>
+              <th scope="col">Última evaluación</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngIf="loading">
+              <td colspan="3" class="empty-state">
+                Cargando actividad de los establecimientos...
+              </td>
+            </tr>
+
+            <tr *ngIf="!loading && summary?.actividad_establecimientos?.length === 0">
+              <td colspan="3" class="empty-state">
+                No hay establecimientos registrados.
+              </td>
+            </tr>
+
+            <tr *ngFor="let item of pagedActivity">
+
+              <td>
+                {{ item.establecimiento }}
+              </td>
+
+              <td>
+                {{ item.evaluaciones_ultimos_7_dias }}
+              </td>
+
+              <td>
+                {{ item.ultima_evaluacion
+                    ? (item.ultima_evaluacion | date:'dd/MM/yyyy')
+                    : 'Sin evaluaciones' }}
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <section class="table-footer home-table-footer"
+               *ngIf="!errorMessage"
+               aria-label="Paginación de establecimientos">
+
+        <span *ngIf="loading">
+          Cargando establecimientos...
+        </span>
+
+        <span *ngIf="!loading">
+          Mostrando {{ firstShown }}-{{ lastShown }}
+          de {{ total }} establecimientos
+        </span>
+
+        <div class="pagination">
+
+          <button type="button"
+                  aria-label="Página anterior"
+                  (click)="goToPage(page - 1)"
+                  [disabled]="loading || page <= 1">
+            ‹
+          </button>
+
+          <button type="button"
+                  *ngFor="let number of visiblePages"
+                  (click)="goToPage(number)"
+                  [disabled]="loading"
+                  [class.active-page]="number === page"
+                  [attr.aria-label]="'Página ' + number"
+                  [attr.aria-current]="number === page ? 'page' : null">
+            {{ number }}
+          </button>
+
+          <button type="button"
+                  aria-label="Página siguiente"
+                  (click)="goToPage(page + 1)"
+                  [disabled]="loading || page >= totalPages">
+            ›
+          </button>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+</div>

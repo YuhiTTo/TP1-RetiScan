@@ -1,0 +1,817 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   CONTENEDOR PRINCIPAL
+========================= */
+
+.page-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f1f3f6;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 230px;
+    min-height: 100vh;
+    background: #2f507f;
+
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-logo {
+    height: 135px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-logo img {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 10px;
+}
+
+.menu-item {
+    width: 100%;
+    height: 50px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+    color: #dbe5f1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 16px;
+
+    font-size: 17px;
+
+    cursor: pointer;
+    text-align: left;
+}
+
+.menu-item.active {
+    background: #1e67c6;
+    color: white;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.menu-icon-image {
+    width: 23px;
+    height: 23px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+
+.logout-button {
+    margin-top: auto;
+
+    height: 65px;
+
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+
+    background: transparent;
+    color: #dbe5f1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 25px;
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+/* =========================
+   CONTENIDO
+========================= */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 18px 30px 30px;
+    background: #f1f3f6;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.establishment-card {
+    min-width: 190px;
+    height: 60px;
+
+    background: white;
+
+    border: 1px solid #cbd3dd;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    padding: 0 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.establishment-icon-image {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.page-intro {
+    margin: 0 0 17px;
+}
+
+.back-button {
+    border: none;
+    background: transparent;
+
+    color: #1767c6;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0;
+
+    line-height: 1;
+}
+
+.back-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+
+    filter: brightness(0) invert(36%) sepia(97%) saturate(1326%) hue-rotate(187deg) brightness(70%) contrast(91%);
+}
+
+.page-header {
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 31px;
+    font-weight: 700;
+}
+
+.page-header p {
+    margin: 3px 0 0;
+    color: #596474;
+    font-size: 14px;
+}
+
+
+/* =========================
+   INFORMACIÓN DE EVALUACIÓN
+========================= */
+
+.evaluation-summary {
+    display: grid;
+    grid-template-columns:
+        minmax(300px, 1.35fr) minmax(145px, 1fr) minmax(125px, 0.9fr) minmax(145px, 1fr);
+
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.patient-card {
+    min-height: 80px;
+    padding: 10px 14px;
+
+    background: #dce8f5;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-width: 0;
+}
+
+.patient-avatar img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+
+.patient-data h2 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    color: #172033;
+}
+
+.patient-data p {
+    margin: 3px 0;
+    font-size: 12px;
+    color: #303846;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.summary-item strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #68778a;
+    margin-bottom: 3px;
+}
+
+.summary-item span:not(.summary-icon) {
+    display: block;
+    font-size: 12px;
+    color: #172033;
+}
+
+
+/* =========================
+   PANELES PRINCIPALES
+========================= */
+
+.retinography-content {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 6px;
+    align-items: stretch;
+}
+
+.upload-card,
+.preview-card {
+    min-width: 0;
+    height: 380px;
+    padding: 8px;
+
+    border: 1px solid #b9c6d4;
+    border-radius: 7px;
+
+    background: transparent;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-card h2,
+.preview-card h2 {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin: 0 0 7px;
+
+    color: #1767c6;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.section-icon {
+    font-size: 18px;
+}
+
+
+/* =========================
+   ZONA DE CARGA
+========================= */
+
+.upload-zone {
+    flex: 1;
+    min-height: 320px;
+    height: auto;
+
+    border: 1px solid #6ca7ed;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+    padding: 10px;
+}
+
+.upload-icon {
+    color: #1767c6;
+    font-size: 36px;
+    line-height: 1;
+}
+
+.upload-zone h3 {
+    margin: 0;
+    color: #202838;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.or-text {
+    font-size: 9px;
+    color: #333;
+}
+
+.select-file-button {
+    min-width: 148px;
+    height: 35px;
+
+    padding: 0 16px;
+
+    border-radius: 5px;
+    background: #246dcc;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.select-file-button:hover {
+    background: #195bb1;
+}
+
+.upload-zone p {
+    margin: 0;
+    font-size: 9px;
+    color: #303846;
+}
+
+
+/* =========================
+   PREVISUALIZACIÓN
+========================= */
+
+.preview-empty {
+    flex: 1;
+    min-height: 320px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: #748196;
+}
+
+.preview-empty span {
+    font-size: 35px;
+}
+
+.preview-empty p {
+    font-size: 13px;
+    text-align: center;
+}
+
+.preview-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.retinography-preview {
+    width: 100%;
+    height: 250px;
+
+    object-fit: contain;
+    background: #000;
+
+    border-radius: 12px;
+}
+
+.selected-status {
+    margin-top: 5px;
+    padding: 5px 8px;
+
+    background: #bdf2d2;
+    color: #18864b;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.file-information {
+    margin-top: 25px;
+}
+
+.file-information>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 8px;
+    padding: 2px 2px;
+
+    font-size: 12px;
+}
+
+.file-information strong {
+    color: #202838;
+    font-weight: 600;
+}
+
+.file-information span {
+    color: #303846;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.file-error {
+    margin-top: 8px;
+    color: #d32f2f;
+    font-size: 11px;
+}
+
+
+/* =========================
+   REQUISITOS
+========================= */
+
+.requirements-card {
+    width: 52%;
+    min-height: 62px;
+
+    margin-top: 14px;
+    padding: 8px;
+
+    background: #dce8f5;
+    border-radius: 8px;
+}
+
+.requirements-card h3 {
+    margin: 0 0 5px;
+
+    font-size: 13px;
+    color: #202838;
+}
+
+.requirements-card ul {
+    margin: 0;
+    padding-left: 20px;
+
+    font-size: 12px;
+    color: #303846;
+}
+
+.requirements-card li {
+    margin: 2px 0;
+}
+
+
+/* =========================
+   BOTONES INFERIORES
+========================= */
+
+.page-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 48px;
+    margin-top: 22px;
+}
+
+.cancel-button,
+.upload-button {
+    height: 35px;
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.cancel-button {
+    width: 106px;
+
+    border: 1px solid #6eb4ef;
+    background: #eef8ff;
+    color: #1767c6;
+}
+
+.upload-button {
+    width: 220px;
+
+    border: none;
+    background: #246dcc;
+    color: white;
+}
+
+.upload-button:disabled {
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   MENSAJES
+========================= */
+
+.status-message {
+    padding: 35px;
+    text-align: center;
+    color: #687386;
+}
+
+.status-message.error {
+    color: #c62828;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 950px) {
+
+    .main-content {
+        padding: 12px 8px;
+    }
+
+    .evaluation-summary {
+        grid-template-columns: 1.3fr 1fr 0.9fr 1fr;
+        gap: 6px;
+    }
+
+    .patient-data h2 {
+        font-size: 11px;
+    }
+
+    .summary-item {
+        gap: 4px;
+    }
+
+    .page-actions {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 760px) {
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-logo img {
+        width: 58px;
+        height: 58px;
+    }
+
+    .menu-item {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .menu-item span,
+    .logout-button span {
+        display: none;
+    }
+
+    .logout-button {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .evaluation-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .patient-card {
+        grid-column: span 2;
+    }
+
+    .retinography-content {
+        grid-template-columns: 1fr;
+    }
+
+    .requirements-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .page-actions {
+        gap: 10px;
+    }
+
+    .upload-button {
+        flex: 1;
+    }
+
+    .evaluation-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.summary-icon-image {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.section-icon-image {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+
+    filter: brightness(0) invert(36%) sepia(97%) saturate(1326%) hue-rotate(187deg) brightness(60%) contrast(91%);
+}
+
+.check-image {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(37%) sepia(51%) saturate(719%) hue-rotate(102deg) brightness(92%) contrast(91%);
+
+}
+
+.upload-icon-image {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+
+    filter: brightness(0) invert(36%) sepia(97%) saturate(1326%) hue-rotate(187deg) brightness(70%) contrast(91%);
+}
+
+
+/* ESTADOS DE CARGA */
+
+.upload-feedback {
+    margin-top: 0px;
+    padding: 12px 16px;
+
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.upload-feedback.loading {
+    background: #eaf3ff;
+    border: 1px solid #b8d4f5;
+    color: #246dcc;
+}
+
+.upload-feedback.success {
+    background: #e8f7ed;
+    border: 1px solid #a9dfba;
+    color: #18864b;
+}
+
+.check-image {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+}
+
+/* Indicador de carga */
+
+.loading-spinner {
+    width: 19px;
+    height: 19px;
+
+    border: 2px solid #b8d4f5;
+    border-top-color: #246dcc;
+
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.upload-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* DISTRIBUCIÓN DE LAS DOS COLUMNAS */
+.upload-column,
+.preview-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+/* REQUISITOS DE LA IMAGEN */
+.requirements-card {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+
+/* ========================================
+   BOTÓN DE ANÁLISIS DE RETINOGRAFÍA
+======================================== */
+
+.upload-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Animación dentro del botón */
+.upload-button .loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+/* Mensajes de error del análisis */
+.upload-feedback.error {
+    background: #fdecec;
+    border: 1px solid #e9aaaa;
+    color: #b42318;
+}
+
+/* Evita interacciones durante el proceso */
+.upload-button:disabled {
+    cursor: not-allowed;
+}

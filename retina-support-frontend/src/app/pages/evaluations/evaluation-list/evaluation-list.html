@@ -1,0 +1,267 @@
+<div class="page-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="/icons/retiscan2.png" alt="RetiScan">
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <button class="menu-item" type="button" (click)="goToHome()">
+                <img class="menu-icon-image" src="/icons/home.png" alt="">
+                <span>Inicio</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToPatients()">
+                <img class="menu-icon-image" src="/icons/patients.png" alt="">
+                <span>Pacientes</span>
+            </button>
+
+            <button class="menu-item active" type="button" aria-current="page">
+                <img class="menu-icon-image" src="/icons/evaluacion.png" alt="">
+                <span>Evaluaciones</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToReports()">
+                <img class="menu-icon-image" src="/icons/reporte.png" alt="">
+                <span>Reportes</span>
+            </button>
+
+        </nav>
+
+        <button class="logout-button" type="button" (click)="logout()">
+            <img class="menu-icon-image" src="/icons/logout.png" alt="">
+            <span>Cerrar sesión</span>
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- ESTABLECIMIENTO -->
+        <header class="top-header">
+
+            <div class="establishment-card">
+
+                <img class="establishment-icon-image" src="/icons/hospital.png" alt="">
+
+                <span class="establishment-name">
+                    {{ displayName }}
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- TÍTULO -->
+        <section class="evaluations-header">
+
+            <div>
+
+                <h1>Evaluaciones</h1>
+
+                <p>
+                    Consulta y gestiona las evaluaciones retinianas
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- BÚSQUEDA Y FILTROS -->
+        <section class="search-section">
+
+            <div class="search-box">
+
+                <img class="search-icon-image" src="/icons/search.png" alt="">
+
+                <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onFilterChange()"
+                    placeholder="Buscar por paciente, ojo o evaluación">
+
+            </div>
+
+            <select class="filter-select" [(ngModel)]="statusFilter" (ngModelChange)="onFilterChange()">
+
+                <option value="TODOS">Estado: Todos</option>
+
+                <option value="PENDIENTE">
+                    Estado: Pendiente
+                </option>
+
+                <option value="FINALIZADA">
+                    Estado: Finalizada
+                </option>
+
+            </select>
+
+        </section>
+
+
+        <!-- TABLA DE EVALUACIONES -->
+        <section class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Fecha</th>
+                        <th>Ojo</th>
+                        <th>Médico</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <!-- CARGANDO -->
+                    <tr *ngIf="loading">
+
+                        <td colspan="6" class="empty-state">
+                            Cargando evaluaciones...
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ERROR -->
+                    <tr *ngIf="!loading && errorMessage">
+
+                        <td colspan="6" class="empty-state">
+                            {{ errorMessage }}
+                        </td>
+
+                    </tr>
+
+
+                    <!-- REGISTROS -->
+                    <tr *ngFor="let evaluation of paginatedEvaluations">
+
+                        <td>
+                            {{ evaluation.nombres_paciente }}
+                            {{ evaluation.apellidos_paciente }}
+                        </td>
+
+                        <td>
+                            {{ evaluation.fecha_evaluacion | date:'dd/MM/yyyy' }}
+                        </td>
+
+                        <td>
+                            {{ evaluation.ojo_evaluado }}
+                        </td>
+
+                        <td>
+                            {{ evaluation.medico_responsable }}
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge" [ngClass]="getStatusClass(evaluation.estado)">
+
+                                {{ getStatusLabel(evaluation.estado) }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button *ngIf="evaluation.estado.toUpperCase() === 'PENDIENTE'; else viewAction"
+                                type="button" class="view-button"
+                                (click)="continueEvaluation(evaluation.id_evaluacion)">
+
+                                Continuar
+
+                            </button>
+
+                            <ng-template #viewAction>
+
+                                <button type="button" class="view-button"
+                                    (click)="viewEvaluation(evaluation.id_evaluacion)">
+
+                                    Ver
+
+                                </button>
+
+                            </ng-template>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- SIN RESULTADOS -->
+                    <tr *ngIf="
+                            !loading &&
+                            !errorMessage &&
+                            filteredEvaluations.length === 0
+                        ">
+
+                        <td colspan="6" class="empty-state">
+
+                            No se encontraron evaluaciones.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- PIE Y PAGINACIÓN -->
+        <section class="table-footer" *ngIf="!loading && !errorMessage">
+
+            <span>
+
+                Mostrando {{ shownStart }} - {{ shownEnd }}
+                de {{ filteredEvaluations.length }} evaluaciones
+
+            </span>
+
+
+            <nav class="pagination" *ngIf="filteredEvaluations.length > 0" aria-label="Paginación de evaluaciones">
+
+                <button type="button" aria-label="Página anterior" [disabled]="currentPage === 1"
+                    (click)="changePage(currentPage - 1)">
+
+                    ‹
+
+                </button>
+
+
+                <button type="button" *ngFor="let page of pageNumbers" [class.page-active]="page === currentPage"
+                    [attr.aria-current]="page === currentPage ? 'page' : null" (click)="changePage(page)">
+
+                    {{ page }}
+
+                </button>
+
+
+                <button type="button" aria-label="Página siguiente" [disabled]="currentPage === totalPages"
+                    (click)="changePage(currentPage + 1)">
+
+                    ›
+
+                </button>
+
+            </nav>
+
+        </section>
+
+    </main>
+
+</div>

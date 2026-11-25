@@ -1,0 +1,385 @@
+<div class="page-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="/icons/retiscan2.png" alt="RetiScan">
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <button class="menu-item" type="button" (click)="goHome()">
+                <img class="menu-icon-image" src="/icons/home.png" alt="">
+                <span>Inicio</span>
+            </button>
+
+            <button class="menu-item active" (click)="goBack()">
+                <img class="menu-icon-image" src="/icons/patients.png" alt="">
+                <span>Pacientes</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToEvaluations()">
+                <img src="/icons/evaluacion.png" class="menu-icon-image" alt="">
+                <span>Evaluaciones</span>
+            </button>
+
+            <button class="menu-item" type="button" (click)="goToReports()">
+                <img class="menu-icon-image" src="/icons/reporte.png" alt="">
+                <span>Reportes</span>
+            </button>
+
+        </nav>
+
+        <button class="logout-button" (click)="logout()">
+            <img class="menu-icon-image" src="/icons/logout.png" alt="">
+            <span>Cerrar sesión</span>
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+
+        <!-- CABECERA -->
+        <header class="top-header">
+
+            <button type="button" class="back-button" (click)="goBack()">
+
+                <img src="/icons/back.png" alt="" class="back-icon">
+
+                Volver a la ficha del paciente
+
+            </button>
+
+            <div class="establishment-card">
+
+                <img src="/icons/hospital.png" class="establishment-icon-image" alt="">
+
+                <span class="establishment-name">
+                    {{ displayName }}
+                </span>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- CARGANDO -->
+        <div class="status-message" *ngIf="loading">
+            Cargando información de la evaluación...
+        </div>
+
+
+        <!-- ERROR -->
+        <div class="status-message error" *ngIf="!loading && errorMessage">
+
+            {{ errorMessage }}
+
+        </div>
+
+
+        <!-- CONTENIDO DE LA EVALUACIÓN -->
+        <ng-container *ngIf="!loading && !errorMessage && evaluation">
+
+            <!-- TÍTULO -->
+            <div class="page-header">
+
+                <h1>Cargar retinografía</h1>
+
+                <p>
+                    Adjunta la imagen del fondo de ojo para esta evaluación
+                </p>
+
+            </div>
+
+
+            <!-- INFORMACIÓN DE LA EVALUACIÓN -->
+            <section class="evaluation-summary">
+
+                <!-- PACIENTE -->
+                <div class="patient-card">
+
+                    <div class="patient-avatar">
+
+                        <img src="/icons/user.png" alt="Paciente">
+
+                    </div>
+
+                    <div class="patient-data">
+
+                        <h2>
+                            {{ evaluation.nombres_paciente }}
+                            {{ evaluation.apellidos_paciente }}
+                        </h2>
+
+                        <p>
+                            DNI: {{ evaluation.numero_documento }}
+                        </p>
+
+                        <p>
+                            {{ calculateAge(evaluation.fecha_nacimiento) }}
+                            años -
+                            {{ evaluation.sexo }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FECHA -->
+                <div class="summary-item">
+
+                    <img class="summary-icon-image" src="/icons/calendario.png" alt="">
+
+                    <div>
+
+                        <strong>Fecha de evaluación</strong>
+
+                        <span>
+                            {{ evaluation.fecha_evaluacion | date:'dd/MM/yyyy' }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OJO -->
+                <div class="summary-item">
+
+                    <img class="summary-icon-image" src="/icons/ojo-abierto.png" alt="">
+
+                    <div>
+
+                        <strong>Ojo evaluado</strong>
+
+                        <span>
+                            {{
+                            evaluation.ojo_evaluado === 'OD'
+                            ? 'OD - Derecho'
+                            : 'OI - Izquierdo'
+                            }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MÉDICO -->
+                <div class="summary-item">
+
+                    <img class="summary-icon-image" src="/icons/usersmall.png" alt="">
+
+                    <div>
+
+                        <strong>Médico</strong>
+
+                        <span>
+                            Dr. {{ evaluation.medico_responsable }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ZONA DE CARGA Y PREVISUALIZACIÓN -->
+            <section class="retinography-content">
+
+                <!-- COLUMNA IZQUIERDA -->
+                <div class="upload-column">
+
+                    <!-- PANEL DE CARGA -->
+                    <div class="upload-card">
+
+                        <h2>
+                            <img class="section-icon-image" src="/icons/imagen.png" alt="">
+                            Retinografía
+                        </h2>
+
+                        <div class="upload-zone">
+
+                            <img class="upload-icon-image" src="/icons/subir-a-la-nube.png" alt="">
+
+                            <h3>
+                                Arrastra y suelta la imagen aquí
+                            </h3>
+
+                            <span class="or-text">o</span>
+
+                            <label class="select-file-button" for="retinographyFile">
+                                Seleccionar archivo
+                            </label>
+
+                            <input id="retinographyFile" type="file" accept=".jpg,.jpeg,.png" hidden
+                                [disabled]="loadingStoredRetinography" (change)="onFileSelected($event)">
+
+                        </div>
+
+                    </div>
+
+                    <!-- REQUISITOS DE LA IMAGEN -->
+                    <section class="requirements-card">
+
+                        <h3>
+                            <img class="section-icon-image" src="/icons/informacion.png" alt="">
+                            Requisitos de la imagen
+                        </h3>
+
+                        <ul>
+                            <li>
+                                Fondo de ojo (retinografía) nítida y completa
+                            </li>
+
+                            <li>
+                                Formatos admitidos: JPG, JPEG o PNG
+                            </li>
+
+                            <li>
+                                Tamaño máximo del archivo: 10 MB
+                            </li>
+                        </ul>
+
+                    </section>
+
+                </div>
+
+
+                <!-- COLUMNA DERECHA -->
+                <div class="preview-column">
+
+                    <!-- PANEL DE PREVISUALIZACIÓN -->
+                    <div class="preview-card">
+
+                        <h2>
+                            <img class="section-icon-image" src="/icons/ojo-abierto.png" alt="">
+                            Previsualización
+                        </h2>
+
+                        <!-- SIN IMAGEN -->
+                        <div class="preview-empty" *ngIf="!previewUrl">
+                            <p>
+                                Selecciona una retinografía para previsualizarla
+                            </p>
+                        </div>
+
+                        <!-- CON IMAGEN -->
+                        <div class="preview-content" *ngIf="previewUrl">
+
+                            <img class="retinography-preview" [src]="previewUrl" alt="Previsualización de retinografía">
+
+                            <div class="file-information">
+
+                                <div>
+                                    <strong>Nombre del archivo:</strong>
+                                    <span>{{ fileName }}</span>
+                                </div>
+
+                                <div>
+                                    <strong>Tamaño:</strong>
+                                    <span>{{ fileSize }}</span>
+                                </div>
+
+                                <div>
+                                    <strong>Formato:</strong>
+                                    <span>{{ fileFormat }}</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ERROR DE ARCHIVO -->
+                        <p class="file-error" *ngIf="fileErrorMessage">
+                            {{ fileErrorMessage }}
+                        </p>
+
+                    </div>
+
+                    <!-- CARGA EN PROCESO -->
+                    <div class="upload-feedback loading" *ngIf="isUploading">
+
+                        <span class="loading-spinner"></span>
+
+                        <span>
+                            Validando y cargando retinografía...
+                        </span>
+
+                    </div>
+
+                    <!-- CARGA EXITOSA -->
+                    <div class="upload-feedback success" *ngIf="uploadSuccessMessage">
+
+                        <img src="/icons/cheque.png" alt="" class="check-image">
+
+                        <span>
+                            {{ uploadSuccessMessage }}
+                        </span>
+
+                    </div>
+
+                    <!-- ERROR DURANTE EL ANÁLISIS -->
+                    <div class="upload-feedback error" *ngIf="analysisErrorMessage">
+                        {{ analysisErrorMessage }}
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- BOTONES -->
+            <div class="page-actions">
+
+                <button type="button" class="cancel-button"
+                    [disabled]="loadingStoredRetinography || isUploading || isAnalyzing" (click)="goToEvaluationForm()">
+
+                    Volver
+
+                </button>
+
+                <button type="button" class="upload-button"
+                    [disabled]="loadingStoredRetinography || isUploading || isAnalyzing || (!selectedFile && !retinographyUploaded)"
+                    (click)="retinographyUploaded ? analyzeRetinography() : uploadRetinography()">
+
+                    <!-- Cargando imagen -->
+                    <ng-container *ngIf="isUploading">
+                        Cargando retinografía...
+                    </ng-container>
+
+                    <!-- Procesando con IA -->
+                    <ng-container *ngIf="!isUploading && isAnalyzing">
+                        <span class="loading-spinner"></span>
+                        Procesando retinografía...
+                    </ng-container>
+
+                    <!-- Antes de cargar -->
+                    <ng-container *ngIf="!isUploading && !isAnalyzing && !retinographyUploaded">
+                        Cargar retinografía
+                    </ng-container>
+
+                    <!-- Imagen cargada correctamente -->
+                    <ng-container *ngIf="!isUploading && !isAnalyzing && retinographyUploaded">
+                        Analizar retinografía
+                    </ng-container>
+
+                </button>
+
+            </div>
+
+        </ng-container>
+
+    </main>
+
+</div>

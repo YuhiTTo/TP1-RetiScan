@@ -1,0 +1,187 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* RETISCAN: EVALUACIONES CON ALTURA ESTABLE */
+
+.page-container .evaluations-section .evaluations-table-container {
+    min-height: 590px;
+    overflow-x: auto;
+}
+
+.page-container .evaluations-section .evaluations-table {
+    table-layout: fixed;
+    min-width: 960px;
+}
+
+.page-container .evaluations-section .evaluations-table thead tr {
+    height: 44px;
+}
+
+.page-container .evaluations-section .evaluations-table tbody tr {
+    height: 78px;
+}
+
+.page-container .evaluations-section .evaluations-table th,
+.page-container .evaluations-section .evaluations-table td {
+    box-sizing: border-box;
+    vertical-align: middle;
+    padding: 6px 18px;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(1) {
+    width: 14%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(2) {
+    width: 8%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(3) {
+    width: 40%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(4) {
+    width: 19%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(5) {
+    width: 19%;
+}
+
+
+/* RETISCAN: RESULTADOS EN FILAS UNIFORMES */
+
+.page-container .evaluations-section .result-badge {
+    padding: 6px 12px;
+    gap: 2px;
+    line-height: 1.35;
+}
+
+/* RETISCAN: REPORTES CON ALTURA ESTABLE */
+
+app-patient-detail .reports-section .reports-table-container {
+    min-height: 590px;
+}
+
+app-patient-detail .reports-section .reports-table {
+    table-layout: fixed;
+    min-width: 960px;
+}
+
+app-patient-detail .reports-section .reports-table thead tr {
+    height: 44px;
+}
+
+app-patient-detail .reports-section .reports-table tbody tr {
+    height: 78px;
+}
+
+app-patient-detail .reports-section .reports-table th,
+app-patient-detail .reports-section .reports-table td {
+    box-sizing: border-box;
+    padding: 6px 18px;
+    vertical-align: middle;
+}
+
+app-patient-detail .reports-section .reports-table th:nth-child(1) {
+    width: 22%;
+}
+
+app-patient-detail .reports-section .reports-table th:nth-child(2) {
+    width: 8%;
+}
+
+app-patient-detail .reports-section .reports-table th:nth-child(3) {
+    width: 25%;
+}
+
+app-patient-detail .reports-section .reports-table th:nth-child(4) {
+    width: 45%;
+}
+
+/* RETISCAN: DISTRIBUCION EQUILIBRADA DE EVALUACIONES */
+
+/* Encabezados y contenido centrados */
+.page-container .evaluations-section .evaluations-table th,
+.page-container .evaluations-section .evaluations-table td {
+    text-align: center;
+}
+
+/* Anchos equilibrados */
+.page-container .evaluations-section .evaluations-table th:nth-child(1) {
+    width: 19%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(2) {
+    width: 19%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(3) {
+    width: 24%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(4) {
+    width: 19%;
+}
+
+.page-container .evaluations-section .evaluations-table th:nth-child(5) {
+    width: 19%;
+}
+
+/* Centrar las etiquetas de resultados IA */
+.page-container .evaluations-section .result-badge {
+    text-align: center;
+    align-items: center;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* RETISCAN: CENTRADO REAL DE EVALUACIONES */
+
+/* Centrar encabezados y celdas */
+.page-container .evaluations-section .evaluations-table thead th,
+.page-container .evaluations-section .evaluations-table tbody td {
+    text-align: center !important;
+}
+
+/* Centrar físicamente las etiquetas de Resultado IA */
+.page-container .evaluations-section .evaluations-table
+.result-badge {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    text-align: center;
+}
+
+/* RETISCAN: COLUMNAS CENTRADAS DE REPORTES */
+
+/* Centrar encabezados y celdas */
+app-patient-detail .reports-section .reports-table thead th,
+app-patient-detail .reports-section .reports-table tbody td {
+    text-align: center !important;
+}
+
+/* Distribuir equitativamente las cuatro columnas */
+app-patient-detail .reports-section .reports-table th:nth-child(1),
+app-patient-detail .reports-section .reports-table th:nth-child(2),
+app-patient-detail .reports-section .reports-table th:nth-child(3),
+app-patient-detail .reports-section .reports-table th:nth-child(4) {
+    width: 25%;
+}
+
+/* Centrar los botones dentro de Acciones */
+app-patient-detail .reports-section .report-actions {
+    justify-content: center;
+}

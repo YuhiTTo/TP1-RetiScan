@@ -1,0 +1,2 @@
+clarity_min_score,metric,direction,n_insufficient,n_sufficient,auc,threshold_candidate,balanced_accuracy,recall_sufficient,recall_insufficient,false_accept_rate,false_reject_rate,tp,fn,tn,fp
+8,clarity_gradient_p90,HIGHER_IS_1,372,828,0.85821353,16.06225775,0.77947249,0.78743961,0.77150538,0.22849462,0.21256039,652,176,287,85
