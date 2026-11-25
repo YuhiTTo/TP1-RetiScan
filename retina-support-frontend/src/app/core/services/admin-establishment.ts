@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from './api-url';
 
 
 export interface Establishment {
@@ -71,8 +72,7 @@ export interface UpdateEstablishmentRequest {
 })
 export class AdminEstablishmentService {
 
-  private readonly apiUrl =
-    'http://127.0.0.1:8000/api/v1/admin/establishments';
+  private readonly apiUrl = `${API_BASE_URL}/admin/establishments`;
 
 
   constructor(
@@ -101,7 +101,7 @@ export class AdminEstablishmentService {
     data: CreateInstitutionalAccountRequest
   ): Observable<CreateInstitutionalAccountResponse> {
     return this.http.post<CreateInstitutionalAccountResponse>(
-      'http://127.0.0.1:8000/api/v1/institutional-accounts',
+      `${API_BASE_URL}/institutional-accounts`,
       data
     );
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from './api-url';
 
 
 export interface Evaluation {
@@ -140,11 +141,9 @@ export interface AIEvaluationResultsResponse {
 })
 export class EvaluationService {
 
-  private readonly apiUrl =
-    'http://127.0.0.1:8000/api/v1/patients';
+  private readonly apiUrl = `${API_BASE_URL}/patients`;
 
-  private readonly evaluationsApiUrl =
-    'http://127.0.0.1:8000/api/v1/evaluations';
+  private readonly evaluationsApiUrl = `${API_BASE_URL}/evaluations`;
 
   private analysisResult: AIAnalysisResponse | null = null;
 
@@ -192,7 +191,7 @@ export class EvaluationService {
     }
   ): Observable<{ id_evaluacion: number }> {
     return this.http.patch<{ id_evaluacion: number }>(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}`,
+      `${this.evaluationsApiUrl}/${evaluationId}`,
       data
     );
   }
@@ -202,7 +201,7 @@ export class EvaluationService {
   ): Observable<EvaluationDetail> {
 
     return this.http.get<EvaluationDetail>(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}`
+      `${this.evaluationsApiUrl}/${evaluationId}`
     );
   }
 
@@ -212,7 +211,7 @@ export class EvaluationService {
   ): Observable<MedicalObservationResponse> {
 
     return this.http.patch<MedicalObservationResponse>(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/medical-observation`,
+      `${this.evaluationsApiUrl}/${evaluationId}/medical-observation`,
       { observacion_medica: observation }
     );
   }
@@ -223,7 +222,7 @@ export class EvaluationService {
   ): Observable<EvaluationFinalizeResponse> {
 
     return this.http.post<EvaluationFinalizeResponse>(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/finalize`,
+      `${this.evaluationsApiUrl}/${evaluationId}/finalize`,
       { observacion_medica: observation }
     );
   }
@@ -238,7 +237,7 @@ export class EvaluationService {
     formData.append('file', file);
 
     return this.http.put<unknown>(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/retinography`,
+      `${this.evaluationsApiUrl}/${evaluationId}/retinography`,
       formData
     );
   }
@@ -247,13 +246,13 @@ export class EvaluationService {
     evaluationId: number
   ): Observable<RetinographyResume> {
     return this.http.get<RetinographyResume>(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/retinography`
+      `${this.evaluationsApiUrl}/${evaluationId}/retinography`
     );
   }
 
   getRetinographyImage(evaluationId: number): Observable<Blob> {
     return this.http.get(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/retinography/image`,
+      `${this.evaluationsApiUrl}/${evaluationId}/retinography/image`,
       {
         responseType: 'blob'
       }
@@ -265,7 +264,7 @@ export class EvaluationService {
   ): Observable<AIEvaluationResultsResponse> {
 
     return this.http.get<AIEvaluationResultsResponse>(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/results`
+      `${this.evaluationsApiUrl}/${evaluationId}/results`
     );
   }
 
@@ -274,7 +273,7 @@ export class EvaluationService {
   ): Observable<AIAnalysisResponse> {
 
     return this.http.post<AIAnalysisResponse>(
-      `http://127.0.0.1:8000/api/v1/evaluations/${evaluationId}/analysis`,
+      `${this.evaluationsApiUrl}/${evaluationId}/analysis`,
       {}
     );
   }

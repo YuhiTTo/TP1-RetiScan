@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from './api-url';
+
 
 export type ConsistencyStatus =
   | 'CONSISTENTE'
@@ -50,10 +52,9 @@ export interface AdminConsistencyFilters {
 })
 export class AdminConsistencyService {
 
-  private readonly url =
-    'http://127.0.0.1:8000/api/v1/admin/consistency';
+  private readonly url = `${API_BASE_URL}/admin/consistency`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   list(
     filters: AdminConsistencyFilters

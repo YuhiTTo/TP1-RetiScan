@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from './api-url';
 
 
 export interface LoginRequest {
@@ -23,8 +24,7 @@ export interface LoginResponse {
 })
 export class AuthService {
 
-  private readonly apiUrl =
-    'http://127.0.0.1:8000/api/v1/auth';
+  private readonly apiUrl = `${API_BASE_URL}/auth`;
 
   constructor(
     private http: HttpClient
