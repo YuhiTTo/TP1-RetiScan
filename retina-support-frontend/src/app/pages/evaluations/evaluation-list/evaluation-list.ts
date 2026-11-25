@@ -31,7 +31,7 @@ export class EvaluationList implements OnInit {
     errorMessage = '';
 
     displayName =
-        localStorage.getItem('display_name') ?? 'Establecimiento';
+        sessionStorage.getItem('display_name') ?? 'Establecimiento';
 
     readonly pageSize = 8;
 
@@ -263,10 +263,10 @@ export class EvaluationList implements OnInit {
 
     logout(): void {
 
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('account_type');
-        localStorage.removeItem('establishment_id');
-        localStorage.removeItem('display_name');
+        sessionStorage.removeItem('access_token');
+        sessionStorage.removeItem('account_type');
+        sessionStorage.removeItem('establishment_id');
+        sessionStorage.removeItem('display_name');
 
         this.router.navigate(['/login']);
     }

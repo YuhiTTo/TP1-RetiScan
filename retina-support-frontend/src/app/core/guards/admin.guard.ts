@@ -5,8 +5,8 @@ export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
   const loginRoute = router.createUrlTree(['/admin/login']);
 
-  const token = localStorage.getItem('access_token');
-  const accountType = localStorage.getItem('account_type');
+  const token = sessionStorage.getItem('access_token');
+  const accountType = sessionStorage.getItem('account_type');
 
   // Sin token o con una cuenta institucional:
   // no permitir abrir pantallas administrativas.
@@ -42,10 +42,10 @@ export const adminGuard: CanActivateFn = () => {
 
   } catch {
     // Limpiar una sesion administrativa invalida.
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('account_type');
-    localStorage.removeItem('establishment_id');
-    localStorage.removeItem('display_name');
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('account_type');
+    sessionStorage.removeItem('establishment_id');
+    sessionStorage.removeItem('display_name');
 
     return loginRoute;
   }

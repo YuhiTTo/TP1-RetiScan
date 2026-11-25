@@ -34,7 +34,7 @@ import {
 export class AdminHome implements OnInit {
 
   readonly displayName =
-    localStorage.getItem('display_name') ?? 'Administrador';
+    sessionStorage.getItem('display_name') ?? 'Administrador';
 
   summary: AdminHomeSummary | null = null;
 
@@ -48,7 +48,7 @@ export class AdminHome implements OnInit {
     private service: AdminHomeService,
     private cdr: ChangeDetectorRef,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadSummary();
@@ -144,7 +144,7 @@ export class AdminHome implements OnInit {
       'establishment_id',
       'display_name'
     ]) {
-      localStorage.removeItem(key);
+      sessionStorage.removeItem(key);
     }
 
     this.router.navigate(['/admin/login']);
