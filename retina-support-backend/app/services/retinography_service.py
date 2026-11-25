@@ -41,7 +41,7 @@ def upload_evaluation_retinography(
     content_type: str | None,
     content: bytes
 ) -> Retinography:
-    
+
     evaluation = get_evaluation_by_id(
         db=db,
         establishment_id=establishment_id,
@@ -157,7 +157,7 @@ def upload_evaluation_retinography(
         db.add(retinography)
 
     else:
-        
+
         retinography.nombre_archivo = original_filename
         retinography.formato = extension
         retinography.tamano_bytes = len(content)

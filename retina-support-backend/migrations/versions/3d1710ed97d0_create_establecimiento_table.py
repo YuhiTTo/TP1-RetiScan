@@ -1,7 +1,7 @@
 """create establecimiento table
 
 Revision ID: 3d1710ed97d0
-Revises: 
+Revises:
 Create Date: 2026-09-29 04:54:29.662955
 
 """
