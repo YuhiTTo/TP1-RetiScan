@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from './api-url';
 
 
 export interface DashboardRecentEvaluation {
@@ -27,8 +28,7 @@ export interface DashboardSummary {
 })
 export class DashboardService {
 
-    private readonly apiUrl =
-        'http://127.0.0.1:8000/api/v1/dashboard/summary';
+    private readonly apiUrl = `${API_BASE_URL}/dashboard/summary`;
 
     constructor(
         private http: HttpClient

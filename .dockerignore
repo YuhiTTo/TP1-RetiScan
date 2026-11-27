@@ -1,0 +1,35 @@
+# Excluir todo por defecto
+**
+
+# Incluir servicio de inteligencia artificial
+!retina-ai-service/
+!retina-ai-service/app/
+!retina-ai-service/app/**
+!retina-ai-service/requirements.txt
+
+# Incluir modelo de retinopatia diabetica
+!models/
+!models/RD/
+!models/RD/efficientnetb3_se/
+!models/RD/efficientnetb3_se/efficientnetb3_se_finetune_best.keras
+
+# Incluir modelo de glaucoma
+!models/glaucoma/
+!models/glaucoma/resnet50v2/
+!models/glaucoma/resnet50v2/resnet50v2_finetune_best.keras
+
+# Incluir archivos de calibracion
+!results/
+!results/calibration/
+!results/calibration/rd_temperature_scaling.json
+!results/calibration/glaucoma_platt_scaling.json
+!results/calibration/review_policy.json
+
+# Excluir credenciales y archivos locales
+**/.env
+**/.env.*
+**/venv/
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/node_modules/

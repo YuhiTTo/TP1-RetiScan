@@ -1,24 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './core/guards/admin.guard';
 
-import { InstitutionalLogin } from './pages/auth/institutional-login/institutional-login';
-import { AdminLogin } from './pages/auth/admin-login/admin-login';
-import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
-import { AdminHome } from './pages/admin/admin-home/admin-home';
-import { AdminEvaluations } from './pages/admin/admin-evaluations/admin-evaluations';
-import { AdminConsistency } from './pages/admin/admin-consistency/admin-consistency';
-import { Home } from './pages/home/home/home';
-import { PatientCreate } from './pages/patients/patient-create/patient-create';
-import { PatientList } from './pages/patients/patient-list/patient-list';
-import { PatientDetail } from './pages/patients/patient-detail/patient-detail';
-import { EvaluationCreate } from './pages/evaluations/evaluation-create/evaluation-create';
-import { RetinographyUpload } from './pages/evaluations/retinography-upload/retinography-upload';
-import { EvaluationList } from './pages/evaluations/evaluation-list/evaluation-list';
-import { EvaluationResults } from './pages/evaluations/evaluation-results/evaluation-results';
-import { EvaluationDetail } from './pages/evaluations/evaluation-detail/evaluation-detail';
-import { ReportList } from './pages/reports/report-list/report-list';
-
-
 export const routes: Routes = [
     {
         path: '',
@@ -27,11 +9,15 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        component: InstitutionalLogin
+        loadComponent: () =>
+            import('./pages/auth/institutional-login/institutional-login')
+                .then(m => m.InstitutionalLogin)
     },
     {
         path: 'admin/login',
-        component: AdminLogin
+        loadComponent: () =>
+            import('./pages/auth/admin-login/admin-login')
+                .then(m => m.AdminLogin)
     },
     {
         path: 'admin',
@@ -41,66 +27,96 @@ export const routes: Routes = [
     {
         path: 'admin/home',
         canActivate: [adminGuard],
-        component: AdminHome
+        loadComponent: () =>
+            import('./pages/admin/admin-home/admin-home')
+                .then(m => m.AdminHome)
     },
     {
         path: 'admin/establishments',
         canActivate: [adminGuard],
-        component: AdminDashboard
+        loadComponent: () =>
+            import('./pages/admin/admin-dashboard/admin-dashboard')
+                .then(m => m.AdminDashboard)
     },
     {
         path: 'admin/evaluations',
         canActivate: [adminGuard],
-        component: AdminEvaluations
+        loadComponent: () =>
+            import('./pages/admin/admin-evaluations/admin-evaluations')
+                .then(m => m.AdminEvaluations)
     },
     {
         path: 'admin/consistency',
         canActivate: [adminGuard],
-        component: AdminConsistency
+        loadComponent: () =>
+            import('./pages/admin/admin-consistency/admin-consistency')
+                .then(m => m.AdminConsistency)
     },
     {
         path: 'home',
-        component: Home
+        loadComponent: () =>
+            import('./pages/home/home/home')
+                .then(m => m.Home)
     },
     {
         path: 'patients',
-        component: PatientList
+        loadComponent: () =>
+            import('./pages/patients/patient-list/patient-list')
+                .then(m => m.PatientList)
     },
     {
         path: 'patients/new',
-        component: PatientCreate
+        loadComponent: () =>
+            import('./pages/patients/patient-create/patient-create')
+                .then(m => m.PatientCreate)
     },
     {
         path: 'patients/:id',
-        component: PatientDetail
+        loadComponent: () =>
+            import('./pages/patients/patient-detail/patient-detail')
+                .then(m => m.PatientDetail)
     },
     {
         path: 'patients/:id/evaluations/new',
-        component: EvaluationCreate
+        loadComponent: () =>
+            import('./pages/evaluations/evaluation-create/evaluation-create')
+                .then(m => m.EvaluationCreate)
     },
     {
         path: 'patients/:id/evaluations/:evaluationId/edit',
-        component: EvaluationCreate
+        loadComponent: () =>
+            import('./pages/evaluations/evaluation-create/evaluation-create')
+                .then(m => m.EvaluationCreate)
     },
     {
         path: 'evaluations',
-        component: EvaluationList
+        loadComponent: () =>
+            import('./pages/evaluations/evaluation-list/evaluation-list')
+                .then(m => m.EvaluationList)
     },
     {
         path: 'evaluations/:evaluationId/retinography',
-        component: RetinographyUpload
+        loadComponent: () =>
+            import('./pages/evaluations/retinography-upload/retinography-upload')
+                .then(m => m.RetinographyUpload)
     },
     {
         path: 'evaluations/:evaluationId/detail',
-        component: EvaluationDetail
+        loadComponent: () =>
+            import('./pages/evaluations/evaluation-detail/evaluation-detail')
+                .then(m => m.EvaluationDetail)
     },
     {
         path: 'evaluations/:evaluationId/results',
-        component: EvaluationResults
+        loadComponent: () =>
+            import('./pages/evaluations/evaluation-results/evaluation-results')
+                .then(m => m.EvaluationResults)
     },
     {
         path: 'reports',
-        component: ReportList
+        loadComponent: () =>
+            import('./pages/reports/report-list/report-list')
+                .then(m => m.ReportList)
     },
     {
         path: '**',

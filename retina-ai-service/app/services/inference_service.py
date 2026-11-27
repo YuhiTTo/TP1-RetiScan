@@ -1,3 +1,19 @@
+import tensorflow as tf
+
+# Configurar memoria de la GPU antes de cargar los modelos
+physical_gpus = tf.config.list_physical_devices("GPU")
+
+for gpu in physical_gpus:
+    try:
+        tf.config.experimental.set_memory_growth(gpu, True)
+        print(f"[GPU] Memory growth habilitado: {gpu.name}")
+    except RuntimeError as error:
+        raise RuntimeError(
+            "No se pudo configurar memory_growth antes "
+            "de inicializar la GPU."
+        ) from error
+
+# Importar servicios después de configurar la GPU
 from app.services.preprocessing_service import preprocess_retinal_fov
 from app.services.rd_inference_service import predict_rd
 from app.services.glaucoma_inference_service import predict_glaucoma
